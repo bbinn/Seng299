@@ -5,9 +5,9 @@ Javascript, node, express, Mongodb, css, html, jquery, ajax (maybe), other thing
 
 
 Members:
-Brett Binnersley
-Ross Gorden-Baker
-
+Brett Binnersley, V00776751
+Ross Gorden-Baker, V00741538
+<Other Members insert names and #'s here>
 
 
 Comments:
