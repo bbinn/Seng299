@@ -1,5 +1,0 @@
-Hey, I'm just pushing this file to see that I know how to use git.  I mean submitting a pull request!  That's what I meant!  Crap!
-
-Ummm... accept this, please?  I'm just trying to see if I can do it.  We'll delete it later, and it shouldn't have any effect on the running.
-
--Tyler
