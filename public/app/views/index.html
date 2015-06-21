@@ -15,15 +15,19 @@
 
 	<!-- JS -->
 	<!-- Add Main Angular JavaScript libraries here-->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js"></script>
 
 	<!-- Add Angular controllers here -->
 
 	<!-- Add Angular services here-->
 
 	<!-- Add main Angular app files here -->
+	<script src="app/app.js"></script>
 
 </head>
-<body>
+
+
+<body ng-app="userApp" ng-controller="mainController as main">
 
 <!-- NAVBAR -->
 <header>
@@ -45,7 +49,7 @@
 <main class="container">
 	<!-- ANGULAR VIEWS -->
 	<div class="jumbotron">
-		<h1>SENG 299 Angular Tutorial</h1>
+		 {{ main.message }}
 	</div>
 
 </main>
