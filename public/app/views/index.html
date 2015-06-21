@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>User CRM</title>
+	<title>Farmers Market</title>
 
 	<!-- FOR ANGULAR ROUTING -->
 	<base href="/">
@@ -11,29 +11,35 @@
 	<!-- load bootstrap from CDN and custom CSS -->
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.1/paper/bootstrap.min.css">
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css">
-	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/style.css">
 
 	<!-- JS -->
 	<!-- Add Main Angular JavaScript libraries here-->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.js"></script>
 
 	<!-- Add Angular controllers here -->
-
 	<!-- Add Angular services here-->
-
 	<!-- Add main Angular app files here -->
 
+	<script src="app/app.js"></script>
+
 </head>
-<body>
+
+
+<body ng-app="userApp" ng-controller="mainController as main">
 
 <!-- NAVBAR -->
 <header>
 	<div class="navbar navbar-inverse">
 	<div class="container">
 		<div class="navbar-header">
-			<a href="/" class="navbar-brand"><span class="glyphicon glyphicon-fire text-danger"></span> User Management</a>
-		</div>	
+			<a href="/home" class="navbar-brand">Farmers Market</a>
+		</div>
 		<ul class="nav navbar-nav">
-			<li><a href="/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
+			<li><a href="/vendors"><span class="glyphicon glyphicon-user"></span></span>Vendors</a></li>
+			<li><a href="/schedule"><span class="glyphicon glyphicon-user"></span>Schedule</a></li>
+			<li><a href="/account"><span class="glyphicon glyphicon-user"></span>Account</a></li>
+			<li><a href="/contact"><span class="glyphicon glyphicon-user"></span>Contact</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li><a href="/about">About</a></li>
@@ -45,8 +51,37 @@
 <main class="container">
 	<!-- ANGULAR VIEWS -->
 	<div class="jumbotron">
-		<h1>SENG 299 Angular Tutorial</h1>
+		<div class="form-group">
+	    <label>Message</label>
+	    <input type="text" class="form-control" ng-model="main.message">
+		</div>
+		<h1>
+		 {{ main.message }}
+		</h1>
 	</div>
+	<h2>Student List:</h2>
+	<table class="table table-bordered">
+	 <thead>
+     <tr>
+       <th>First Name</th>
+       <th>Last Name</th>
+     </tr>
+	 </thead>
+	 <tbody>
+     <tr ng-repeat="student in main.students">
+       <td>{{ student.first }}</td>
+       <td>{{ student.last }}</td>
+     </tr>
+	 </tbody>
+	</table>
+
+	<!-- form to add computer to the list -->
+	<form class="form-inline" ng-submit="main.addStudent()">
+    <input type="text" class="form-control" placeholder="First" ng-model="main.studentData.first">
+    <input type="text" class="form-control" placeholder="Last" ng-model="main.studentData.last">
+    <button type="submit" class="btn btn-success">Add</button>
+	</form>
+
 
 </main>
 
