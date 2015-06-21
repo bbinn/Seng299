@@ -49,8 +49,37 @@
 <main class="container">
 	<!-- ANGULAR VIEWS -->
 	<div class="jumbotron">
+		<div class="form-group">
+	    <label>Message</label>
+	    <input type="text" class="form-control" ng-model="main.message">
+		</div>
+		<h1>
 		 {{ main.message }}
+		</h1>
 	</div>
+	<h2>Student List:</h2>
+	<table class="table table-bordered">
+	 <thead>
+     <tr>
+       <th>First Name</th>
+       <th>Last Name</th>
+     </tr>
+	 </thead>
+	 <tbody>
+     <tr ng-repeat="student in main.students">
+       <td>{{ student.first }}</td>
+       <td>{{ student.last }}</td>
+     </tr>
+	 </tbody>
+	</table>
+
+	<!-- form to add computer to the list -->
+	<form class="form-inline" ng-submit="main.addStudent()">
+    <input type="text" class="form-control" placeholder="First" ng-model="main.studentData.first">
+    <input type="text" class="form-control" placeholder="Last" ng-model="main.studentData.last">
+    <button type="submit" class="btn btn-success">Add</button>
+	</form>
+
 
 </main>
 
