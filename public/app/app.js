@@ -1,28 +1,29 @@
-angular.module('userApp', [])
+angular.module('userApp', ['ngRoute'])
+.config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
+    $routeProvider
+      .when('/home', {
+        templateUrl: '/app/views/pages/home.html'
+      })
+      .when('/vendors', {
+        templateUrl: '/app/views/pages/vendors.html'
+      })
+      .when('/schedule', {
+        templateUrl: '/app/views/pages/schedule.html'
+      })
+      .when('/account', {
+        templateUrl: '/app/views/pages/account.html'
+      })
+      .when('/contact', {
+        templateUrl: '/app/views/pages/contact.html'
+      })
+      .when('/about', {
+        templateUrl: '/app/views/pages/about.html'
+      })
+
+    $locationProvider.html5Mode(true);
+}])
 .controller('mainController', function(){
 
-  var vm = this;
-
-  // basic variable to display
-  vm.message ="SENG 299 - Group 6 tutorial angular"
-
-  // a list of students that will be displayed on the home page
-  vm.students = [
-    {first: "David", last: "Johnson"},
-    {first: "Ernest", last: "Aaron"}
-  ];
-
-  vm.studentData = {};
-  //function to add student to list
-  vm.addStudent = function() {
-
-      // add a computer to the list
-      vm.students.push({
-          first: vm.studentData.first,
-          last: vm.studentData.last,
-      });
-
-      // after our computer has been added, clear the form
-      vm.studentData = {};
-  };
+  var vm = this
 });
