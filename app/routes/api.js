@@ -54,13 +54,17 @@ ensureLoggedOut = function(req, res, next) {
 
 
 module.exports = function(app, express) {
-
 	var router = express.Router();
 
-	// Receive message from the client and then handle it here
+	// Authentication routes go here
 	router.post('/login', ensureLoggedOut, function(req, res) {
 			res.status(400).send({error: 'Denied'});
 	});
+	router.post('/signup', ensureLoggedOut, function(req, res) {
+			res.status(400).send({error: 'Denied'});
+	});
+
+
 
 
 
