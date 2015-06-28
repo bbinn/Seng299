@@ -1,15 +1,11 @@
-angular.module('authenticate', [])
 
-vm.studentData = {};
-//function to add student to list
-vm.addStudent = function() {
+function tryLogin() {
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
 
-    // add a computer to the list
-    vm.students.push({
-        first: vm.studentData.first,
-        last: vm.studentData.last,
-    });
+    sendCommand('login', {
+      username: username,
+      password: password
+    })
 
-    // after our computer has been added, clear the form
-    vm.studentData = {};
-};
+}
