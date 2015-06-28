@@ -9,7 +9,7 @@ function sendCommand(command, body, callback) {
       {
         url: 'api/' + command,
         type: "POST",
-        data: { JSON.stringify(body) },
+        data: JSON.stringify(body),
         success: function (data, status, xhr){
           return callback( null, data )
         } ,

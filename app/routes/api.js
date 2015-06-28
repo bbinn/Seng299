@@ -22,23 +22,26 @@ safeParse = function(data) {
 
 //Ensure that the user is logged in (and has proper authentification)
 ensureAuthenticated = function(req, res, next) {
-	if (req.cookies[config.session.cookieName] != null) {
-	  return utils.verifySessionToken(req.cookies[config.cookieName], function(err) {
-	    if (err) {
-	      console.error(err);
-	      return res.send(401);
-	    } else {
-	      return next();
-	    }
-	  });
-	} else {
-	  return res.send(401);
+	if(req.cookies != null){
+		if (req.cookies[config.session.cookieName] != null) {
+		  return utils.verifySessionToken(req.cookies[config.cookieName], function(err) {
+		    if (err) {
+		      console.error(err);
+		      return res.send(401);
+		    } else {
+		      return next();
+		    }
+		  });
+		}
 	}
+  return res.send(401);
 }
 
 //Ensure that the user is NOT logged in
 ensureLoggedOut = function(req, res, next) {
-	console.log(req);
+	if(req.cookies == null){
+		return next();
+	}
 	if (req.cookies[config.cookieName] == null) {
 	  return next();
 	} else {
@@ -54,10 +57,9 @@ module.exports = function(app, express) {
 
 	var router = express.Router();
 
-
 	// Receive message from the client and then handle it here
 	router.post('/login', ensureLoggedOut, function(req, res) {
-			res.send(400, {error: 'Denied'});
+			res.status(400).send({error: 'Denied'});
 	});
 
 
