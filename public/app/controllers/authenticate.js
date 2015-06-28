@@ -9,14 +9,15 @@ function tryLogin() {
         username: username,
         password: password
       },
-      function(error, message) {
-        if(error !== null){
+      function(err, message) {
+        if(err !== null){
           //Error occured. Handle it here
-          console.log(error);
+          console.log(err);
         }
         else
         {
-          //Success - do successful login here
+          //Success - do login here (client side, store cookie etc.)
+          console.log('Success');
         }
       }
     );

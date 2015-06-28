@@ -5,12 +5,11 @@
 // Responds back with a message to the client.
 
 function sendCommand(command, body, callback) {
-
     ($).ajax(
       {
         url: 'api/' + command,
         type: "POST",
-        data: { body: JSON.stringify(body) },
+        data: { JSON.stringify(body) },
         success: function (data, status, xhr){
           return callback( null, data )
         } ,
