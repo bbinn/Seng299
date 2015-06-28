@@ -1,5 +1,5 @@
 var bodyParser = require('body-parser'); 	// get body-parser
-var User       = require('../models/user');
+var Account       = require('../models/account');
 var jwt        = require('jsonwebtoken');
 var config     = require('../../config');
 
@@ -8,14 +8,12 @@ var superSecret = config.secret;
 
 //Extract the JSON object from a string[ified] body
 safeParse = function(data) {
-		var e;
 		try {
 		  if (!data) {
 		    return {};
 		  }
 		  return JSON.parse(data);
 		} catch (_error) {
-		  e = _error;
 		  return {};
 		}
 	}
@@ -25,16 +23,20 @@ ensureAuthenticated = function(req, res, next) {
 	if(req.cookies != null){
 		if (req.cookies[config.session.cookieName] != null) {
 		  return utils.verifySessionToken(req.cookies[config.cookieName], function(err) {
-		    if (err) {
-		      console.error(err);
-		      return res.send(401);
-		    } else {
+		    if (err)
+		    {
+		      return res.status(401).send({
+		      	error: err
+		      });
+		    }
+		    else
+		    {
 		      return next();
 		    }
 		  });
 		}
 	}
-  return res.send(401);
+  return res.status(401).send();
 }
 
 //Ensure that the user is NOT logged in
@@ -45,7 +47,7 @@ ensureLoggedOut = function(req, res, next) {
 	if (req.cookies[config.cookieName] == null) {
 	  return next();
 	} else {
-	  return res.send(400, {
+	  return res.status(400).send({
 	    error: "You must be logged out to do this action"
 	  });
 	}
@@ -58,20 +60,53 @@ module.exports = function(app, express) {
 
 	// Authentication routes go here
 	router.post('/login', ensureLoggedOut, function(req, res) {
-			res.status(400).send({error: 'Denied'});
+		res.status(400).send({error: 'Denied'});
 	});
+
 	router.post('/signup', ensureLoggedOut, function(req, res) {
-			res.status(400).send({error: 'Denied'});
+		body = safeParse(req.body);
+		var account = new Account();
+
+		// User info
+		account.name = body.name;
+		account.company = body.company;
+		account.age = body.age;
+		account.email = body.email;
+		account.phone = body.phone;
+		account.address = body.address;
+
+		// Account info
+		account.username = body.username;
+		account.password = body.password;
+		account.accountType = body.accountType;
+
+		account.save(function(error) {
+			if (error) {
+				if (error.code == 11000) { // duplicate entry
+					return res.status(400).send({
+						error: 'An account with that name already exists.'
+					});
+				}
+				else
+				{
+					return res.status(400).send({
+						error: error
+					});
+				}
+			}
+
+			// return a message
+			res.json({
+				message: 'User created!'
+			});
+		});
 	});
-
-
 
 
 
 
 	return router;
 };
-
 
 
 
