@@ -64,8 +64,10 @@ module.exports = function(app, express) {
 	});
 
 	router.post('/signup', ensureLoggedOut, function(req, res) {
-		body = safeParse(req.body);
+		body = safeParse(req.body.body);
 		var account = new Account();
+
+		console.log(body);
 
 		// User info
 		account.name = body.name;

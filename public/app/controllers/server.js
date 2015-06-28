@@ -20,19 +20,17 @@ extractError = function(xhr) {
   return (safeParse(xhr.responseText)).error;
 }
 
-
 function sendCommand(command, body, callback) {
   ($).ajax(
     {
       url: 'api/' + command,
       type: "POST",
-      data: JSON.stringify(body),
+      data: {body: JSON.stringify(body)},
       success: function (data, status, xhr){
         return callback( null, data )
       } ,
       error: function (xhr, status, err) {
-        console.log( extractError (xhr) );
-        return callback( extractError (xhr) );
+        return callback( extractError(xhr) );
       }
     }
   );
