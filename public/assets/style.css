@@ -52,9 +52,14 @@ main 					{
 	padding-top:30px;
 }
 
-
 p, h1, h2, h3, h4, h5, a		{
 	font-family: "LeagueGothic", Helvetica, sans-serif;
+}
+
+p 	{
+	color: black;
+	font-size: 20px;
+	padding-top: 10px;
 }
 
 /* HEADER
