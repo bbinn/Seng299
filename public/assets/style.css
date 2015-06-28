@@ -1,96 +1,14 @@
-/* Begin CSS reset */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
+/* Reset First */
+@import url('reset.css');
 
-/* End CSS reset */
-
-main 					{
-	padding-top:30px;
-}
-
-/* HEADER
-===================== */
-header .navbar 		{
-	border-radius: 0px;
-	background-color: black;
-}
-
-body {
-	background-color: ghostwhite;
-}
+/* Other styles */
+@import url('login.css');
+@import url('navbar.css');
+@import url('pageBody.css'); /*Main body of every page (shared) */
+@import url('spinner.css');
 
 
-/* NGANIMATE
-====================== */
 
-/* show and hide */
-.show-hide-message.ng-hide-remove {
-	-webkit-animation:zoomIn 0.3s both ease;
-	-moz-animation:zoomIn 0.3s both ease;
-	animation:zoomIn 0.3s both ease;
-}
 
-/* ANIMATIONS
-====================== */
-.spinner {
-	-webkit-animation:spin 1s infinite;
-	-moz-animation:spin 1s infinite;
-	animation:spin 1s infinite;
-}
 
-@keyframes spin {
-	from 	{ transform:rotate(0deg); }
-	to 	{ transform:rotate(360deg); }
-}
-
-@-webkit-keyframes spin {
-	from 	{ -webkit-transform:rotate(0deg); }
-	to 	{ -webkit-transform:rotate(360deg); }
-}
-
-@-moz-keyframes spin {
-	from 	{ -moz-transform:rotate(0deg); }
-	to 	{ -moz-transform:rotate(360deg); }
-}

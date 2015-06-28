@@ -20,7 +20,12 @@ angular.module('userApp', ['ngRoute'])
       .when('/about', {
         templateUrl: '/app/views/pages/about.html'
       })
-
+      .when('/login', {
+        templateUrl: '/app/views/pages/login.html'
+      })
+      .when('/signup', {
+        templateUrl: '/app/views/pages/signup.html'
+      })
     $locationProvider.html5Mode(true);
 }])
 .controller('mainController', function(){
