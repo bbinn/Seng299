@@ -1,0 +1,99 @@
+<div ng-controller="ScheduleController as s">
+  <div class = DayPicker style = "text-align: center">
+    <h1> Schedule for {{s.date.toDateString()}} </h1>
+    <fieldset class="dayPicker">
+      <button ng-click="s.prevWeek()">&lt</button>
+      <input type="radio" name="day" id="sunday" ng-click="s.changeDay(0)">
+      <label for="sunday" class="dayLabel">SUN</label>
+      <input type="radio" name="day" id="monday" ng-click="s.changeDay(1)">
+      <label for="monday" class="dayLabel">MON</label>
+      <input type="radio" name="day" id="tuesday" ng-click="s.changeDay(2)">
+      <label for="tuesday" class="dayLabel">TUE</label>
+      <input type="radio" name="day" id="wednesday" ng-click="s.changeDay(3)">
+      <label for="wednesday" class="dayLabel">WED</label>
+      <input type="radio" name="day" id="thursday" ng-click="s.changeDay(4)">
+      <label for="thursday" class="dayLabel">THU</label>
+      <input type="radio" name="day" id="friday" ng-click="s.changeDay(5)">
+      <label for="friday" class="dayLabel">FRI</label>
+      <input type="radio" name="day" id="saturday" ng-click="s.changeDay(6)">
+      <label for="saturday" class="dayLabel">SAT</label>
+      <button ng-click="s.nextWeek()">&gt</button>
+    </fieldset>
+  </div>
+  <br>
+  <br>
+  <style>
+    td {
+      border: 1px solid black;
+      text-align: center;
+      height: 120px;
+      vertical-align: middle;
+      }
+    th {
+      vertical-align: middle;
+    }
+  </style>
+  <div class="scheduleTable">
+    <h1 style="text-align: center"> 10:00am - 2:00pm</h1>
+    <table style="width:80%" class="lunchTable">
+      <tr>
+        <th width="25%"> Lunch Booths </th>
+        <td width="25%"> <a ng-href="/{{s.lunchBooths[0].id}}">{{ s.lunchBooths[0].name}}</a></td>
+        <td width="25%"> <a ng-href="/{{s.lunchBooths[1].id}}">{{ s.lunchBooths[1].name}}</a> </td>
+        <td width="25%"> <a ng-href="/{{s.lunchBooths[2].id}}">{{ s.lunchBooths[2].name}}</a> </td>
+      </tr>
+    </table>
+    <table style="width:80%" class="produceTable">
+      <tr>
+        <th width="25%"> Produce Booths </th>
+        <td width="18.75%"> <a ng-href="/{{s.produceBooths[0].id}}">{{ s.produceBooths[0].name}}</a></td>
+        <td width="18.75%"> <a ng-href="/{{s.produceBooths[1].id}}">{{ s.produceBooths[1].name}}</a> </td>
+        <td width="18.75%"> <a ng-href="/{{s.produceBooths[2].id}}">{{ s.produceBooths[2].name}}</a> </td>
+        <td width="18.75%"> <a ng-href="/{{s.produceBooths[3].id}}">{{ s.produceBooths[3].name}}</a> </td>
+      </tr>
+    </table>
+    <table style="width:80%" class="MerchTable">
+      <tr>
+        <th width="25%"> Merchandise Booths </th>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[0].id}}">{{ s.merchBooths[0].name}}</a></td>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[2].id}}">{{ s.merchBooths[2].name}}</a> </td>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[1].id}}">{{ s.merchBooths[1].name}}</a> </td>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[3].id}}">{{ s.merchBooths[3].name}}</a> </td>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[4].id}}">{{ s.merchBooths[4].name}}</a> </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <div class="scheduleTable">
+    <h1 style="text-align: center"> 4:00pm - 8:00pm</h1>
+    <table style="width:80%" class="lunchTable">
+      <tr>
+        <th width="25%"> Lunch Booths </th>
+        <td width="25%"> <a ng-href="/{{s.lunchBooths[3].id}}">{{ s.lunchBooths[3].name}}</a></td>
+        <td width="25%"> <a ng-href="/{{s.lunchBooths[4].id}}">{{ s.lunchBooths[4].name}}</a> </td>
+        <td width="25%"> <a ng-href="/{{s.lunchBooths[5].id}}">{{ s.lunchBooths[5].name}}</a> </td>
+      </tr>
+    </table>
+    <table style="width:80%" class="produceTable">
+      <tr>
+        <th width="25%"> Produce Booths </th>
+        <td width="18.75%"> <a ng-href="/{{s.produceBooths[4].id}}">{{ s.produceBooths[4].name}}</a></td>
+        <td width="18.75%"> <a ng-href="/{{s.produceBooths[5].id}}">{{ s.produceBooths[5].name}}</a> </td>
+        <td width="18.75%"> <a ng-href="/{{s.produceBooths[6].id}}">{{ s.produceBooths[6].name}}</a> </td>
+        <td width="18.75%"> <a ng-href="/{{s.produceBooths[7].id}}">{{ s.produceBooths[7].name}}</a> </td>
+      </tr>
+    </table>
+    <table style="width:80%" class="MerchTable">
+      <tr>
+        <th width="25%"> Merchandise Booths </th>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[5].id}}">{{ s.merchBooths[5].name}}</a></td>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[6].id}}">{{ s.merchBooths[6].name}}</a> </td>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[7].id}}">{{ s.merchBooths[7].name}}</a> </td>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[8].id}}">{{ s.merchBooths[8].name}}</a> </td>
+        <td width="15%"> <a ng-href="/{{s.merchBooths[9].id}}">{{ s.merchBooths[9].name}}</a> </td>
+      </tr>
+    </table>
+  </div>
+  <br>
+  <br>
+</div>
