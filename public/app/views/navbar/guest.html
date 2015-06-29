@@ -1,5 +1,5 @@
-<ul class="nav navbar-nav navbar-right">
-  <li ng-class="{ active: main.activeUser != null}"><a href="/login">{{main.activeUser.name}}</a></li>
-  <li ng-class="{ active: main.activeUser == null}"><a href="/signup">Signup</a></li>
-  <li ng-class="{ active: main.activeUser == null}"><a href="/about">About</a></li>
+<ul ng-if="main.activeUser == null" class="nav navbar-nav navbar-right">
+  <li><a href="/login">Login</a></li>
+  <li><a href="/signup">Signup</a></li>
+  <li><a href="/about">About</a></li>
 </ul>
