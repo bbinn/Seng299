@@ -1,11 +1,11 @@
 
 /* Main body of every page */
 
-main {
-  padding-top: 30px;
-}
-
 body {
   background-color: ghostwhite;
-  padding: 10px 0;
+  padding: 10px 0 0 0;
+}
+
+.ngViewContainer {
+  min-height: 400px;
 }
