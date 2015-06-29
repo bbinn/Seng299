@@ -1,7 +1,7 @@
 
 var config        = require('../../config');
 var utils         = require('../utils');
-var Authenticate  = require('../commands/authenticate');
+var Authenticate  = require('../controllers/authenticate');
 
 
 // Extract the JSON object from a string[ified] body
@@ -95,7 +95,7 @@ module.exports = function(app, express) {
 
 	router.post('/signup', ensureLoggedOut, function(req, res) {
 		body = safeParse(req.body.body);
-		Authenticate.signup(function(error) {
+		Authenticate.signup(body, function(error) {
 			// Handle error
 			if (error) {
 				if (error.code == 11000) { // duplicate entry

@@ -1,8 +1,8 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
-var bcrypt 		 = require('bcrypt-nodejs');
+var bcrypt 		   = require('bcrypt-nodejs');
 
-var UserSchema   = new Schema({
+var AccountSchema   = new Schema({
 
 	// User information
 	name:  { type: String, required: true},
@@ -13,32 +13,28 @@ var UserSchema   = new Schema({
 	address:  { type: String, required: true },
 
 	// Account information
-	username: { type: String, required: true, index: { unique: true }},
+	username: { type: String, required: true, index: { unique: true } },
 	password: { type: String, required: true, select: false },
 	accountType:  { type: String, required: true },
-	id:  { type: Number }
-
+	id:  { type: Number, required: true, index: { unique: true } }
 
 });
 
 
-// hash the password before the user is saved & generate an ID for them.
-UserSchema.pre('save', function(next) {
-	var user = this;
+// hash the password before the account is saved & generate an ID for them.
+AccountSchema.pre('save', function(next) {
+	var account = this;
 
-	// hash the password only if the password has been changed or user is new
-	if (!user.isModified('password')){
+	// hash the password only if the password has been changed or account is new
+	if (!account.isModified('password')){
 		return next();
 	}
 
-	//Generate an ID for the user here: TOOD: THIS
-	user.id = 0; //TODO THIS!!
-
-	bcrypt.hash(user.password, null, null, function(err, hash) {
+	bcrypt.hash(account.password, null, null, function(err, hash) {
 		if (err) {
 			return next(err);
 		}
-		user.password = hash; // change the password to the hashed version
+		account.password = hash; // change the password to the hashed version
 		return next();
 	});
 
@@ -46,10 +42,10 @@ UserSchema.pre('save', function(next) {
 
 
 // method to compare a given password with the database hash
-UserSchema.methods.comparePassword = function(password) {
-	var user = this;
-	return bcrypt.compareSync(password, user.password);
+AccountSchema.methods.comparePassword = function(password) {
+	var account = this;
+	return bcrypt.compareSync(password, account.password);
 };
 
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('Account', AccountSchema);
