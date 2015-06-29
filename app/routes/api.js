@@ -1,12 +1,9 @@
-var bodyParser = require('body-parser'); 	// get body-parser
+
 var Account       = require('../models/account');
-var jwt        = require('jsonwebtoken');
-var config     = require('../../config');
+var config        = require('../../config');
+var utils         = require('../utils');
 
-// super secret for creating tokens
-var superSecret = config.secret;
-
-//Extract the JSON object from a string[ified] body
+// Extract the JSON object from a string[ified] body
 safeParse = function(data) {
 		try {
 		  if (!data) {
@@ -18,10 +15,10 @@ safeParse = function(data) {
 		}
 	}
 
-//Ensure that the user is logged in (and has proper authentification)
+// Ensure that the user is logged in (and has proper authentification)
 ensureAuthenticated = function(req, res, next) {
 	if(req.cookies != null){
-		if (req.cookies[config.session.cookieName] != null) {
+		if (req.cookies[config.cookieName] != null) {
 		  return utils.verifySessionToken(req.cookies[config.cookieName], function(err) {
 		    if (err)
 		    {
@@ -39,7 +36,7 @@ ensureAuthenticated = function(req, res, next) {
   return res.status(401).send();
 }
 
-//Ensure that the user is NOT logged in
+// Ensure that the user is NOT logged in
 ensureLoggedOut = function(req, res, next) {
 	if(req.cookies == null){
 		return next();
@@ -52,6 +49,29 @@ ensureLoggedOut = function(req, res, next) {
 	  });
 	}
 }
+
+// Cookies for authentification
+setCookie = function(res, token){
+  return res.cookie(config.cookieName, token,
+  	{
+	    secure: false,
+	    httpOnly: true,
+	    maxAge: config.expiryInSeconds * 1000
+	  }
+	);
+}
+
+clearCookie = function(res){
+  return res.clearCookie(config.cookieName,
+	  {
+	    secure: config.secure,
+	    httpOnly: true
+	 	}
+ 	);
+}
+
+
+
 
 
 
