@@ -1,3 +1,5 @@
+@font-face 		{ font-family: "LeagueGothic"; src: url("fonts/LeagueGothic.otf") format("opentype"); }
+
 /* Begin CSS reset */
 
 html, body, div, span, applet, object, iframe,
@@ -48,6 +50,11 @@ table {
 
 main 					{
 	padding-top:30px;
+}
+
+
+p, h1, h2, h3, h4, h5, a		{
+	font-family: "LeagueGothic", Helvetica, sans-serif;
 }
 
 /* HEADER
