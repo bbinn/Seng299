@@ -42,6 +42,7 @@ ensureLoggedOut = function(req, res, next) {
 	if(req.cookies == null){
 		return next();
 	}
+	console.log(req.cookies);
 	if (req.cookies[config.cookieName] == null) {
 	  return next();
 	} else {

@@ -1,16 +1,18 @@
 
 // CALL THE PACKAGES --------------------
-var express    = require('express');
-var app        = express();
-var bodyParser = require('body-parser');
-var morgan     = require('morgan');
-var mongoose   = require('mongoose');
-var config 	   = require('./config');
-var path 	     = require('path');
+var express       = require('express');
+var app           = express();
+var bodyParser    = require('body-parser');
+var morgan        = require('morgan');
+var mongoose      = require('mongoose');
+var config 	      = require('./config');
+var path 	        = require('path');
+var cookieParser  = require('cookie-parser');
 
 // APP CONFIGURATION ==================
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // configure our app to handle CORS requests
 app.use(function(req, res, next) {

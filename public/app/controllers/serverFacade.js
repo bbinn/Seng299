@@ -5,6 +5,7 @@
 // Responds back with a message to the client.
 // If err is NOT NULL, then an error occured, else a success occured (and can be extracted from the message)
 
+activeUser = null
 
 safeParse = function(data) {
     try {

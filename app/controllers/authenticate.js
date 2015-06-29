@@ -1,13 +1,13 @@
 var Account       = require('../models/account');
 var bcrypt        = require('bcrypt-nodejs');
 var IDController  = require('./id');
+var utils         = require('../utils');
 
 var Authenticate;
 Authenticate = (function() {
 
   //Empty constructor
   function Authenticate() {}
-
 
   Authenticate.login = function (data, callback) {
     if(data.username == null){
@@ -27,22 +27,21 @@ Authenticate = (function() {
       }
       // docs is an array
       if(docs.length == 0) {
-        return callback('No user found')
+        return callback('No user found');
       }
       account = docs[0];
 
       //Check if the entered password equals the hashed one.
-      bcrypt.compare(account.password, password), function(error, passed){
-        if(error){
+      account.comparePassword(password, function(error, passed){
+        if(error) {
           return callback(error);
         }
         if(passed != true){
           return callback('Invalid username or password');
         }
         var token = utils.generateSessionToken(account.id);
-        return callback(null, token, account.id)
-      }
-
+        return callback(null, token, account.id);
+      });
     });
   }
 

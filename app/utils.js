@@ -11,16 +11,16 @@ ServerUtils = (function() {
   // Generate a signed session token
   ServerUtils.generateSessionToken = function (accountId, expiresIn) {
 
-    var expiry = (Math.floor(Date.now() / 1000) + config.session.expiryInSeconds);
+    var expiry = (Math.floor(Date.now() / 1000) + config.expiryInSeconds);
     if(expiresIn != null){
       expiry = expiresIn;
     }
 
     // Here's the session info to sign
-    var sessionInfo = "#{accountId}:#{expiry}";
+    var sessionInfo = (accountId +':' + expiry);
 
     // Create a key that's a conjunction of the private key and the data
-    var key = "#{config.secret}//#{accountId}//#{expiry}";
+    var key = (config.secret + '//' + accountId + '//' + expiry);
 
     // Sign it
     var hmac = crypto.createHmac('sha1', key);
@@ -28,7 +28,7 @@ ServerUtils = (function() {
     hmac.write(sessionInfo);
     hmac.end();
 
-    return "#{sessionInfo}:#{hmac.read()}";
+    return(sessionInfo + ':' + hmac.read());
   }
 
   ServerUtils.verifySessionToken = function (token, callback) {

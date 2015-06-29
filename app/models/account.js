@@ -14,7 +14,7 @@ var AccountSchema   = new Schema({
 
 	// Account information
 	username: { type: String, required: true, index: { unique: true } },
-	password: { type: String, required: true, select: false },
+	password: { type: String, required: true}, // Note: THIS SHOULD BE: (, select: false)
 	accountType:  { type: String, required: true },
 	id:  { type: Number, required: true, index: { unique: true } }
 
@@ -42,9 +42,9 @@ AccountSchema.pre('save', function(next) {
 
 
 // method to compare a given password with the database hash
-AccountSchema.methods.comparePassword = function(password) {
+AccountSchema.methods.comparePassword = function(password, callback) {
 	var account = this;
-	return bcrypt.compareSync(password, account.password);
+	return bcrypt.compare(password, account.password, callback);
 };
 
 
