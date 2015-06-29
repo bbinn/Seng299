@@ -2,21 +2,22 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 var bcrypt 		   = require('bcrypt-nodejs');
 
-var AccountSchema   = new Schema({
+
+var AccountSchema = new Schema({
 
 	// User information
-	name:  { type: String, required: true},
-	company:  { type: String, required: true },
-	age:  { type: String, required: true },
-	email:  { type: String, required: true },
-	phone:  { type: String, required: true },
-	address:  { type: String, required: true },
+	name:  { type: String, required: true, select: true},
+	company:  { type: String, required: true, select: true },
+	age:  { type: String, required: true, select: true },
+	email:  { type: String, required: true, select: true },
+	phone:  { type: String, required: true, select: true },
+	address:  { type: String, required: true, select: true },
 
 	// Account information
-	username: { type: String, required: true, index: { unique: true } },
-	password: { type: String, required: true}, // Note: THIS SHOULD BE: (, select: false)
-	accountType:  { type: String, required: true },
-	id:  { type: Number, required: true, index: { unique: true } },
+	username: { type: String, required: true, select: true, index: { unique: true } },
+	password: { type: String, required: true, select: false},
+	accountType:  { type: String, required: true, select: true },
+	id:  { type: Number, required: true, index: { unique: true }, select: true },
 
 	// Exclude defaults in our query results
 	_id: {type: String, select: false},
@@ -48,6 +49,7 @@ AccountSchema.pre('save', function(next) {
 // method to compare a given password with the database hash
 AccountSchema.methods.comparePassword = function(password, callback) {
 	var account = this;
+
 	return bcrypt.compare(password, account.password, callback);
 };
 

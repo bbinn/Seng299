@@ -48,23 +48,23 @@ AuthenticateController = (function() {
 
   // API Call
   AuthenticateController.login = function(req, res) {
-    body = safeParse(req.body.body);
-    login(body, function(err, sessionToken, accountId) {
+    body = utils.safeParse(req.body.body);
+    login(body, function(err, sessionToken, account) {
       if(err != null) {
-        clearCookie(res);
+        utils.clearCookie(res);
         return res.status(400).send({error: err});
       }
       else
       {
-        setCookie(res, sessionToken);
-        return res.status(200).send({accountId: accountId});
+        utils.setCookie(res, sessionToken);
+        return res.status(200).send(account);
       }
     })
   }
 
   // API Call
   AuthenticateController.signup = function(req, res) {
-    body = safeParse(req.body.body);
+    body = utils.safeParse(req.body.body);
     signup(body, function(error) {
       // Handle error
       if (error) {
@@ -128,28 +128,38 @@ login = function (data, callback) {
   var password = data.password;
 
   // get the user with that id
-  Account.find({username: username }, function (err, docs) {
-    if(err) {
-      return callback(err);
-    }
-    // docs is an array
-    if(docs.length == 0) {
-      return callback('No user found');
-    }
-    account = docs[0];
+  Account.find({username: username }).select(
+      {
+        password: true //Explicity include the password in this query
+      }
+    ).exec(function (err, docs) {
+      if(err) {
+        return callback(err);
+      }
+      // docs is an array
+      if(docs.length == 0) {
+        return callback('No user found');
+      }
+      account = docs[0];
 
-    //Check if the entered password equals the hashed one.
-    account.comparePassword(password, function(error, passed){
-      if(error) {
-        return callback(error);
-      }
-      if(passed != true){
-        return callback('Invalid username or password');
-      }
-      var token = utils.generateSessionToken(account.id);
-      return callback(null, token, account.id);
+      //Check if the entered password equals the hashed one.
+      account.comparePassword(password, function(error, passed){
+        if(error) {
+          return callback(error);
+        }
+        if(passed != true){
+          return callback('Invalid username or password');
+        }
+
+        // Clone the object so we can delete the password (so it doesn't get sent to the client)
+        var cloned = utils.deepClone(account);
+        delete cloned.password;
+        delete cloned._id;
+
+        var token = utils.generateSessionToken(cloned.id);
+        return callback(null, token, cloned);
+      });
     });
-  });
 }
 
 signup = function(body, callback) {

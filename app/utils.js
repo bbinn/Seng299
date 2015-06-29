@@ -77,6 +77,23 @@ ServerUtils = (function() {
     );
   }
 
+  // Safely extract the data from the request
+  ServerUtils.safeParse = function(data) {
+    try {
+      if (!data) {
+        return {};
+      }
+      return JSON.parse(data);
+    } catch (_error) {
+      return {};
+    }
+  }
+
+  // Do a deep clone
+  ServerUtils.deepClone = function(data){
+    return JSON.parse(JSON.stringify(data));
+  }
+
 
   return ServerUtils;
 

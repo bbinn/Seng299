@@ -14,7 +14,7 @@ module.exports = function(app, express) {
 
   // Authentication routes
   router.post('/auth', Authenticate.auth); //Authenticate the user (check their cookeis)
-  router.post('/login', Authenticate.ensureLoggedOut, Authenticate.login);
+  router.post('/login', Authenticate.login);
   router.post('/signup', Authenticate.ensureLoggedOut, Authenticate.signup);
 
   //Other routes (comment what they are)
