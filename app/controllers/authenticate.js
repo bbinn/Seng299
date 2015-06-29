@@ -31,9 +31,8 @@ AuthenticateController = (function() {
         return utils.verifySessionToken(req.cookies[config.cookieName], function(err) {
           if (err)
           {
-            return res.status(401).send({
-              error: err
-            });
+            utils.clearCookie(res);
+            return res.status(400).send({error: err});
           }
           else
           {
@@ -71,7 +70,7 @@ AuthenticateController = (function() {
   // API Call
   AuthenticateController.signup = function(req, res) {
     body = utils.safeParse(req.body.body);
-    signup(body, function(error) {
+    signup(body, function(error, sessionToken, results) {
       // Handle error
       if (error) {
         if (error.code == 11000) { // duplicate entry
@@ -86,10 +85,13 @@ AuthenticateController = (function() {
           });
         }
       }
+      console.log(sessionToken);
+      console.log(results);
       //Handle success
-      res.json({
-        message: 'User created!'
-      });
+      utils.setCookie(res, sessionToken);
+      res.status(200).send(
+        JSON.stringify(results)
+      );
     });
   }
 
@@ -98,10 +100,11 @@ AuthenticateController = (function() {
     sessionToken = req.cookies[config.cookieName];
     utils.verifySessionToken(sessionToken, function(err, accountId) {
       if(err) {
+        utils.clearCookie(res);
         return res.status(400).send(err);
       }
 
-      Account.find({id: accountId }, function (err, docs) {
+      Account.find({_id: accountId }, function (err, docs) {
         if(err)
         {
           return res.status(500).send(err);
@@ -160,9 +163,8 @@ login = function (data, callback) {
         // Clone the object so we can delete the password (so it doesn't get sent to the client)
         var cloned = utils.deepClone(account);
         delete cloned.password;
-        delete cloned._id;
 
-        var token = utils.generateSessionToken(cloned.id);
+        var token = utils.generateSessionToken(cloned._id);
         return callback(null, token, cloned);
       });
     });
@@ -213,8 +215,24 @@ signup = function(body, callback) {
     if(error){
       return callback(error)
     }
-    account.id = id;
-    return account.save( callback );
+    account._id = id;
+    return account.save( function(err){
+      if(err)
+      {
+        return callback(err);
+      }
+      else
+      {
+        var token = utils.generateSessionToken(id);
+
+        cloned = utils.deepClone(account);
+        delete cloned.password;
+        delete cloned.__v;
+
+        return callback(null, token, cloned);
+      }
+    });
+
   });
 }
 

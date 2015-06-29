@@ -2,6 +2,8 @@
   //
   //
   // Generates unqiue ID's in increasing order (starting at 0, increasing to infinity)
+  // This overrides the default _id field.
+  // This will guarantees a range & make debugging easier
   //
   //
 

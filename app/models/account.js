@@ -17,10 +17,11 @@ var AccountSchema = new Schema({
 	username: { type: String, required: true, select: true, index: { unique: true } },
 	password: { type: String, required: true, select: false},
 	accountType:  { type: String, required: true, select: true },
-	id:  { type: Number, required: true, index: { unique: true }, select: true },
+
+	// Override default id
+	_id: { type: Number, required: true, index: { unique: true }, select: true },
 
 	// Exclude defaults in our query results
-	_id: {type: String, select: false},
 	__v: {type: String, select: false}
 
 });

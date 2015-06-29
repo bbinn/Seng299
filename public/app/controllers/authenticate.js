@@ -47,9 +47,11 @@ angular.module('userApp')
       }
     )})
     .success(function (data, status, xhr, config){
-      console.log(data);
+      $location.path("/account");
+      vm.activeUser = data;
     })
     .error(function (data, status, xhr, config){
+      // TODO: Show popup
       console.log(data);
     });
   }
@@ -66,7 +68,7 @@ angular.module('userApp')
       }
     )})
     .success(function (data, status, xhr, config){
-      $location.path("/profile");
+      $location.path("/account");
       vm.activeUser = data;
     })
     .error(function (data, status, xhr, config){
@@ -77,9 +79,6 @@ angular.module('userApp')
 
 
   $scope.tryLogout =  function() {
-    console.log('TLO');
-    console.log(vm);
-
     $http.post('api/logout', {body: JSON.stringify({})})
     .success(function (data, status, xhr, config){
       $location.path("/login");
