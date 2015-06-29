@@ -1,5 +1,5 @@
 angular.module('userApp')
-.controller('authController', function($scope, $rootScope, $http){
+.controller('authController', function($scope, $http, $location){
   var vm = this;
   vm.activeUser = null;
 
@@ -66,10 +66,11 @@ angular.module('userApp')
       }
     )})
     .success(function (data, status, xhr, config){
-      console.log(data);
+      $location.path("/profile");
       vm.activeUser = data;
     })
     .error(function (data, status, xhr, config){
+      //TODO: Show popup
       console.log(data);
     });
   }
@@ -81,9 +82,11 @@ angular.module('userApp')
 
     $http.post('api/logout', {body: JSON.stringify({})})
     .success(function (data, status, xhr, config){
-      return vm.activeUser = null;
+      $location.path("/login");
+      vm.activeUser = null;
     })
     .error(function (data, status, xhr, config) {
+      //TODO: Show popup
       console.log(data);
     });
   }
