@@ -1,5 +1,5 @@
 <ul ng-if="main.activeUser != null" class="nav navbar-nav navbar-right">
-  <li><a href="/login">Profile</a></li>
+  <li><a href="/login">{{main.activeUser.name}}'s Profile</a></li>
   <li><a href="/signup">Logout</a></li>
   <li><a href="/about">About</a></li>
 </ul>
