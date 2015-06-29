@@ -16,6 +16,7 @@ function tryLogin() {
       else
       {
         activeUser = user;
+        console.log(user);
       }
     }
   );

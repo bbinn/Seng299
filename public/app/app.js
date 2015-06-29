@@ -30,5 +30,15 @@ angular.module('userApp', ['ngRoute'])
 }])
 .controller('mainController', function(){
 
-  var vm = this
+  // Try to authenticate the user (see if a cookie exists)
+  sendCommand(
+    'authenticate', {},
+    function(err, user) {
+      if(err == null) {
+        console.log('Successfully Authentificated');
+        activeUser = user;
+      }
+    }
+  );
+
 });

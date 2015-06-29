@@ -3,13 +3,13 @@ var bcrypt        = require('bcrypt-nodejs');
 var IDController  = require('./id');
 var utils         = require('../utils');
 
-var Authenticate;
-Authenticate = (function() {
+var AuthenticateController;
+AuthenticateController = (function() {
 
   //Empty constructor
-  function Authenticate() {}
+  function AuthenticateController() {}
 
-  Authenticate.login = function (data, callback) {
+  AuthenticateController.login = function (data, callback) {
     if(data.username == null){
       return callback("Must provide a username");
     }
@@ -45,7 +45,7 @@ Authenticate = (function() {
     });
   }
 
-  Authenticate.signup = function(body, callback) {
+  AuthenticateController.signup = function(body, callback) {
     var name = body.name.trim();
     var company = body.company.trim();
     var age = body.age.trim();
@@ -95,10 +95,12 @@ Authenticate = (function() {
     });
   }
 
-  return Authenticate;
+  AuthenticateController.
+
+  return AuthenticateController;
 })();
 
-module.exports = Authenticate;
+module.exports = AuthenticateController;
 
 
 
