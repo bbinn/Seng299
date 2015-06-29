@@ -1,5 +1,4 @@
 
-var Account       = require('../models/account');
 var config        = require('../../config');
 var utils         = require('../utils');
 var Authenticate  = require('../commands/authenticate');
@@ -75,14 +74,12 @@ clearCookie = function(res){
 
 
 
-
-
 module.exports = function(app, express) {
 	var router = express.Router();
 
 	// Authentication routes go here
 	router.post('/login', ensureLoggedOut, function(req, res) {
-    body = safeParse req.body.body
+    body = safeParse(req.body.body);
     Authenticate.login(body, function(err, sessionToken, accountId) {
       if(err != null) {
         clearCookie(res);
@@ -98,22 +95,7 @@ module.exports = function(app, express) {
 
 	router.post('/signup', ensureLoggedOut, function(req, res) {
 		body = safeParse(req.body.body);
-		var account = new Account();
-
-		// User info
-		account.name = body.name;
-		account.company = body.company;
-		account.age = body.age;
-		account.email = body.email;
-		account.phone = body.phone;
-		account.address = body.address;
-
-		// Account info
-		account.username = body.username;
-		account.password = body.password;
-		account.accountType = body.accountType;
-
-		account.save(function(error) {
+		Authenticate.signup(function(error) {
 			// Handle error
 			if (error) {
 				if (error.code == 11000) { // duplicate entry
@@ -135,7 +117,7 @@ module.exports = function(app, express) {
 		});
 	});
 
-	// We can add more routes below here, however we should extract them into different JS files (same for above too, just getting it to work thou)
+	// We can add more routes below here, however we should extract them into different JS files
 	// ...
 
 
