@@ -27,8 +27,11 @@
 		<div ng-controller="authController as auth">
 			<div ng-include="'app/views/navbar/index.html'"></div>
 			<div class="container">
-				<div ng-view></div>
+				<div class="ngViewContainer">
+					<div ng-view></div>
+				</div>
 			</div>
+			<div ng-include="'app/views/footer/index.html'"></div>
 		</div>
 	</body>
 </html>
