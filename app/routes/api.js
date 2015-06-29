@@ -2,6 +2,8 @@
 var Account       = require('../models/account');
 var config        = require('../../config');
 var utils         = require('../utils');
+var Authenticate  = require('../commands/authenticate');
+
 
 // Extract the JSON object from a string[ified] body
 safeParse = function(data) {
@@ -80,14 +82,23 @@ module.exports = function(app, express) {
 
 	// Authentication routes go here
 	router.post('/login', ensureLoggedOut, function(req, res) {
-		res.status(400).send({error: 'Denied'});
+    body = safeParse req.body.body
+    Authenticate.login(body, function(err, sessionToken, accountId) {
+      if(err != null) {
+        clearCookie(res);
+        return res.status(400).send({error: err});
+      }
+      else
+      {
+        setCookie(res, sessionToken);
+        return res.status(200).send({accountId: accountId});
+      }
+    })
 	});
 
 	router.post('/signup', ensureLoggedOut, function(req, res) {
 		body = safeParse(req.body.body);
 		var account = new Account();
-
-		console.log(body);
 
 		// User info
 		account.name = body.name;
@@ -103,6 +114,7 @@ module.exports = function(app, express) {
 		account.accountType = body.accountType;
 
 		account.save(function(error) {
+			// Handle error
 			if (error) {
 				if (error.code == 11000) { // duplicate entry
 					return res.status(400).send({
@@ -116,15 +128,15 @@ module.exports = function(app, express) {
 					});
 				}
 			}
-
-			// return a message
+			//Handle success
 			res.json({
 				message: 'User created!'
 			});
 		});
 	});
 
-
+	// We can add more routes below here, however we should extract them into different JS files (same for above too, just getting it to work thou)
+	// ...
 
 
 	return router;

@@ -11,7 +11,7 @@ ServerUtils = (function() {
   // Generate a signed session token
   ServerUtils.generateSessionToken = function (accountId, expiresIn) {
 
-    var expiry = (Math.floor(Date.now() / 1000) + config.session.expiryInSeconds)
+    var expiry = (Math.floor(Date.now() / 1000) + config.session.expiryInSeconds);
     if(expiresIn != null){
       expiry = expiresIn;
     }
@@ -19,7 +19,7 @@ ServerUtils = (function() {
     // Here's the session info to sign
     var sessionInfo = "#{accountId}:#{expiry}";
 
-    // Synthesize a key that's a conjunction of the private key and the data
+    // Create a key that's a conjunction of the private key and the data
     var key = "#{config.secret}//#{accountId}//#{expiry}";
 
     // Sign it
@@ -43,12 +43,12 @@ ServerUtils = (function() {
     var expiry = parseInt(expiry);
 
     // Has this token expired?
-    if(expiry < Math.floor(Date.now() / 1000)){
+    if(expiry < Math.floor(Date.now() / 1000)) {
       return callback("This session token has expired");
     }
 
     // Does the signature match?
-    if(generateSessionToken(accountId, expiry) != token){
+    if(generateSessionToken(accountId, expiry) != token) {
       return callback("This session token has been modified");
     }
 
