@@ -9,8 +9,9 @@ module.exports = function(app, express) {
   var router = express.Router();
 
   // Authentication routes
-  router.post('/auth', Authenticate.auth); //Authenticate the user (check their cookeis)
+  router.post('/auth', Authenticate.auth);
   router.post('/login', Authenticate.ensureLoggedOut, Authenticate.login);
+  router.post('/logout', Authenticate.ensureLoggedIn, Authenticate.logout);
   router.post('/signup', Authenticate.ensureLoggedOut, Authenticate.signup);
 
   // Booth Routes (book booth, unbook booth, etc.) ..

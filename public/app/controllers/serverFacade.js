@@ -21,19 +21,3 @@ safeParse = function(data) {
 extractError = function(xhr) {
   return (safeParse(xhr.responseText)).error;
 }
-
-function sendCommand(command, body, callback) {
-  ($).ajax(
-    {
-      url: 'api/' + command,
-      type: "POST",
-      data: {body: JSON.stringify(body)},
-      success: function (data, status, xhr){
-        return callback( null, data )
-      } ,
-      error: function (xhr, status, err) {
-        return callback( extractError(xhr) );
-      }
-    }
-  );
-}

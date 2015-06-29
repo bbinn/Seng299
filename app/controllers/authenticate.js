@@ -63,6 +63,12 @@ AuthenticateController = (function() {
   }
 
   // API Call
+  AuthenticateController.logout = function(req, res) {
+    utils.clearCookie(res);
+    return res.status(200).send();
+  }
+
+  // API Call
   AuthenticateController.signup = function(req, res) {
     body = utils.safeParse(req.body.body);
     signup(body, function(error) {

@@ -32,8 +32,11 @@ ServerUtils = (function() {
   }
 
   ServerUtils.verifySessionToken = function (token, callback) {
+    if(token == null) {
+      return callback("Invalid Token");
+    }
     var fields = token.split(':');
-    if(fields.length != 3){
+    if(fields.length != 3) {
       return callback("Invalid Token");
     }
 

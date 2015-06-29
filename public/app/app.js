@@ -1,3 +1,4 @@
+
 angular.module('userApp', ['ngRoute'])
 .config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
@@ -27,22 +28,4 @@ angular.module('userApp', ['ngRoute'])
         templateUrl: '/app/views/pages/signup.html'
       })
     $locationProvider.html5Mode(true);
-}])
-.controller('mainController', function(){
-
-  var vm = this;
-  vm.activeUser = null;
-
-  // Try to authenticate the user (see if a cookie exists)
-  sendCommand(
-    'auth', {},
-    function(err, user) {
-      if(err == null) {
-        console.log('Successfully Authentificated');
-        activeUser = user;
-        vm.activeUser = user;
-      }
-    }
-  );
-
-});
+}]);
