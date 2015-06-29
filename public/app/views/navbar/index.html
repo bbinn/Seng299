@@ -1,0 +1,22 @@
+<header>
+  <div class="navbar navbar-inverse">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="/home" class="navbar-brand">Farmers Market</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="/vendors"><span class="glyphicon glyphicon-user"></span></span>Vendors</a></li>
+        <li><a href="/schedule"><span class="glyphicon glyphicon-user"></span>Schedule</a></li>
+        <li><a href="/account"><span class="glyphicon glyphicon-user"></span>Account</a></li>
+        <li><a href="/contact"><span class="glyphicon glyphicon-user"></span>Contact</a></li>
+      </ul>
+
+      <!-- If User is logged in -->
+      <div ng-include="'app/views/navbar/user.html'"></div>
+
+      <!-- Else: User is not logged in -->
+      <div ng-include="'app/views/navbar/guest.html'"></div>
+
+    </div>
+  </div>
+</header>
