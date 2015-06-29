@@ -32,10 +32,11 @@ angular.module('userApp', ['ngRoute'])
 
   // Try to authenticate the user (see if a cookie exists)
   sendCommand(
-    'authenticate', {},
+    'auth', {},
     function(err, user) {
       if(err == null) {
         console.log('Successfully Authentificated');
+        console.log(user);
         activeUser = user;
       }
     }

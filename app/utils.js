@@ -34,26 +34,49 @@ ServerUtils = (function() {
   ServerUtils.verifySessionToken = function (token, callback) {
     var fields = token.split(':');
     if(fields.length != 3){
-      return callback("Invalid session token");
+      return callback("Invalid Token");
     }
 
-    [ accountId, expiry, hmacSignature ] = fields;
+    var accountId = fields[0];
+    var expiry = fields[1];
+    var hmacSignature = fields[2];
 
     var accountId = parseInt(accountId);
     var expiry = parseInt(expiry);
 
     // Has this token expired?
     if(expiry < Math.floor(Date.now() / 1000)) {
-      return callback("This session token has expired");
+      return callback("Token has expired");
     }
 
     // Does the signature match?
-    if(generateSessionToken(accountId, expiry) != token) {
-      return callback("This session token has been modified");
+    if(ServerUtils.generateSessionToken(accountId, expiry) != token) {
+      return callback("Token has been modified");
     }
-
     return callback(null, accountId, expiry);
   }
+
+
+  // Cookies for authentification
+  ServerUtils.setCookie = function(res, token){
+    return res.cookie(config.cookieName, token,
+      {
+        secure: false,
+        httpOnly: true,
+        maxAge: config.expiryInSeconds * 1000
+      }
+    );
+  }
+
+  ServerUtils.clearCookie = function(res){
+    return res.clearCookie(config.cookieName,
+      {
+        secure: config.secure,
+        httpOnly: true
+      }
+    );
+  }
+
 
   return ServerUtils;
 

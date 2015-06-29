@@ -16,7 +16,11 @@ var AccountSchema   = new Schema({
 	username: { type: String, required: true, index: { unique: true } },
 	password: { type: String, required: true}, // Note: THIS SHOULD BE: (, select: false)
 	accountType:  { type: String, required: true },
-	id:  { type: Number, required: true, index: { unique: true } }
+	id:  { type: Number, required: true, index: { unique: true } },
+
+	// Exclude defaults in our query results
+	_id: {type: String, select: false},
+	__v: {type: String, select: false}
 
 });
 

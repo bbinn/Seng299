@@ -27,7 +27,7 @@ mongoose.connect(config.database);  // connect to our database (hosted on modulu
 app.use(express.static(__dirname + '/public'));  // set static files location
 
 // API ROUTES ------------------------
-var apiRoutes = require('./app/routes/api')(app, express);
+var apiRoutes = require('./app/routes')(app, express);
 app.use('/api', apiRoutes);
 
 // MAIN CATCHALL ROUTE ---------------
