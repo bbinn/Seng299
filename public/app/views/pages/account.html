@@ -1,0 +1,43 @@
+<body>
+<div ng-controller="profileController as p">
+	<link rel="stylesheet" type="test/css" href="../../assets/account.css">
+	<div class="header">
+		<div id="username">
+			<h1 style="color:white">{{p.userName}}</h1>
+		</div>
+		<!-- 150px by 150px profile picture-->
+		<div id="profilepic">
+			<img ng-src="{{p.genericProfileImage}}">
+		</div>
+		<div id="banner">
+			<img ng-src="{{p.genericBannerImage}}">
+		</div>
+	</div>
+
+	<div class="content">
+
+		<div id="description">
+			<p>{{p.desc}}</p>
+		</div>
+
+		<div id="sidebar">
+			<table>
+			<thead>
+				<tr>
+					<th>Booth</th>
+					<th>Date</th>
+					<th>Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="booth in p.activeBooths">
+				<td>{{booth.booth}}</td>
+				<td>{{booth.date}}</td>
+				<td>{{booth.time}}</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+
+</div>
+</body>
