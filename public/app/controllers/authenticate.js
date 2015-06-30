@@ -3,6 +3,7 @@ angular.module('userApp')
 .controller('authController', function($scope, $http, $location){
   var vm = this;
   vm.activeUser = null;
+  activeUser = null;
 
   // Try to authenticate the user (see if a cookie exists)
   $http.post('api/auth', {body: JSON.stringify({})})
