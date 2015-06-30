@@ -1,4 +1,3 @@
-activeUser = null;
 
 angular.module('userApp')
 .controller('authController', function($scope, $http, $location){

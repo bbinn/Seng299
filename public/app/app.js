@@ -1,3 +1,4 @@
+activeUser = null;
 
 angular.module('userApp', ['ngRoute'])
 .config(['$routeProvider', '$locationProvider',
