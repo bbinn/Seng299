@@ -27,6 +27,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   vm.repopulate = function() {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> ngdialog has been implemented and popups for the schedule page are working
     //getbooths(vm.day)
@@ -46,6 +47,39 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
     }
     for (var i = 0; i < 10; i++) {
       vm.merchBooths[i] = {name: "+ Book this booth", id: i}
+=======
+    var defaultText = "Empty";
+    var defaultId = -1;
+    if (vm.activeUser && (vm.activeUser.accountType == "vendor" || vm.activeUser.accountType == "admin")) {
+      defaultText = "+ Book this booth"
+      defaultId = 0;
+    }
+
+    $http.post('api/getbooths', {body: JSON.stringify({
+      timeSlot: vm.date
+    })})
+    .success(function (data, status, xhr, config) {
+      console.log(data);
+    })
+    .error(function (data, status, xhr, config) {
+      console.log(data);
+    });
+
+    for (var i = 0; i < 3; i++) {
+      vm.booths[i] = [];
+      for (var j = 0; j < 10; j++) {
+          vm.booths[i][j] = {name: defaultText, id: defaultId}
+      }
+      for (var i = 0; i < 6; i++) {
+        vm.lunchBooths[i] = {name: defaultText, id: defaultId}
+      }
+      for (var i = 0; i < 8; i++) {
+        vm.produceBooths[i] = {name: defaultText, id: defaultId}
+      }
+      for (var i = 0; i < 10; i++) {
+        vm.merchBooths[i] = {name: defaultText, id: defaultId}
+      }
+>>>>>>>  stylying and popups now support input fields
     }
 =======
 =======
@@ -121,15 +155,39 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   }
 
   vm.showDialog = function(boothId) {
+    if (boothId == -1) {
+      return;
+    }
+
     ngDialog.open({
-      template: '<div>'+boothId+'</div>',
-      plain: true,
-      appendTo: '.dialogClass'
+      template: 'app/views/pages/BookBoothPopup.html',
+      scope: $scope,
+      controller: 'BoothPopupController'
     });
+<<<<<<< HEAD
 
 >>>>>>> ngdialog has been implemented and popups for the schedule page are working
+=======
+>>>>>>>  stylying and popups now support input fields
   }
 
-  vm.repopulate();
+  // Try to authenticate the user (see if a cookie exists)
+  $http.post('api/auth', {body: JSON.stringify({})})
+  .success(function (data, status, xhr, config){
+    console.log('Successfully Authentificated');
+    vm.activeUser = data;
+    vm.repopulate();
+  })
+  .error(function (data, status, xhr, config) {
+    console.log(data);
+    vm.repopulate();
+  });
 
 }]);
+angular.module('userApp').controller('BoothPopupController', function($scope){
+
+  $scope.myTextBox="my name is"
+
+
+
+})
