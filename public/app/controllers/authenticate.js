@@ -1,3 +1,4 @@
+activeUser = null;
 
 angular.module('userApp')
 .controller('authController', function($scope, $http, $location){
@@ -53,7 +54,6 @@ angular.module('userApp')
       $location.path("/account");
       vm.activeUser = data;
       activeUser = data;
-
     })
     .error(function (data, status, xhr, config){
       // TODO: Show popup

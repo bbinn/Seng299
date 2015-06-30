@@ -12,7 +12,11 @@ IDController = (function() {
       {$inc: {cnt: 1}},
       {upsert: true},
       function(error, doc){
-        return callback(error, doc.cnt);
+        var cnt = null;
+        if(error == null && doc != null){
+          cnt = doc.cnt;
+        }
+        return callback(error, cnt);
       }
     );
   }

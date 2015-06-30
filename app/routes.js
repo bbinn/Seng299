@@ -3,7 +3,10 @@ var config        = require('../config');
 var utils         = require('./utils');
 
 // Controllers
+var Account = require('./controllers/account');
 var Authenticate  = require('./controllers/authenticate');
+var Booth  = require('./controllers/booth');
+
 
 module.exports = function(app, express) {
   var router = express.Router();
@@ -15,29 +18,17 @@ module.exports = function(app, express) {
   router.post('/signup', Authenticate.ensureLoggedOut, Authenticate.signup);
 
   // Booth Routes (book booth, unbook booth, etc.) ..
+  router.post('/getbooths', Booth.getBooths);
+  router.post('/bookbooth', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Booth.book);
+  });
 
 
-  //Other routes (comment what they are)
 
 
   //Return
   return router;
-
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
