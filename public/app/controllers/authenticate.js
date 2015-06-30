@@ -1,3 +1,5 @@
+activeUser = null;
+
 angular.module('userApp')
 .controller('authController', function($scope, $http, $location){
   var vm = this;
@@ -8,6 +10,7 @@ angular.module('userApp')
   .success(function (data, status, xhr, config){
     console.log('Successfully Authentificated');
     vm.activeUser = data;
+    activeUser = data;
   })
   .error(function (data, status, xhr, config) {
     console.log(data);
@@ -49,6 +52,8 @@ angular.module('userApp')
     .success(function (data, status, xhr, config){
       $location.path("/account");
       vm.activeUser = data;
+      activeUser = data;
+
     })
     .error(function (data, status, xhr, config){
       // TODO: Show popup
@@ -70,6 +75,7 @@ angular.module('userApp')
     .success(function (data, status, xhr, config){
       $location.path("/account");
       vm.activeUser = data;
+      activeUser = data;
     })
     .error(function (data, status, xhr, config){
       //TODO: Show popup
@@ -83,6 +89,7 @@ angular.module('userApp')
     .success(function (data, status, xhr, config){
       $location.path("/login");
       vm.activeUser = null;
+      activeUser = null;
     })
     .error(function (data, status, xhr, config) {
       //TODO: Show popup
