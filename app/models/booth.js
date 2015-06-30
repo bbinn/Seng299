@@ -1,6 +1,7 @@
 var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
+<<<<<<< HEAD
 
 var BoothSchema = new Schema({
 
@@ -15,3 +16,13 @@ var BoothSchema = new Schema({
 
 module.exports = mongoose.model('Booth', BoothSchema);
 
+=======
+// booth schema
+var BoothSchema   = new Schema({
+	name: String,
+	desc: String,
+	id: {type: Number, required: true, index: {unique: true}}
+});
+
+module.exports = mongoose.model('Booth', BoothSchema);
+>>>>>>> ngdialog has been implemented and popups for the schedule page are working
