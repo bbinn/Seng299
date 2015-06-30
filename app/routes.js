@@ -18,6 +18,7 @@ module.exports = function(app, express) {
   router.post('/signup', Authenticate.ensureLoggedOut, Authenticate.signup);
 
   // Booth Routes (book booth, unbook booth, etc.) ..
+  router.post('/getbooths', Booth.getBooths);
   router.post('/bookbooth', Authenticate.ensureLoggedIn, function(req, res) {
     Account.getAccountInformation(req, res, Booth.book);
   });

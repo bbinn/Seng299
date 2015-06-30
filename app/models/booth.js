@@ -8,7 +8,7 @@ var BoothSchema = new Schema({
   vendorId:     { type: Number, required: true, select: true, index: true },
   boothType:    { type: String, required: true, select: true},
   boothNumber:  { type: Number, required: true, select: true},
-  description:  { type: String, required: true, select: true }
+  description:  { type: String, select: true }
 
 });
 
