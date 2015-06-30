@@ -1,5 +1,4 @@
-
-angular.module('userApp', ['ngRoute'])
+angular.module('userApp', ['ngRoute', 'ngDialog'])
 .config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $routeProvider
