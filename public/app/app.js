@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 activeUser = null;
 
-angular.module('userApp', ['ngRoute'])
-=======
 angular.module('userApp', ['ngRoute', 'ngDialog'])
->>>>>>> ngdialog has been implemented and popups for the schedule page are working
 .config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $routeProvider

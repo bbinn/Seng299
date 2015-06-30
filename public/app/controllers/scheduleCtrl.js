@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 angular.module('userApp').controller('ScheduleController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
   var vm = this;
   vm.date = new Date();
@@ -8,6 +9,12 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', f
   var vm = this;
   vm.date = new Date();
 >>>>>>> initial commit of schedule page, includes working date picker, and a table of booths
+=======
+angular.module('userApp').controller('ScheduleController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
+  var vm = this;
+  vm.date = new Date();
+  vm.booths = [];
+>>>>>>> ngdialog has been implemented and popups for the schedule page are working
   vm.lunchBooths = [];
   vm.produceBooths = [];
   vm.merchBooths = [];
@@ -19,6 +26,9 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', f
 
   vm.repopulate = function() {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ngdialog has been implemented and popups for the schedule page are working
     //getbooths(vm.day)
 
     for (var i = 0; i < 3; i++) {
@@ -27,6 +37,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', f
         vm.booths[i][j] = {name: "+ Book this booth", id: i+j}
     }
 
+<<<<<<< HEAD
     for (var i = 0; i < 6; i++) {
       vm.lunchBooths[i] = {name: "+ Book this booth", id: i}
     }
@@ -37,25 +48,31 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', f
       vm.merchBooths[i] = {name: "+ Book this booth", id: i}
     }
 =======
+=======
+>>>>>>> ngdialog has been implemented and popups for the schedule page are working
     for (var i = 0; i < 6; i++) {
-      vm.lunchBooths[i] = {name: "+ Book this booth", id: "book/"+i}
+      vm.lunchBooths[i] = {name: "+ Book this booth", id: i}
     }
     for (var i = 0; i < 8; i++) {
-      vm.produceBooths[i] = {name: "+ Book this booth", id: "book/"+i}
+      vm.produceBooths[i] = {name: "+ Book this booth", id: i}
     }
     for (var i = 0; i < 10; i++) {
-      vm.merchBooths[i] = {name: "+ Book this booth", id: "book/"+i}
+      vm.merchBooths[i] = {name: "+ Book this booth", id: i}
     }
+<<<<<<< HEAD
     //TEMP CODE
     vm.lunchBooths[1] = {name: "Rocking Moroccan Deli", id: "booth/12"}
     //END TEMP
 >>>>>>> initial commit of schedule page, includes working date picker, and a table of booths
+=======
+>>>>>>> ngdialog has been implemented and popups for the schedule page are working
   }
 
 
   vm.changeDay = function(newDay) {
     var oldDay = vm.date.getDay();
     var deltaDay = newDay-oldDay;
+<<<<<<< HEAD
 <<<<<<< HEAD
     vm.date.setDate(vm.date.getDate() + deltaDay);
     vm.day = vm.date.getDate();
@@ -65,10 +82,16 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', f
     vm.date.setDate(vm.date.getDate() + deltaDay);
     vm.day = vm.date.getDate();
 >>>>>>> initial commit of schedule page, includes working date picker, and a table of booths
+=======
+    vm.date.setDate(vm.date.getDate() + deltaDay);
+    vm.day = vm.date.getDate();
+    vm.repopulate();
+>>>>>>> ngdialog has been implemented and popups for the schedule page are working
   };
 
   vm.nextWeek = function() {
     vm.date.setDate(vm.date.getDate() + 7);
+<<<<<<< HEAD
 <<<<<<< HEAD
     vm.repopulate();
   }
@@ -89,6 +112,22 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', f
   vm.prevWeek = function() {
     vm.date.setDate(vm.date.getDate() - 7);
 >>>>>>> initial commit of schedule page, includes working date picker, and a table of booths
+=======
+    vm.repopulate();
+  }
+  vm.prevWeek = function() {
+    vm.date.setDate(vm.date.getDate() - 7);
+    vm.repopulate();
+  }
+
+  vm.showDialog = function(boothId) {
+    ngDialog.open({
+      template: '<div>'+boothId+'</div>',
+      plain: true,
+      appendTo: '.dialogClass'
+    });
+
+>>>>>>> ngdialog has been implemented and popups for the schedule page are working
   }
 
   vm.repopulate();
