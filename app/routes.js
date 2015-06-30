@@ -23,8 +23,16 @@ module.exports = function(app, express) {
     Account.getAccountInformation(req, res, Booth.book);
   });
 
-
-
+  // Account management
+  router.post('/getpending', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Account.getPendingVendors);
+  });
+  router.post('/confirmvendor', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Account.confirmVendor);
+  });
+  router.post('/denyvendor', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Account.denyVendor);
+  });
 
   //Return
   return router;

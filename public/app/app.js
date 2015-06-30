@@ -31,5 +31,8 @@ angular.module('userApp', ['ngRoute', 'ngDialog'])
       .when('/signup', {
         templateUrl: '/app/views/pages/signup.html'
       })
+      .when('/admin', {
+        templateUrl: '/app/views/pages/admin.html'
+      })
     $locationProvider.html5Mode(true);
 }]);
