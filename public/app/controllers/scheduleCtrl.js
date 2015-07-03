@@ -1,6 +1,7 @@
 var currentBooth = null;
 
 angular.module('userApp').controller('ScheduleController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
+  'use strict';
   var vm = this;
   vm.date = new Date();
   vm.booths = [];
@@ -20,7 +21,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
     //allow vendors and admins to book booths
     if (activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
-      defaultText = "+ Book this booth"
+      defaultText = "+ Book this booth";
       defaultId = 0;
     }
 
@@ -53,22 +54,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
           vm.merchBooths[data.docs[i].boothNumber] = data.docs[i];
         }
       }
-
-    for (var i = 0; i < 3; i++) {
-      vm.booths[i] = [];
-      for (var j = 0; j < 10; j++) {
-          vm.booths[i][j] = {name: defaultText, id: defaultId}
-      }
-      for (var i = 0; i < 6; i++) {
-        vm.lunchBooths[i] = {name: defaultText, id: defaultId}
-      }
-      for (var i = 0; i < 8; i++) {
-        vm.produceBooths[i] = {name: defaultText, id: defaultId}
-      }
-      for (var i = 0; i < 10; i++) {
-        vm.merchBooths[i] = {name: defaultText, id: defaultId}
-      }
-    }
+    });
   }
 
 
@@ -167,7 +153,7 @@ angular.module('userApp').controller('BoothPopupController', function($scope){
     vm.repopulate();
   });
 
-}]);
+});
 angular.module('userApp').controller('BoothPopupController', function($scope){
 
 })
