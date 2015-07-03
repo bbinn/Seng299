@@ -4,11 +4,19 @@
       ng-model="title" name="title">
 
     Booth Details:<br>
+<<<<<<< HEAD
     <textarea ng-model="description" name="description" style="width: 80%; height: 200px;resize: none;" ></textarea>
     <br>
 
     <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
   	<button type="button" class="ngdialog-button ngdialog-button-primary" ng-enter=confirm([title,description])  ng-click=confirm([title,description])>Book</button>
+=======
+    <textarea ng-model="message" style="width: 80%; height: 200px;resize: none;" ></textarea>
+    <br>
+
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
+  	<button type="button" class="ngdialog-button ngdialog-button-primary" ng-click=confirm("OK")>Book</button>
+>>>>>>> bf405f6b866fe550acb1d161b9088f7ebaff7e0f
     <br>
   </div>
 </div>

@@ -53,10 +53,22 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
           vm.merchBooths[data.docs[i].boothNumber] = data.docs[i];
         }
       }
-    })
-    .error(function (data, status, xhr, config) {
-      console.log(data);
-    });
+
+    for (var i = 0; i < 3; i++) {
+      vm.booths[i] = [];
+      for (var j = 0; j < 10; j++) {
+          vm.booths[i][j] = {name: defaultText, id: defaultId}
+      }
+      for (var i = 0; i < 6; i++) {
+        vm.lunchBooths[i] = {name: defaultText, id: defaultId}
+      }
+      for (var i = 0; i < 8; i++) {
+        vm.produceBooths[i] = {name: defaultText, id: defaultId}
+      }
+      for (var i = 0; i < 10; i++) {
+        vm.merchBooths[i] = {name: defaultText, id: defaultId}
+      }
+    }
   }
 
 
@@ -124,5 +136,38 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 angular.module('userApp').controller('BoothPopupController', function($scope){
   var pp = this;
   pp.booth = currentBooth;
-  console.log(pp.booth);
+  vm.showDialog = function(boothId) {
+    if (boothId == -1) {
+      return;
+    }
+
+    ngDialog.openConfirm({
+      template: 'app/views/pages/BookBoothPopup.html',
+      scope: $scope,
+      controller: 'BoothPopupController'
+    }).then(
+      function(value) {
+        console.log(value);
+      },
+      function(value) {
+        console.log(value);
+      }
+    );
+  }
+
+  // Try to authenticate the user (see if a cookie exists)
+  $http.post('api/auth', {body: JSON.stringify({})})
+  .success(function (data, status, xhr, config){
+    console.log('Successfully Authentificated');
+    vm.activeUser = data;
+    vm.repopulate();
+  })
+  .error(function (data, status, xhr, config) {
+    console.log(data);
+    vm.repopulate();
+  });
+
+}]);
+angular.module('userApp').controller('BoothPopupController', function($scope){
+
 })

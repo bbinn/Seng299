@@ -12,5 +12,4 @@ var BoothSchema = new Schema({
 
 });
 
-
 module.exports = mongoose.model('Booth', BoothSchema);
