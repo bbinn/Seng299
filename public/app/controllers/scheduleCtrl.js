@@ -155,5 +155,6 @@ angular.module('userApp').controller('BoothPopupController', function($scope){
 
 });
 angular.module('userApp').controller('BoothPopupController', function($scope){
-
+  var pp = this;
+  pp.booth = currentBooth;
 })
