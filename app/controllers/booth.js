@@ -30,11 +30,12 @@ BoothController = (function() {
     body = utils.safeParse(req.body.body);
 
     // Todo: check to see if booth is already booked. If yes -> throw an error. Else: Book it.
-    var time = body.timeslot;
+    var title = body.title;
+    var time = body.timeSlot;
     var boothNumber = body.boothNumber;
     var type = body.boothType;
     var description = body.description;
-    if(time == null || boothNumber == null || type == null) {
+    if(title == null || time == null || boothNumber == null || type == null) {
       return res.status(400).send({
         error: "Missing part of the body"
       });
@@ -42,7 +43,8 @@ BoothController = (function() {
 
     Booth.find({
       timeSlot: time,
-      boothNumber: boothNumber
+      boothNumber: boothNumber,
+      boothType: type
     })
     .exec(function (err, docs) {
       //Find to see if this booth is already booked
@@ -57,6 +59,7 @@ BoothController = (function() {
 
       //Book this booth - (Save it into the database)
       var booth = new Booth();
+      booth.title = title;
       booth.timeSlot = time;
       booth.vendorId = accountInformation._id;
       booth.boothType = type;
@@ -119,12 +122,3 @@ BoothController = (function() {
 
 
 module.exports = BoothController;
-
-
-
-
-
-
-
-
-

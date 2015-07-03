@@ -1,3 +1,5 @@
+var currentBooth = null;
+
 angular.module('userApp').controller('ScheduleController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
   var vm = this;
   vm.date = new Date();
@@ -15,36 +17,46 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   vm.repopulate = function() {
     var defaultText = "Empty";
     var defaultId = -1;
-    if (vm.activeUser && (vm.activeUser.accountType == "vendor" || vm.activeUser.accountType == "admin")) {
+
+    //allow vendors and admins to book booths
+    if (activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
       defaultText = "+ Book this booth"
       defaultId = 0;
     }
 
-    $http.post('api/getbooths', {body: JSON.stringify({
-      timeSlot: vm.date
-    })})
+    $http.post('api/getbooths', {body: JSON.stringify({ timeSlot: vm.date })})
     .success(function (data, status, xhr, config) {
-      console.log(data);
+      console.log(data.docs);
+
+      //fill all booths with default value
+      for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < 6; i++) {
+          vm.lunchBooths[i] = {title: defaultText, id: i, type: 'lunch', unbooked: true};
+        }
+        for (var i = 0; i < 8; i++) {
+          vm.produceBooths[i] = {title: defaultText, id: i, type: 'produce', unbooked: true};
+        }
+        for (var i = 0; i < 10; i++) {
+          vm.merchBooths[i] = {title: defaultText, id: i, type: 'merch', unbooked: true};
+        }
+      }
+
+      //fill existing booths with correct values
+      for (var i = 0; i < data.docs.length; i++) {
+        if (data.docs[i].boothType == 'lunch') {
+          vm.lunchBooths[data.docs[i].boothNumber] = data.docs[i];
+        }
+        if (data.docs[i].boothType == 'produce') {
+          vm.produceBooths[data.docs[i].boothNumber] = data.docs[i];
+        }
+        if (data.docs[i].boothType == 'merch') {
+          vm.merchBooths[data.docs[i].boothNumber] = data.docs[i];
+        }
+      }
     })
     .error(function (data, status, xhr, config) {
       console.log(data);
     });
-
-    for (var i = 0; i < 3; i++) {
-      vm.booths[i] = [];
-      for (var j = 0; j < 10; j++) {
-          vm.booths[i][j] = {name: defaultText, id: defaultId}
-      }
-      for (var i = 0; i < 6; i++) {
-        vm.lunchBooths[i] = {name: defaultText, id: defaultId}
-      }
-      for (var i = 0; i < 8; i++) {
-        vm.produceBooths[i] = {name: defaultText, id: defaultId}
-      }
-      for (var i = 0; i < 10; i++) {
-        vm.merchBooths[i] = {name: defaultText, id: defaultId}
-      }
-    }
   }
 
 
@@ -65,42 +77,52 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
     vm.repopulate();
   }
 
-  vm.showDialog = function(boothId) {
-    if (boothId == -1) {
+  vm.showDialog = function(booth) {
+    //-1 means unauthenticated
+    if (booth.id == -1) {
       return;
     }
-
-    ngDialog.openConfirm({
-      template: 'app/views/pages/BookBoothPopup.html',
-      scope: $scope,
-      controller: 'BoothPopupController'
-    }).then(
-      function(value) {
-        console.log(value);
-      },
-      function(value) {
-        console.log(value);
-      }
-    );
+    if (booth.unbooked) {
+      ngDialog.openConfirm({
+        template: 'app/views/pages/BookBoothPopup.html',
+        scope: $scope,
+        controller: 'BoothPopupController'
+      }).then(
+        function(value) {
+          $http.post('api/bookbooth', {body: JSON.stringify({
+            title:       value[0],
+            timeSlot:    vm.date,
+            vendorId:    activeUser.id,
+            boothType:   booth.type,
+            boothNumber: booth.id,
+            description: value[1]
+          })})
+          .success(function(data, status, xhr, config) {
+            console.log(data);
+            vm.repopulate();
+          })
+          .error(function(data, status, xhr, config) {
+            console.log(data);
+          });
+        },
+        function(value) { }
+      );
+    }
+    else {
+      currentBooth = booth;
+      ngDialog.open({
+        template: 'app/views/pages/ViewBoothPopup.html',
+        scope: $scope,
+        controller: 'BoothPopupController'
+      });
+    }
   }
+  vm.repopulate();
 
-  // Try to authenticate the user (see if a cookie exists)
-  $http.post('api/auth', {body: JSON.stringify({})})
-  .success(function (data, status, xhr, config){
-    console.log('Successfully Authentificated');
-    vm.activeUser = data;
-    vm.repopulate();
-  })
-  .error(function (data, status, xhr, config) {
-    console.log(data);
-    vm.repopulate();
-  });
 
 }]);
 angular.module('userApp').controller('BoothPopupController', function($scope){
-
-  $scope.title=""
-
-
-
+  var pp = this;
+  pp.booth = currentBooth;
+  console.log(pp.booth);
 })
