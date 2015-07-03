@@ -6,10 +6,11 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   vm.produceBooths = [];
   vm.merchBooths = [];
 
-  if (vm.date.getDay() == 1) {
-    //monday is not a thing
-    vm.date.setDate(vm.date.getDate() + 1);
-  }
+  //Set the current day as checked by default
+  var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  var daybox = document.getElementById(days[vm.date.getDay()]);
+  daybox.checked = true;
+
 
   vm.repopulate = function() {
     var defaultText = "Empty";
@@ -69,11 +70,18 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       return;
     }
 
-    ngDialog.open({
+    ngDialog.openConfirm({
       template: 'app/views/pages/BookBoothPopup.html',
       scope: $scope,
       controller: 'BoothPopupController'
-    });
+    }).then(
+      function(value) {
+        console.log(value);
+      },
+      function(value) {
+        console.log(value);
+      }
+    );
   }
 
   // Try to authenticate the user (see if a cookie exists)
@@ -91,7 +99,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 }]);
 angular.module('userApp').controller('BoothPopupController', function($scope){
 
-  $scope.myTextBox="my name is"
+  $scope.title=""
 
 
 
