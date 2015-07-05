@@ -6,7 +6,7 @@ var uploadpath = path.resolve(__dirname, '..', config.uploads);
 module.exports = function(app){
 
   app.get("/:id", function(req, res){
-    var id = req.params.id;we
+    var id = req.params.id;
     FileController.ensureExists(id, function(exists){
       if(exists){
         var filepath = path.join(uploadpath, "#{id}");
@@ -19,7 +19,7 @@ module.exports = function(app){
       }
       else
       {
-        res.status(404).send("File not found: #{id}");
+        res.status(404).send({error: "File not found: #{id}"});
       }
     }
   });

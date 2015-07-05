@@ -5,8 +5,8 @@ var utils         = require('./utils');
 // Controllers
 var Account = require('./controllers/account');
 var Authenticate  = require('./controllers/authenticate');
-var Booth  = require('./controllers/booth');
-
+var Booth = require('./controllers/booth');
+var File = require('./controllers/file');
 
 module.exports = function(app, express) {
   var router = express.Router();
@@ -23,6 +23,9 @@ module.exports = function(app, express) {
     Account.getAccountInformation(req, res, Booth.book);
   });
 
+
+  //File routes
+  router.post('/upload', Authenticate.ensureLoggedIn, File.handleUpload);
 
   //Return
   return router;

@@ -19,6 +19,23 @@ FileController = (function() {
   //Empty constructor
   function FileController() {}
 
+  // Handle an upload
+  FileController.handleUpload = function(req, res) {
+    FileController.upload(req, function(error, id){
+      if(error)
+      {
+        return res.status(400).send({error: error});
+      }
+      else
+      {
+        res.status(200).send({
+          id: id
+        });
+      }
+    });
+  }
+
+  // Actually upload the file
   FileController.upload = function(req, callback) {
     if(req.xhr){
       var name = decodeURIComponent(req.header("x-file-name"));
@@ -59,10 +76,13 @@ FileController = (function() {
     }
     else
     {
-      callback("Attempted non-streamed upload");
+      return callback("Attempted non-streamed upload");
     }
   }
 
+  FileController.handleUploaded = function(){
+
+  }
 
   FileController.ensureExists = function (id, cb){
     fs.exists(path.join(uploadpath, id), cb);
