@@ -24,7 +24,9 @@ FileController = (function() {
     FileController.upload(req, function(error, id){
       if(error)
       {
-        return res.status(400).send({error: error});
+        return res.status(400).send({
+          error: error
+        });
       }
       else
       {
@@ -80,10 +82,7 @@ FileController = (function() {
     }
   }
 
-  FileController.handleUploaded = function(){
-
-  }
-
+  // Ensure a file exists, will call the callback with wether it exists or not
   FileController.ensureExists = function (id, cb){
     fs.exists(path.join(uploadpath, id), cb);
   }
