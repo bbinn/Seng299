@@ -2,8 +2,12 @@ var currentBooth = null;
 
 angular.module('userApp').controller('ScheduleController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
   'use strict';
+
+
+
   var vm = this;
-  vm.date = new Date();
+  var today = new Date();
+  vm.date = new Date(today.getYear(), today.getMonth(), today.getDay(), 0, 0, 0, 0);
   vm.booths = [];
   vm.lunchBooths = [];
   vm.produceBooths = [];
@@ -27,8 +31,6 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
     $http.post('api/getbooths', {body: JSON.stringify({ timeSlot: vm.date })})
     .success(function (data, status, xhr, config) {
-      console.log(data.docs);
-
       //fill all booths with default value
       for (var i = 0; i < 3; i++) {
         for (var i = 0; i < 6; i++) {
@@ -66,6 +68,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
     vm.repopulate();
   };
 
+  //when the week change buttons get pressed
   vm.nextWeek = function() {
     vm.date.setDate(vm.date.getDate() + 7);
     vm.repopulate();
@@ -81,6 +84,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       return;
     }
     if (booth.unbooked) {
+      //open the book booth dialog
       ngDialog.openConfirm({
         template: 'app/views/pages/BookBoothPopup.html',
         scope: $scope,
@@ -107,6 +111,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       );
     }
     else {
+      //open the view booth dialog
       currentBooth = booth;
       ngDialog.open({
         template: 'app/views/pages/ViewBoothPopup.html',
@@ -140,18 +145,6 @@ angular.module('userApp').controller('BoothPopupController', function($scope){
       }
     );
   }
-
-  // Try to authenticate the user (see if a cookie exists)
-  $http.post('api/auth', {body: JSON.stringify({})})
-  .success(function (data, status, xhr, config){
-    console.log('Successfully Authentificated');
-    vm.activeUser = data;
-    vm.repopulate();
-  })
-  .error(function (data, status, xhr, config) {
-    console.log(data);
-    vm.repopulate();
-  });
 
 });
 angular.module('userApp').controller('BoothPopupController', function($scope){
