@@ -1,4 +1,5 @@
-input[type="text"] {
+
+.searchBox {
   padding: 4px 6px 4px 6px;
   text-align: left;
   border-width: 2px;
@@ -7,11 +8,11 @@ input[type="text"] {
   width: 50%;
 
 }
-input[type="text"]:focus {
+.searchBox:focus {
   outline: 0;
   box-shadow: none;
 }
-input[type="button"] {
+.searchButton {
   padding: 6px 4px 6px 4px;
   border-width: 2px;
   border-style: solid;
@@ -19,9 +20,8 @@ input[type="button"] {
   background-color: #91b2cc;
   color: #000000;
   width: 15%;
-
 }
-input[type="button"]:hover {
+.searchButton:hover {
   outline: 0;
   box-shadow: none;
   color: #000000;
@@ -51,6 +51,17 @@ h2 {
   word-wrap: break-word;
   white-space: normal;
 }
+p {
+  font-size: 10px;
+  word-wrap: break-word;
+  white-space: normal;
+  line-height: 100%;
+  text-indent: 0;
+  text-align: left;
+  text-overflow: "...";
+  overflow: hidden;
+  height: 20px;
+}
 .singleVendor {
   padding: 15px 15px 15px 15px;
   margin: 5px;
@@ -65,7 +76,7 @@ h2 {
   font-size: 2vw;
 }
 .singleVendor:hover {
-  background-color: #BFBFBF;
+  background-color: rgba(176, 185, 255, 0.5);
   cursor: pointer;
 }
 
@@ -85,4 +96,19 @@ h2 {
   width: auto;
   text-align: center;
   margin: 5px;
+}
+.showMoreButton {
+  background: transparent;
+  border: none;
+  color: #969696;
+  font-size: 15px;
+  text-align: right !important;
+}
+.showMoreButton:hover {
+  background: transparent;
+  border: none;
+  color: #000000;
+}
+.clickedVendor {
+
 }

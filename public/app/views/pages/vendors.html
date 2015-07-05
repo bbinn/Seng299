@@ -3,8 +3,8 @@
 
   <!-- Search Box! -->
   <div class="centerText">
-    <input type="text" ng-model="searchVendorName" id="searchBox" placeholder="Search all Vendors!">
-    <input type="button" value="Search!" ng-click="v.searchVendor(searchVendorName)">
+    <input class="searchBox" type="text" ng-model="searchVendorName" id="searchBox" placeholder="Search all Vendors!">
+    <input class="searchButton" type="button" value="Search!" ng-click="v.searchVendor(searchVendorName)">
     <br>{{v.searchMessage}}</br>
 
     <div class="vendorContainer">
@@ -14,13 +14,11 @@
         <h2>Vendors Booked This Week</h2>
       </div>
       <div ng-repeat="rows in v.vendorsThisWeek">
-        <div class="singleVendor" ng-repeat="vendor in rows" ng-click="v.vendorClicked(vendor.id)">
+        <div class="singleVendor" ng-repeat="vendor in rows">
           <img class="center-cropped" ng-src="{{vendor.profilePic}}">
           <h2>{{vendor.userName}}</h2>
-          <div ng-if="v.clickedVendor >= 0">
-            <h2> CLicked! </h2>
-          </div>
-
+          <p>{{vendor.description}}</p>
+          <input class="showMoreButton" type="button" value="Show More!" ng-click="v.changePage(vendor.id)">
           </div>
         </div>
       </div>
