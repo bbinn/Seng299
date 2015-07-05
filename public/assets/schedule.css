@@ -1,0 +1,75 @@
+td {
+  border: 1px solid black;
+  text-align: center;
+  height: 120px;
+  vertical-align: middle;
+  }
+th {
+  vertical-align: middle;
+}
+input{
+  display:none;
+}
+
+label{
+width:45px;
+height:25px;
+border-radius:2;
+border: 3px black solid;
+line-height:22px;
+text-align:center;
+color:black;
+font-size:12pt;
+cursor:pointer;
+background:white;
+position:relative;
+
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+}
+ input:checked + label:before{
+   opacity:0.5;
+}
+label:before{
+    position:absolute;
+    top:2px;
+    left:2px;
+    height:15px;
+    width:35px;
+    background:green ;
+    content:'';
+    opacity:0;
+}
+
+/*
+label{
+  width:40px;
+  height:25px;
+  border-radius:2;
+  border: 3px #3a3a3a solid;
+  line-height:22px;
+  text-align:center;
+  color:black;
+  font-size:12pt;
+  cursor:pointer;
+  background:white;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+input:checked + label:before{
+  opacity:1;
+}
+label:before{
+  position: absolute;
+  top:2px;
+  left:2px;
+  height:15px;
+  width:30px;
+  background:#3a3a3a;
+  content:'';
+  opacity:0;
+}
+*/
