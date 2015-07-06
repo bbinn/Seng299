@@ -12,7 +12,6 @@ angular.module('userApp')
     if(!data.error)
     {
       console.log('Successfully Authentificated');
-      console.log(data);
       vm.activeUser = data;
       activeUser = data;
     }

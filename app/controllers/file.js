@@ -6,16 +6,6 @@ var uploadpath = path.resolve(__dirname, '..', '..', config.uploads);
 var Account       = require('../models/account');
 
 
-
-var getFileNameExt = function(filename){
-  var a = filename.split('.');
-  if( a.length == 1 || ( a.length == 2  && a[0] == "") )
-  {
-    return('');
-  }
-  return(a.pop().toLowerCase());
-};
-
 var FileController;
 FileController = (function() {
 
@@ -45,7 +35,6 @@ FileController = (function() {
 
   // Ensure a file exists, will call the callback with wether it exists or not
   FileController.ensureExists = function (id, cb){
-    console.log(path.join(uploadpath, id));
     fs.exists(path.join(uploadpath, id), cb);
   }
 
