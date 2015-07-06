@@ -63,7 +63,6 @@ angular.module('userApp')
 
 
   $scope.tryLogin = function() {
-    console.log('Here');
     var username = document.getElementById('username').value.trim();
     var password = document.getElementById('password').value.trim();
     $http.post('api/login', {body: JSON.stringify(

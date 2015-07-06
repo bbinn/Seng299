@@ -1,0 +1,15 @@
+<div ng-controller="BoothPopupController">
+  <div>
+    Booth Title: <input type="text" class="form-control"
+      ng-model="title" name="title">
+
+    Booth Details:<br>
+    <textarea ng-model="description" name="description" style="width: 80%; height: 200px;resize: none;" ></textarea>
+    <br>
+
+    <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click=closeThisDialog("Cancel")>Cancel</button>
+  	<button type="button" class="ngdialog-button ngdialog-button-primary" ng-enter=confirm([title,description])  ng-click=confirm([title,description])>Book</button>
+
+    <br>
+  </div>
+</div>

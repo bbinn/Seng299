@@ -6,12 +6,12 @@ var uploadpath = path.resolve(__dirname, '..', config.uploads);
 
 var getFileNameExt = function(filename){
   var a = filename.split('.');
-  if( a.length == 1 || ( a.length is 2  && a[0] == "") )
+  if( a.length == 1 || ( a.length == 2  && a[0] == "") )
   {
     return('');
   }
   return(a.pop().toLowerCase());
-}
+};
 
 var FileController;
 FileController = (function() {
@@ -20,7 +20,7 @@ FileController = (function() {
   function FileController() {}
 
   // Handle an upload
-  FileController.handleUpload = function(req, res) {
+  FileController.handleUpload = function(req, res){
     FileController.upload(req, function(error, id){
       if(error)
       {

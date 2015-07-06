@@ -1,5 +1,5 @@
 var path = require("path");
-var FileController = require('controllers/file');
+var FileController = require('./controllers/file');
 var uploadpath = path.resolve(__dirname, '..', config.uploads);
 
 // Set up the server routes
@@ -21,7 +21,7 @@ module.exports = function(app){
       {
         res.status(404).send({error: "File not found: #{id}"});
       }
-    }
+    });
   });
 
 };
