@@ -31,7 +31,9 @@ angular.module('userApp')
     var username = document.getElementById('signupusername').value.trim();
     var password = document.getElementById('signuppassword').value.trim();
     var confirmPassword = document.getElementById('confirmPassword').value.trim();
-    var accountType = document.getElementById('accountType').value.trim();
+    var accountTypeField = document.getElementById('accountType');
+
+    var accountType = accountTypeField.options[accountTypeField.selectedIndex].value.trim();
 
     // Password != confirm password
     if(password != confirmPassword)
