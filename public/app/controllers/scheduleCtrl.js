@@ -21,12 +21,10 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   vm.repopulate = function() {
     var defaultText = "Empty";
-    var defaultId = -1;
 
     //allow vendors and admins to book booths
     if (activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
       defaultText = "+ Book this booth";
-      defaultId = 0;
     }
 
     $http.post('api/getbooths', {body: JSON.stringify({ timeSlot: vm.date })})
@@ -79,8 +77,8 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   }
 
   vm.showDialog = function(booth) {
-    //-1 means unauthenticated
-    if (booth.id == -1) {
+    //only let vendors and admits book booths
+    if (!activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
       return;
     }
     if (booth.unbooked) {
