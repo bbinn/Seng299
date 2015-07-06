@@ -27,7 +27,12 @@ module.exports = function(app, express) {
 
 
   //File routes
-  router.post('/upload', [Authenticate.ensureLoggedIn, multipart({uploadDir: 'uploads'})], File.handleUpload);
+  router.post('/uploadavatar', [Authenticate.ensureLoggedIn, multipart({uploadDir: 'uploads'})], function(req, res) {
+    Account.getAccountInformation(req, res, File.handleAvatarComplete);
+  });
+  router.post('/uploadbanner', [Authenticate.ensureLoggedIn, multipart({uploadDir: 'uploads'})], function(req, res) {
+    Account.getAccountInformation(req, res, File.handleBannerComplete);
+  });
 
 
   // Account management

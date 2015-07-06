@@ -5,9 +5,9 @@
 	<div class="header">
 		<!-- 150px by 150px profile picture-->
 		<div id="banner">
-			<img ng-src="{{p.genericBannerImage}}">
+			<img ng-src="{{p.bannerImage}}">
 			<div id="profilepic">
-				<img ng-click="tryLogin()" ng-src="{{p.genericProfileImage}}">
+				<img ng-src="{{p.profileImage}}">
 			</div>
 		</div>
 	</div>
@@ -15,8 +15,15 @@
 	<div id="username">
 		{{p.userName}}
 	</div>
-	<div ng-controller="uploadController" nv-file-drop="" uploader="uploader">
-		<input type="file" nv-file-select="" uploader="uploader" />
+
+	<div ng-controller="uploadController" nv-file-drop="" uploader="avatarUploader">
+		<input type="file" id="selectedAvatar" nv-file-select="false" uploader="avatarUploader" ngf-max-size='10000000' style="display: none;"/>
+		<input type="button" value="Upload Avatar" onclick="document.getElementById('selectedAvatar').click();" />
+	</div>
+
+	<div ng-controller="uploadController" nv-file-drop="" uploader="bannerUploader">
+		<input type="file" id="selectedBanner" nv-file-select="false" uploader="bannerUploader" ngf-max-size='10000000' style="display: none;"/>
+		<input type="button" value="Upload Banner" onclick="document.getElementById('selectedBanner').click();" />
 	</div>
 
 	<div class="content">

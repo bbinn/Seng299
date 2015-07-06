@@ -29,16 +29,12 @@
 	border-color: #AAA;
 }
 
-
 #banner {
 	width: 100%;
 	position: absolute;
 	z-index: -1;
 	text-align: center;
 }
-
-
-
 
 .content {
 	margin: 10px;

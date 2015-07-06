@@ -31,7 +31,7 @@ var apiRoutes = require('./app/routes')(app, express);
 app.use('/api', apiRoutes);
 
 var fileRoutes = require('./app/fileRoutes')(app, express);
-app.use('/files', fileRoutes);
+app.use('/uploads', fileRoutes);
 
 // MAIN CATCHALL ROUTE ---------------
 app.get('*', function(req, res) {

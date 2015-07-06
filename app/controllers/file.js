@@ -1,7 +1,10 @@
 var path  = require("path");
 var fs = require("fs");
 var ID = require("./id");
-var uploadpath = path.resolve(__dirname, '..', config.uploads);
+var uploadpath = path.resolve(__dirname, '..', '..', config.uploads);
+
+var Account       = require('../models/account');
+
 
 
 var getFileNameExt = function(filename){
@@ -20,15 +23,29 @@ FileController = (function() {
   function FileController() {}
 
   // Handle an upload
-  FileController.handleUpload = function(req, res, next){
+  FileController.handleAvatarComplete = function(req, res, accountInformation){
     var file = req.files.file;
-    console.log(file.name); //original name (ie: sunset.png)
-    console.log(file.path); //file path (ie: /file/12345-xyaz.png)
-    res.status(200).send({file: file.path});
+    Account.update({_id: accountInformation._id}, {
+      $set: {avatarLink: file.path}
+    }, function(err, affected, resp) {
+      res.status(200).send({file: file.path});
+    });
   }
+
+  // Handle an upload
+  FileController.handleBannerComplete = function(req, res, accountInformation){
+    var file = req.files.file;
+    Account.update({_id: accountInformation._id}, {
+      $set: {bannerLink: file.path}
+    }, function(err, affected, resp) {
+      res.status(200).send({file: file.path});
+    });
+  }
+
 
   // Ensure a file exists, will call the callback with wether it exists or not
   FileController.ensureExists = function (id, cb){
+    console.log(path.join(uploadpath, id));
     fs.exists(path.join(uploadpath, id), cb);
   }
 

@@ -11,7 +11,7 @@ module.exports = function(app, express){
     var id = req.params.id;
     FileController.ensureExists(id, function(exists){
       if(exists){
-        var filepath = path.join(uploadpath, "#{id}");
+        var filepath = path.join(uploadpath, id);
         res.set("Content-Type", "image/jpeg");
         res.set("Content-Disposition", "attachment; filename=\"#{id}\"");
         res.set("Cache-Control", "public, max-age=1209600");

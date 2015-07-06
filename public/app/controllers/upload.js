@@ -1,16 +1,32 @@
 
 angular.module('userApp')
 .controller('uploadController', ['$scope', 'FileUploader', function($scope, FileUploader){
-  var uploader = $scope.uploader = new FileUploader({
-    url: 'api/upload',
+
+  //Upload Avatar
+  var avatarUploader = $scope.avatarUploader = new FileUploader({
+    url: 'api/uploadavatar',
     withCredentials: true
   });
 
-  uploader.onAfterAddingFile = function(fileItem) {
+  avatarUploader.onAfterAddingFile = function(fileItem) {
     fileItem.upload();
   };
 
-  uploader.onCompleteItem = function(fileItem, response, status, headers) {
+  avatarUploader.onCompleteItem = function(fileItem, response, status, headers) {
+    console.log("Uploaded: " + response.file);
+  };
+
+  //Upload Avatar
+  var bannerUploader = $scope.bannerUploader = new FileUploader({
+    url: 'api/uploadbanner',
+    withCredentials: true
+  });
+
+  bannerUploader.onAfterAddingFile = function(fileItem) {
+    fileItem.upload();
+  };
+
+  bannerUploader.onCompleteItem = function(fileItem, response, status, headers) {
     console.log("Uploaded: " + response.file);
   };
 
