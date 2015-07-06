@@ -1,0 +1,71 @@
+
+.header {
+	position: relative;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	height: 200px;
+}
+
+#profilepic {
+	width: 100%;
+	padding: 0 120px;
+	text-align: left;
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin: 25px 10px 25px 10px;
+}
+
+#username {
+	font: inherit;
+	font-size: 50px;
+	padding: 0 120px;
+	margin: 0;
+	text-align: left;
+	color: #222;
+	border-width: 1px;
+	border-bottom-style: solid;
+	border-color: #AAA;
+}
+
+
+#banner {
+	width: 100%;
+	position: absolute;
+	z-index: -1;
+	text-align: center;
+}
+
+
+
+
+.content {
+	margin: 10px;
+}
+
+#sidebar {
+	width: 30%;
+	float:left;
+	display:table-cell;
+}
+
+#sidebar table, td, th {
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+
+#sidebar td, th {
+	padding: 10px;
+}
+
+#sidebar th {
+	text-align: center;
+	vertical-align: middle;
+}
+
+#description {
+	width: 70%;
+	float:right;
+	display:table-cell;
+}

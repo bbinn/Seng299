@@ -20,66 +20,11 @@ FileController = (function() {
   function FileController() {}
 
   // Handle an upload
-  FileController.handleUpload = function(req, res){
-    FileController.upload(req, function(error, id){
-      if(error)
-      {
-        return res.status(400).send({
-          error: error
-        });
-      }
-      else
-      {
-        res.status(200).send({
-          id: id
-        });
-      }
-    });
-  }
-
-  // Actually upload the file
-  FileController.upload = function(req, callback) {
-    if(req.xhr){
-      var name = decodeURIComponent(req.header("x-file-name"));
-      var type = (req.header("x-mime-type") || "application/octet-stream");
-      var ext = getFileNameExt(name);
-      if(ext != 'jpg' && ext && 'png' && ext != 'jpeg')
-      {
-        return callback('Must upload a jpg or png image');
-      }
-
-      ID.getNextID(function(error, id){
-        if(error)
-        {
-          return callback(error);
-        }
-
-        var idname = (id + '.' + ext);
-        var file = path.join(uploadpath, idname);
-        var ws = fs.createWriteStream(tmpfile);
-
-        ws.on("error", function(err){
-          return callback("Failed opening writestream.");
-        });
-
-        ws.on("close", function(err){
-          return callback(null, idname);
-        });
-
-        req.on("data", function(data){
-          ws.write(data);
-        });
-
-        req.on("end", function(){
-          ws.end();
-        });
-
-      });
-    }
-    else
-    {
-      return callback("Attempted non-streamed upload");
-    }
+  FileController.handleUpload = function(req, res, next){
+    var file = req.files.file;
+    console.log(file.name); //original name (ie: sunset.png)
+    console.log(file.path); //file path (ie: /file/12345-xyaz.png)
+    res.status(200).send({file: file.path});
   }
 
   // Ensure a file exists, will call the callback with wether it exists or not

@@ -30,7 +30,7 @@ app.use(express.static(__dirname + '/public'));  // set static files location
 var apiRoutes = require('./app/routes')(app, express);
 app.use('/api', apiRoutes);
 
-var fileRoutes = require('./app/fileRoutes')(app);
+var fileRoutes = require('./app/fileRoutes')(app, express);
 app.use('/files', fileRoutes);
 
 // MAIN CATCHALL ROUTE ---------------

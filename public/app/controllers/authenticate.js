@@ -9,9 +9,12 @@ angular.module('userApp')
   // Try to authenticate the user (see if a cookie exists)
   $http.post('api/auth', {body: JSON.stringify({})})
   .success(function (data, status, xhr, config){
-    console.log('Successfully Authentificated');
-    vm.activeUser = data;
-    activeUser = data;
+    if(!data.error)
+    {
+      console.log('Successfully Authentificated');
+      vm.activeUser = data;
+      activeUser = data;
+    }
   })
   .error(function (data, status, xhr, config) {
     console.log(data);
@@ -25,8 +28,8 @@ angular.module('userApp')
     var phone = document.getElementById('phone').value.trim();
     var address = document.getElementById('address').value.trim();
 
-    var username = document.getElementById('username').value.trim();
-    var password = document.getElementById('password').value.trim();
+    var username = document.getElementById('signupusername').value.trim();
+    var password = document.getElementById('signuppassword').value.trim();
     var confirmPassword = document.getElementById('confirmPassword').value.trim();
     var accountType = document.getElementById('accountType').value.trim();
 
@@ -63,8 +66,8 @@ angular.module('userApp')
 
 
   $scope.tryLogin = function() {
-    var username = document.getElementById('username').value.trim();
-    var password = document.getElementById('password').value.trim();
+    var username = document.getElementById('loginusername').value.trim();
+    var password = document.getElementById('loginpassword').value.trim();
     $http.post('api/login', {body: JSON.stringify(
       {
         username: username,

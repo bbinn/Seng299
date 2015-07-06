@@ -27,21 +27,20 @@
 		<script src="app/controllers/scheduleCtrl.js"></script>
 		<script src="app/controllers/vendorsCtrl.js"></script>
 		<script src="app/controllers/upload.js"></script>
-
+		<script src="app/controllers/profileCtrl.js"></script>
+    <script src="app/controllers/adminCtrl.js"></script>
 	</head>
 
 
 	<body ng-app="userApp">
 		<div ng-controller="authController as auth">
-			<div ng-controller="uploadController as uploadCtrl">
-				<div ng-include="'app/views/navbar/index.html'"></div>
-				<div class="container">
-					<div class="ngViewContainer">
-						<div ng-view></div>
-					</div>
+			<div ng-include="'app/views/navbar/index.html'"></div>
+			<div class="container">
+				<div class="ngViewContainer">
+					<div ng-view></div>
 				</div>
-				<div ng-include="'app/views/footer/index.html'"></div>
 			</div>
+			<div ng-include="'app/views/footer/index.html'"></div>
 		</div>
 	</body>
 </html>

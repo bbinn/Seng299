@@ -1,6 +1,8 @@
 
 var config        = require('../config');
 var utils         = require('./utils');
+var multipart     = require('connect-multiparty');
+
 
 // Controllers
 var Account = require('./controllers/account');
@@ -25,7 +27,19 @@ module.exports = function(app, express) {
 
 
   //File routes
-  router.post('/upload', Authenticate.ensureLoggedIn, File.handleUpload);
+  router.post('/upload', [Authenticate.ensureLoggedIn, multipart({uploadDir: 'uploads'})], File.handleUpload);
+
+
+  // Account management
+  router.post('/getpending', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Account.getPendingVendors);
+  });
+  router.post('/confirmvendor', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Account.confirmVendor);
+  });
+  router.post('/denyvendor', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Account.denyVendor);
+  });
 
   //Return
   return router;
