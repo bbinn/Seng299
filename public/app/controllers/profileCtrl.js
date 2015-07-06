@@ -17,10 +17,11 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	*/
 
 	var vm = this;
+
+	vm.date = new Date();
 	vm.activeBooths = [];
-	// TODO: change default back to false
-	vm.canBook = true;
-	vm.hasBooths = true;
+	vm.canBook = false;
+	vm.hasBooths = false;
 	// default profile picture and banner
 	vm.genericProfileImage = $sce.trustAsResourceUrl('../../assets/generic_profile.png');
 	vm.genericBannerImage = $sce.trustAsResourceUrl('../../assets/generic_banner.jpg');
@@ -35,19 +36,22 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.getActiveBooths = function() {
 		$http.post('api/getbooths', {body: JSON.stringify({ vendorId: activeUser._id})})
 			.success(function(data, status, headers, config) {
-				for (int i = 0; i < data.docs.length; i++) {
-					vm.activeBooths[i] = {title: data.docs[i].title, boothType: data.docs[i].boothType, description: data.docs[i].description };
+				console.log(data.docs);
+				for (var i = 0; i < data.docs.length; i++) {
+					vm.activeBooths[i] = {title: data.docs[i].title, boothType: data.docs[i].boothType, timeSlot: data.docs[i].timeSlot, description: data.docs[i].description };
+					console.log(vm.activeBooths[i]);
 				}
+
+				if (data.docs.length > 0) {
+					vm.hasBooths = true;
+				}
+
 			});
 
 	};
 
 	vm.getActiveBooths();
 
-	if (activeBooths.length < 0) {
-		vm.hasBooths = false;
-	}
-	
 	/* TEST CODE with dummy data */
 
 	// need to add a way to add a description associated with the user

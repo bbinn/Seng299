@@ -20,26 +20,30 @@
 			<p>{{p.desc}}</p>
 		</div>
 
-		<div ng-show="p.canBook" ng-switch on="p.hasBooths" id="sidebar">
-			<div ng-switch-when="true">
-				<table>
-				<thead>
-					<tr>
-						<th>Booth</th>
-						<th>Date</th>
-						<th>Time</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="booth in p.activeBooths">
-					<td>{{booth.title}}</td>
-					<td>{{booth.boothType}}</td>
-					<td>{{booth.timeSlot}}</td>
-					</tr>
-				</tbody>
-				</table>
+		<div ng-show="p.canBook" id="sidebar">
+			<div ng-switch on="p.hasBooths">
+				<div ng-switch-when="true">
+					<table>
+					<thead>
+						<tr>
+							<th>Booth</th>
+							<th>Booth Type</th>
+							<th>Time</th>
+							<th>Description</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="booth in p.activeBooths">
+						<td>{{booth.title}}</td>
+						<td>{{booth.boothType}}</td>
+						<td>{{booth.timeSlot}}</td>
+						<td>{{booth.description}}</td>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+				<div ng-switch-default> This user has no booths to show</div>
 			</div>
-			<div ng-switch-default> This user has no booths to show</div>
 		</div>
 
 </div>
