@@ -35,4 +35,9 @@ angular.module('userApp', ['ngRoute', 'ngDialog', 'angularFileUpload'])
         templateUrl: '/app/views/pages/admin.html'
       })
     $locationProvider.html5Mode(true);
-}]);
+}])
+.filter('trustUrl', function ($sce) {
+  return function(url) {
+    return $sce.trustAsResourceUrl(url);
+  };
+});

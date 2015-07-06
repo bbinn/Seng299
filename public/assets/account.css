@@ -7,21 +7,21 @@
 	height: 200px;
 }
 
-#profilepic {
-	width: 100%;
-	padding: 0 120px;
-	text-align: left;
+.profilepic {
+	height: 150px;
+	width: 150px;
+	margin: 15px;
+	background:;
+	overflow: hidden;
 	position: absolute;
 	top: 0;
 	left: 0;
-	margin: 25px 10px 25px 10px;
 }
 
-#username {
+.accountUsername {
 	font: inherit;
 	font-size: 50px;
-	padding: 0 120px;
-	margin: 0;
+	margin: 0 200px;
 	text-align: left;
 	color: #222;
 	border-width: 1px;
@@ -29,9 +29,24 @@
 	border-color: #AAA;
 }
 
-#banner {
+.accountUpload {
+	background-color: rgb(200, 200, 255);
+	padding: 2px;
+	border-radius: 4px;
+	margin: 4px 6px;
+	float: right;
+	font-size: 16px;
+	border: none;
+	display: inline-block;
+}
+
+.banner {
+	background-size: cover;
 	width: 100%;
+	height: 180px;
 	position: absolute;
+	left: 0;
+	top: 0;
 	z-index: -1;
 	text-align: center;
 }

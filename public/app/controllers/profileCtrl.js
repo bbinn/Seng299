@@ -24,14 +24,6 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	// default profile picture and banner
 
 	var user = activeUser || {};
-	vm.userName = user.name;
-
-
-	console.log(user.avatarLink);
-	console.log(user.bannerLink);
-	vm.profileImage = $sce.trustAsResourceUrl(user.avatarLink);
-	vm.bannerImage = $sce.trustAsResourceUrl(user.bannerLink);
-
 
 	// user has the ability to book booths
 	if (user.accountType == "vendor") {

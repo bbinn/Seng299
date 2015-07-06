@@ -1,6 +1,6 @@
 
 angular.module('userApp')
-.controller('uploadController', ['$scope', 'FileUploader', function($scope, FileUploader){
+.controller('uploadController', ['$scope', 'FileUploader', '$rootScope', function($scope, FileUploader, $rootScope){
 
   //Upload Avatar
   var avatarUploader = $scope.avatarUploader = new FileUploader({
@@ -14,6 +14,8 @@ angular.module('userApp')
 
   avatarUploader.onCompleteItem = function(fileItem, response, status, headers) {
     console.log("Uploaded: " + response.file);
+    activeUser.avatarLink = response.file;
+    $rootScope.$apply();
   };
 
   //Upload Avatar
@@ -28,6 +30,8 @@ angular.module('userApp')
 
   bannerUploader.onCompleteItem = function(fileItem, response, status, headers) {
     console.log("Uploaded: " + response.file);
+    activeUser.bannerLink = response.file;
+    $rootScope.$apply();
   };
 
 

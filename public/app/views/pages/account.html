@@ -3,27 +3,21 @@
 	<link rel="stylesheet" type="test/css" href="../../assets/account.css">
 
 	<div class="header">
-		<!-- 150px by 150px profile picture-->
-		<div id="banner">
-			<img ng-src="{{p.bannerImage}}">
-			<div id="profilepic">
-				<img ng-src="{{p.profileImage}}">
-			</div>
+		<img class="profilepic" ng-src="{{auth.activeUser.avatarLink}}">
+		<img class="banner" ng-src="{{auth.activeUser.bannerLink}}">
+	</div>
+
+	<div class="accountUsername">
+		{{ auth.activeUser.name }}
+		<div class="accountUpload" ng-controller="uploadController" nv-file-drop="" uploader="avatarUploader">
+			<input type="file" id="selectedAvatar" nv-file-select="false" uploader="avatarUploader" ngf-max-size='10000000' style="display: none;"/>
+			<input class="accountUpload" type="button" value="Upload Avatar" onclick="document.getElementById('selectedAvatar').click();" />
 		</div>
-	</div>
 
-	<div id="username">
-		{{p.userName}}
-	</div>
-
-	<div ng-controller="uploadController" nv-file-drop="" uploader="avatarUploader">
-		<input type="file" id="selectedAvatar" nv-file-select="false" uploader="avatarUploader" ngf-max-size='10000000' style="display: none;"/>
-		<input type="button" value="Upload Avatar" onclick="document.getElementById('selectedAvatar').click();" />
-	</div>
-
-	<div ng-controller="uploadController" nv-file-drop="" uploader="bannerUploader">
-		<input type="file" id="selectedBanner" nv-file-select="false" uploader="bannerUploader" ngf-max-size='10000000' style="display: none;"/>
-		<input type="button" value="Upload Banner" onclick="document.getElementById('selectedBanner').click();" />
+		<div class="accountUpload" ng-controller="uploadController" nv-file-drop="" uploader="bannerUploader">
+			<input type="file" id="selectedBanner" nv-file-select="false" uploader="bannerUploader" ngf-max-size='10000000' style="display: none;"/>
+			<input class="accountUpload" type="button" value="Upload Banner" onclick="document.getElementById('selectedBanner').click();" />
+		</div>
 	</div>
 
 	<div class="content">
