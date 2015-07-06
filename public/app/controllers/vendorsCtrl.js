@@ -3,11 +3,10 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   var vm = this;
   vm.searchMessage = "";
   vm.searchVendorName = "";
-  vm.clickedVendor = -1;
 
 // temp dummy vendors
   vm.vendorsThisWeek = [
-    { id: 0, description: "My Banana's are the fucking best. Especiially if you don't buy organic! ;P", userName: "Mr.Banana", profilePic: $sce.trustAsResourceUrl('../../assets/images/vendorsTemp/mrBanana.jpg')},
+    { id: 0, description: "My Banana's are the fucking best. Especiially if you don't buy organic! ;Paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", userName: "Mr.Banana", profilePic: $sce.trustAsResourceUrl('../../assets/images/vendorsTemp/mrBanana.jpg')},
     { id: 1, description: "bock,bock,bock,bock,bock,begowwwwk", userName: "EggsGalore", profilePic: $sce.trustAsResourceUrl('../../assets/images/vendorsTemp/eggsGalore.jpg')},
     { id: 2, description: "Got enough calcium?", userName: "GotMilk?", profilePic: $sce.trustAsResourceUrl('../../assets/images/vendorsTemp/cowsMilk.jpg')},
     { id: 3, description: "Get your clothing material here!", userName: "Wooly's Wool", profilePic: $sce.trustAsResourceUrl('../../assets/images/vendorsTemp/wooliesWool.jpg')},
@@ -34,14 +33,20 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.vendorsMostFollowed = splitVendors(vm.vendorsMostFollowed, 4);
 
 // end temp dummy vendors
+  // $watch('vm.vendorName') = function(){
+  //   alert("you queried:" + vm.vendorName);
+  // });
 
-  vm.searchVendor = function(searchVendorName) {
-    vm.searchMessage = "You just searched: " + searchVendorName;
+
+  vm.viewProfile = function(id) {
+    alert("you want to view vendor id: " + id);
+  }
+  vm.search = function(code){
+    // alert(vm.searchMessage);
+    alert("enter pressed");
+
   }
 
-  vm.vendorClicked = function(id) {
-    vm.clickedVendor= id;
-  }
 
 }]);
 

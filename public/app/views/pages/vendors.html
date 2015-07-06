@@ -3,9 +3,10 @@
 
   <!-- Search Box! -->
   <div class="centerText">
-    <input class="searchBox" type="text" ng-model="searchVendorName" id="searchBox" placeholder="Search all Vendors!">
-    <input class="searchButton" type="button" value="Search!" ng-click="v.searchVendor(searchVendorName)">
-    <br>{{v.searchMessage}}</br>
+    <input class="searchBox" type="text"
+           id="searchBox" placeholder="Search all Vendors!" ng-model="v.vendorName">
+    <input class="searchButton" type="button" value="Search!" ng-click="v.search()">
+    <br>You're searching: {{v.vendorName}}</br>
 
     <div class="vendorContainer">
 
@@ -14,12 +15,14 @@
         <h2>Vendors Booked This Week</h2>
       </div>
       <div ng-repeat="rows in v.vendorsThisWeek">
-        <div class="singleVendor" ng-repeat="vendor in rows">
+        <div class="singleVendor" ng-repeat="vendor in rows" ng-click="v.viewProfile(vendor.id)">
           <img class="center-cropped" ng-src="{{vendor.profilePic}}">
-          <h2>{{vendor.userName}}</h2>
-          <p>{{vendor.description}}</p>
-          <input class="showMoreButton" type="button" value="Show More!" ng-click="v.changePage(vendor.id)">
+
+          <div class="description">
+            <h2>{{vendor.userName}}</h2>
+            <p>{{vendor.description}}</p>
           </div>
+          <!-- <input class="showMoreButton" type="button" value="Show More!" ng-click="v.viewProfile(vendor.id)"> -->
         </div>
       </div>
 
@@ -29,11 +32,12 @@
         <h2>Most Followed Vendors!</h2>
       </div>
       <div ng-repeat="rows in v.vendorsMostFollowed">
-        <div class="singleVendor" ng-repeat="vendor in rows" >
-
+        <div class="singleVendor" ng-repeat="vendor in rows" ng-click="v.viewProfile(vendor.id)">
           <img class="center-cropped" ng-src="{{vendor.profilePic}}">
-          <h2>{{vendor.userName}}</h2>
-
+            <div class="description">
+              <h2>{{vendor.userName}}</h2>
+              <p>{{vendor.description}}</p>
+            </div>
         </div>
       </div>
 

@@ -36,7 +36,7 @@
 .vendorContainer {
   white-space: nowrap;
   width: 100%;
-  height: 100%;
+  height: 80vh;
   padding 1%;
   /*border-radius: 10px;*/
   border-style: solid;
@@ -44,6 +44,9 @@
   border-width: 2px;
   margin: 1%;
   overflow-y: scroll;
+}
+div {
+  text-overflow: ellipsis;
 }
 h2 {
   font-size: 20px;
@@ -57,10 +60,12 @@ p {
   white-space: normal;
   line-height: 100%;
   text-indent: 0;
-  text-align: left;
-  text-overflow: "...";
+  height: 100vh;
+}
+.description {
+  height: 70px;
+  text-overflow: ellipsis;
   overflow: hidden;
-  height: 20px;
 }
 .singleVendor {
   padding: 15px 15px 15px 15px;
