@@ -15,7 +15,6 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 		-repopulate()
 		-notifyFollowers()
 	*/
-
 	var vm = this;
 
 	vm.date = new Date();
@@ -58,4 +57,5 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.desc = "Yes, shrubberies are my trade. I am a shrubber. My name is Roger the Shrubber. I arrange, design, and sell shrubberies. Yes, shrubberies are my trade. I am a shrubber. My name is Roger the Shrubber. I arrange, design, and sell shrubberies.";
 
 /* END TEST CODE */ 
+
 }]);
