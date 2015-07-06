@@ -37,8 +37,13 @@ to see and edit all reservations.
 These are the core features of the system, the rest is up to you. Marks will be
 awarded for creativity.
 
+**Installation Instructions**
+npm install
+node server.js
+navigate to localhost:8080
+
 **Available Technologies**
-Javascript, node, express, Mongodb, css, html, jquery, ajax (maybe), other things too
+Javascript, node, express, Mongodb, css, html, jquery, ajax, other things too
 
 **Members**
 - Brett Binnersley, V00776751
@@ -58,6 +63,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
 
 
