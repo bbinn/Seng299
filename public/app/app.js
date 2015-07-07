@@ -16,7 +16,7 @@ angular.module('userApp', ['ngRoute', 'ngDialog', 'angularFileUpload'])
       .when('/schedule', {
         templateUrl: '/app/views/pages/schedule.html'
       })
-      .when('/account', {
+      .when('/account/:user_id?', {
         templateUrl: '/app/views/pages/account.html'
       })
       .when('/contact', {
