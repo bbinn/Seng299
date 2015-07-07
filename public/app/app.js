@@ -1,6 +1,6 @@
 activeUser = null;
 
-angular.module('userApp', ['ngRoute', 'ngDialog'])
+angular.module('userApp', ['ngRoute', 'ngDialog', 'angularFileUpload'])
 .config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $routeProvider
@@ -31,5 +31,13 @@ angular.module('userApp', ['ngRoute', 'ngDialog'])
       .when('/signup', {
         templateUrl: '/app/views/pages/signup.html'
       })
+      .when('/admin', {
+        templateUrl: '/app/views/pages/admin.html'
+      })
     $locationProvider.html5Mode(true);
-}]);
+}])
+.filter('trustUrl', function ($sce) {
+  return function(url) {
+    return $sce.trustAsResourceUrl(url);
+  };
+});

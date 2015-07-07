@@ -101,7 +101,7 @@ AuthenticateController = (function() {
     utils.verifySessionToken(sessionToken, function(err, accountId) {
       if(err) {
         utils.clearCookie(res);
-        return res.status(400).send(err);
+        return res.status(200).send({error: err});
       }
 
       Account.find({_id: accountId }, function (err, docs) {
@@ -111,7 +111,7 @@ AuthenticateController = (function() {
         }
         if(docs.length == 0)
         {
-          return res.status(400).send("Sorry, that account doesn't exist");
+          return res.status(200).send({error: "Sorry, that account doesn't exist"});
         }
         account = docs[0];
         newtoken = utils.generateSessionToken(account.id);

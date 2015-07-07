@@ -1,6 +1,7 @@
 var Account       = require('../models/account');
 var utils         = require('../utils');
 var config        = require('../../config');
+var mongoose      = require('mongoose');
 
 var AccountController;
 AccountController = (function() {
@@ -34,17 +35,96 @@ AccountController = (function() {
     });
   };
 
+  //API Call
+  // Retrieves all pending vendors
+  AccountController.getPendingVendors = function(req, res, accountInformation) {
+    if(accountInformation == null) {
+      return res.status(401).send({
+        error: "You must be logged in to do this action"
+      });
+    }
+    if(accountInformation.accountType != 'admin') {
+      return res.status(400).send({
+        error: "You must be an admin to perform this action"
+      });
+    }
+    Account.find({accountType: 'vendor_pending'})
+    .exec(function (err, docs) {
+      if(err) {
+        return res.status(200).send(JSON.stringify({docs: []}));
+      }
+      return res.status(200).send(JSON.stringify({docs: docs}));
+    });
+  };
+
+  AccountController.confirmVendor = function(req, res, accountInformation) {
+    if(accountInformation == null) {
+      return res.status(401).send({
+        error: "You must be logged in to do this action"
+      });
+    }
+    if(accountInformation.accountType != 'admin') {
+      return res.status(400).send({
+        error: "You must be an admin to perform this action"
+      });
+    }
+
+    body = utils.safeParse(req.body.body);
+
+    var username = body.username;
+    if(username == null) {
+      return res.status(400).send({
+        error: "Missing part of the body"
+      });
+    }
+    Account.find({userName: username})
+    .exec(function (err, docs) {
+      if(err) {
+        return res.status(500).send({});
+      }
+      Account.update({username: username}, {
+        $set: {accountType: "vendor"}
+      }, function(err, affected, resp) {
+        res.status(200).send("");
+      });
+    });
+  };
+
+  AccountController.denyVendor = function(req, res, accountInformation) {
+    if(accountInformation == null) {
+      return res.status(401).send({
+        error: "You must be logged in to do this action"
+      });
+    }
+    if(accountInformation.accountType != 'admin') {
+      return res.status(400).send({
+        error: "You must be an admin to perform this action"
+      });
+    }
+
+    body = utils.safeParse(req.body.body);
+
+    var username = body.username;
+    if(username == null) {
+      return res.status(400).send({
+        error: "Missing part of the body"
+      });
+    }
+    Account.find({userName: username})
+    .exec(function (err, docs) {
+      if(err) {
+        return res.status(500).send({});
+      }
+       Account.update({username: username}, {
+        $set: {accountType: "user"}
+      }, function(err, affected, resp) {
+        res.status(200).send("");
+      });
+    });
+  };
+
+
   return AccountController;
 })();
 
-
 module.exports = AccountController;
-
-
-
-
-
-
-
-
-

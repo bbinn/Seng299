@@ -65,7 +65,7 @@ ServerUtils = (function() {
     return res.cookie(config.cookieName, token,
       {
         secure: false,
-        httpOnly: true,
+        httpOnly: config.httpOnly,
         maxAge: config.expiryInSeconds * 1000
       }
     );
@@ -75,7 +75,7 @@ ServerUtils = (function() {
     return res.clearCookie(config.cookieName,
       {
         secure: config.secure,
-        httpOnly: true
+        httpOnly: config.httpOnly
       }
     );
   }
