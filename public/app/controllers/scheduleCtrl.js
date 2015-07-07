@@ -21,12 +21,10 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   vm.repopulate = function() {
     var defaultText = "Empty";
-    var defaultId = -1;
 
     //allow vendors and admins to book booths
     if (activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
       defaultText = "+ Book this booth";
-      defaultId = 0;
     }
 
     $http.post('api/getbooths', {body: JSON.stringify({ timeSlot: vm.date })})
@@ -79,8 +77,8 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   }
 
   vm.showDialog = function(booth) {
-    //-1 means unauthenticated
-    if (booth.id == -1) {
+    //only let vendors and admins book booths
+    if (!activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
       return;
     }
     if (booth.unbooked) {
@@ -91,23 +89,32 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
         controller: 'BoothPopupController'
       }).then(
         function(value) {
-          $http.post('api/bookbooth', {body: JSON.stringify({
-            title:       value[0],
-            timeSlot:    vm.date,
-            vendorId:    activeUser.id,
-            boothType:   booth.type,
-            boothNumber: booth.id,
-            description: value[1]
-          })})
-          .success(function(data, status, xhr, config) {
-            console.log(data);
-            vm.repopulate();
-          })
-          .error(function(data, status, xhr, config) {
-            console.log(data);
-          });
+          //find out if the user really wants to book the booth
+          ngDialog.openConfirm({
+            template: 'app/views/pages/ConfirmationPopup.html'
+          }).then(
+            function() {
+              $http.post('api/bookbooth', {body: JSON.stringify({
+                title:       value[0],
+                timeSlot:    vm.date,
+                vendorId:    activeUser.id,
+                boothType:   booth.type,
+                boothNumber: booth.id,
+                description: value[1]
+              })})
+              .success(function(data, status, xhr, config) {
+                console.log(data);
+                vm.repopulate();
+              })
+              .error(function(data, status, xhr, config) {
+                console.log("hello");
+                console.log(data);
+              });
+            },
+            function(value) { } //just close if "no" was pressed
+          )
         },
-        function(value) { }
+        function(value) { } //just close if "cancel" was pressed
       );
     }
     else {

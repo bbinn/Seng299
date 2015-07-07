@@ -5,6 +5,7 @@ td {
   vertical-align: middle;
   }
 th {
+  border: none;
   vertical-align: middle;
 }
 input{
