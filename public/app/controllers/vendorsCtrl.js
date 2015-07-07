@@ -4,6 +4,9 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.searchMessage = "";
   vm.searchVendorName = "";
 
+  // $http.post('api/getAccounts', {body: JSON.stringify({ })})
+  // .success(function (data, status, xhr, config) {
+
 // temp dummy vendors
   vm.vendorsThisWeek = [
     { id: 0, description: "My Banana's are the fucking best. Especiially if you don't buy organic! ;Paaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", userName: "Mr.Banana", profilePic: $sce.trustAsResourceUrl('../../assets/images/vendorsTemp/mrBanana.jpg')},
@@ -31,12 +34,6 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
     { id: 10, userName: "Rena's Pies", profilePic: $sce.trustAsResourceUrl('../../assets/images/vendorsTemp/renasPies.jpg')},
   ];
   vm.vendorsMostFollowed = splitVendors(vm.vendorsMostFollowed, 4);
-
-// end temp dummy vendors
-  // $watch('vm.vendorName') = function(){
-  //   alert("you queried:" + vm.vendorName);
-  // });
-
 
   vm.viewProfile = function(id) {
     alert("you want to view vendor id: " + id);
