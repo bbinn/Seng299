@@ -123,8 +123,28 @@ AccountController = (function() {
     });
   };
 
+  // API call
+  // Get account information from a vendor given a vendor ID
+  AccountController.getAccount = function(req, res) {
+      body = utils.safeParse(req.body.body);
+      var vendorId = body.vendorId;
+      var query = {}
+
+      if(vendorId != null && vendorId != undefined){
+        query._id = vendorId;
+      }
+
+      Account.find(query)
+      .exec(function (err, docs) {
+        if(err) {
+          return res.status(200).send(JSON.stringify({docs: []}));
+        }
+        return res.status(200).send(JSON.stringify({docs: docs}));
+      });
+  };
 
   return AccountController;
+
 })();
 
 module.exports = AccountController;
