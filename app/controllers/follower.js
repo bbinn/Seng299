@@ -35,16 +35,44 @@ FollowerController = (function() {
         return res.status(200).send({});
       }
     });
-  });
   }
 
   FollowerController.getfollowing = function(req, res) {
     body = utils.safeParse(req.body.body);
     var username = body.username;
+    if(username == null) {
+      return res.status(400).send({
+        error: "Missing part of the body"
+      });
+    }
+    Follower.find({vendorId: username})
+    .exec(function (err, docs) {
+      if(err) {
+        return res.status(200).send(JSON.stringify({docs: []}));
+      }
+      return res.status(200).send(JSON.stringify({docs: docs}));
+    });
   }
 
-  return BoothController;
+  FollowerController.getfollowers = function(req, res) {
+    body = utils.safeParse(req.body.body);
+    var username = body.username;
+    if(username == null) {
+      return res.status(400).send({
+        error: "Missing part of the body"
+      });
+    }
+    Follower.find({userId: username})
+    .exec(function (err, docs) {
+      if(err) {
+        return res.status(200).send(JSON.stringify({docs: []}));
+      }
+      return res.status(200).send(JSON.stringify({docs: docs}));
+    });
+  }
+
+  return FollowerController;
 })();
 
 
-module.exports = BoothController;
+module.exports = FollowerController;
