@@ -8,7 +8,6 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor" })})
   .success(function(data, status, headers, config) {
     var docs = data.docs;
-    console.log(data.docs);
     vm.populateVendorsContainer(docs);
   });
 
@@ -42,6 +41,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.vendorsMostFollowed = splitVendors(vm.vendorsMostFollowed, 4);
 
   vm.populateVendorsContainer = function(docs){
+    vm.vendorsThisWeek = [];
     for(var i = 0; i < docs.length; i++){
       vm.vendorsThisWeek.push({id: docs[i]._id,  username: docs[i].username, description: docs[i].description, profilePic: docs[i].avatarLink});
     }
@@ -53,9 +53,9 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.search = function(){
     console.log("you just searched: " + vm.vendorName);
 
-    $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor",  })})
+    $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor", fuzzyName: vm.vendorName  })})
     .success(function(data, status, headers, config) {
-
+      var docs = data.docs;
       vm.populateVendorsContainer(docs);
     });
 

@@ -4,7 +4,7 @@
   <!-- Search Box! -->
   <div class="centerText">
     <input class="searchBox" type="text"
-           id="searchBox" placeholder="Search all Vendors!" ng-model="v.vendorName" ng-keypress="v.search()">
+           id="searchBox" placeholder="Search all Vendors!" ng-model="v.vendorName" ng-change="v.search()">
     <input class="searchButton" type="button" value="Search!" ng-click="v.search()">
     <br>You're searching: {{v.vendorname}}</br>
 
