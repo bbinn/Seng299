@@ -46,6 +46,9 @@ module.exports = function(app, express) {
     Account.getAccountInformation(req, res, Account.denyVendor);
   });
 
+  router.post('/getaccounts', Account.getAccounts);
+
+
   //Return
   return router;
 };

@@ -123,6 +123,41 @@ AccountController = (function() {
     });
   };
 
+  // Get booths. Pass into the body OPTIONAL arguments:
+  // timeSlot = body.timeSlot;
+  // vendorId = body.vendorId;
+  // boothType = body.boothType;
+  // boothNumber = body.boothNumber;
+
+  AccountController.getAccounts = function(req, res) {
+    body = utils.safeParse(req.body.body);
+
+    var username = body.username;
+    var accountId = body.accountId;
+
+    var query = {}
+    if(username != null && username != undefined){
+      query.username = username;
+    }
+    if(vendorId != null && vendorId != undefined){
+      query.vendorId = vendorId;
+    }
+    if(boothType != null && boothType != undefined){
+      query.boothType = boothType;
+    }
+    if(boothNumber != null && boothNumber != undefined){
+      query.boothNumber = boothNumber;
+    }
+
+    Booth.find(query)
+    .exec(function (err, docs) {
+      if(err) {
+        return res.status(200).send(JSON.stringify({docs: []}));
+      }
+      return res.status(200).send(JSON.stringify({docs: docs}));
+    });
+  };
+
 
   return AccountController;
 })();
