@@ -18,6 +18,11 @@ var AccountSchema = new Schema({
 	password: { type: String, required: true, select: false},
 	accountType:  { type: String, required: true, select: true },
 
+	// Description
+	description:  { type: String, required: false, select: true },
+	avatarLink:  { type: String, required: false, select: true },
+	bannerLink:  { type: String, required: false, select: true },
+
 	// Override default id
 	_id: { type: Number, required: true, index: { unique: true }, select: true },
 

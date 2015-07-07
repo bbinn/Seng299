@@ -1,12 +1,14 @@
 
 var config        = require('../config');
 var utils         = require('./utils');
+var multipart     = require('connect-multiparty');
+
 
 // Controllers
 var Account = require('./controllers/account');
 var Authenticate  = require('./controllers/authenticate');
-var Booth  = require('./controllers/booth');
-
+var Booth = require('./controllers/booth');
+var File = require('./controllers/file');
 
 module.exports = function(app, express) {
   var router = express.Router();
@@ -22,6 +24,16 @@ module.exports = function(app, express) {
   router.post('/bookbooth', Authenticate.ensureLoggedIn, function(req, res) {
     Account.getAccountInformation(req, res, Booth.book);
   });
+
+
+  //File routes
+  router.post('/uploadavatar', [Authenticate.ensureLoggedIn, multipart({uploadDir: 'uploads'})], function(req, res) {
+    Account.getAccountInformation(req, res, File.handleAvatarComplete);
+  });
+  router.post('/uploadbanner', [Authenticate.ensureLoggedIn, multipart({uploadDir: 'uploads'})], function(req, res) {
+    Account.getAccountInformation(req, res, File.handleBannerComplete);
+  });
+
 
   // Account management
   router.post('/getaccount', Account.getAccount);

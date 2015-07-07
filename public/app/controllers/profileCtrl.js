@@ -54,13 +54,14 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 			});
 	};
 
-
-
 	var user;
+
 	vm.userID = $routeParams.user_id;
+
 	if (typeof vm.userID === 'undefined') {
 		vm.userID = activeUser._id;
 	} 
+
 	vm.getAccount(vm.userID);
 	
 	vm.getActiveBooths(vm.userID);
@@ -70,6 +71,6 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	// need to add a way to add a description associated with the user
 	vm.desc = "Yes, shrubberies are my trade. I am a shrubber. My name is Roger the Shrubber. I arrange, design, and sell shrubberies. Yes, shrubberies are my trade. I am a shrubber. My name is Roger the Shrubber. I arrange, design, and sell shrubberies.";
 
-/* END TEST CODE */ 
+	/* END TEST CODE */
 
 }]);

@@ -25,10 +25,14 @@ app.use(function(req, res, next) {
 app.use(morgan('dev')); // log all requests to the console
 mongoose.connect(config.database);  // connect to our database (hosted on modulus.io)
 app.use(express.static(__dirname + '/public'));  // set static files location
+app.use(express.static(__dirname + '/uploads'));  // set static files location
 
 // API ROUTES ------------------------
 var apiRoutes = require('./app/routes')(app, express);
 app.use('/api', apiRoutes);
+
+var fileRoutes = require('./app/fileRoutes')(app, express);
+app.use('/uploads', fileRoutes);
 
 // MAIN CATCHALL ROUTE ---------------
 app.get('*', function(req, res) {

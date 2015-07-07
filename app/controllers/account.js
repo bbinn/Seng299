@@ -68,7 +68,7 @@ AccountController = (function() {
         error: "You must be an admin to perform this action"
       });
     }
-    
+
     body = utils.safeParse(req.body.body);
 
     var username = body.username;
