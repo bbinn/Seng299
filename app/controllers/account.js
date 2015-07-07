@@ -123,41 +123,33 @@ AccountController = (function() {
     });
   };
 
-  // Get booths. Pass into the body OPTIONAL arguments:
-  // timeSlot = body.timeSlot;
-  // vendorId = body.vendorId;
-  // boothType = body.boothType;
-  // boothNumber = body.boothNumber;
+  // API call
+  // Get account information from a vendor given a vendor ID
+  AccountController.getAccount = function(req, res) {
+      body = utils.safeParse(req.body.body);
+      var query = {}
+      var vendorId = body.vendorId;
+      var ids = body.ids; // [1,2,4,7]
+      var accountType = body.accountType;
 
-  AccountController.getAccounts = function(req, res) {
-    body = utils.safeParse(req.body.body);
-
-    var username = body.username;
-    var accountId = body.accountId;
-
-    var query = {}
-    if(username != null && username != undefined){
-      query.username = username;
-    }
-    if(vendorId != null && vendorId != undefined){
-      query.vendorId = vendorId;
-    }
-    if(boothType != null && boothType != undefined){
-      query.boothType = boothType;
-    }
-    if(boothNumber != null && boothNumber != undefined){
-      query.boothNumber = boothNumber;
-    }
-
-    Booth.find(query)
-    .exec(function (err, docs) {
-      if(err) {
-        return res.status(200).send(JSON.stringify({docs: []}));
+      if(vendorId != null && vendorId != undefined){
+        query._id = vendorId;
       }
-      return res.status(200).send(JSON.stringify({docs: docs}));
-    });
-  };
+      if(ids != null && ids != undefined){
+        query._id = {$in: ids};
+      }
+      if(accountType != null && accountType != undefined){
+        query.accountType = accountType;
+      }
 
+      Account.find(query)
+      .exec(function (err, docs) {
+        if(err) {
+          return res.status(200).send(JSON.stringify({docs: []}));
+        }
+        return res.status(200).send(JSON.stringify({docs: docs}));
+      });
+  };
 
   return AccountController;
 })();
