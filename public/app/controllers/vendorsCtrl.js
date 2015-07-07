@@ -45,7 +45,6 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
 
 
   }
-  scope.$watch()
 
 
 }]);
