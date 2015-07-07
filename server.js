@@ -8,6 +8,7 @@ var mongoose      = require('mongoose');
 var config 	      = require('./config');
 var path 	        = require('path');
 var cookieParser  = require('cookie-parser');
+var fs            = require("fs");
 
 // APP CONFIGURATION ==================
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,6 +34,11 @@ app.use('/api', apiRoutes);
 
 var fileRoutes = require('./app/fileRoutes')(app, express);
 app.use('/uploads', fileRoutes);
+
+//Ensure folder exists
+if(!fs.existsSync('./uploads')){
+  fs.mkdirSync('./uploads');
+}
 
 // MAIN CATCHALL ROUTE ---------------
 app.get('*', function(req, res) {

@@ -127,15 +127,24 @@ AccountController = (function() {
   // Get account information from a vendor given a vendor ID
   AccountController.getAccount = function(req, res) {
       body = utils.safeParse(req.body.body);
+      var query = {};
       var vendorId = body.vendorId;
+      var ids = body.ids; // [1,2,4,7]
       var accountType = body.accountType;
+      var fuzzyName = body.fuzzyName;
 
       var query = {};
       if(vendorId != null && vendorId != undefined){
         query._id = vendorId;
       }
-      if(accountType != null && accountType != undefined) {
+      if(ids != null && ids != undefined){
+        query._id = {$in: ids};
+      }
+      if(accountType != null && accountType != undefined){
         query.accountType = accountType;
+      }
+      if(fuzzyName != null && fuzzyName != undefined){
+        query.username = { $regex: fuzzyName, $options: 'i' };
       }
 
       Account.find(query)
@@ -148,7 +157,6 @@ AccountController = (function() {
   };
 
   return AccountController;
-
 })();
 
 module.exports = AccountController;
