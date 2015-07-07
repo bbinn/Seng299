@@ -60,10 +60,10 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 
 	if (typeof vm.userID === 'undefined') {
 		vm.userID = activeUser._id;
-	} 
+	}
 
 	vm.getAccount(vm.userID);
-	
+
 	vm.getActiveBooths(vm.userID);
 
 	/* TEST CODE with dummy data */

@@ -128,10 +128,14 @@ AccountController = (function() {
   AccountController.getAccount = function(req, res) {
       body = utils.safeParse(req.body.body);
       var vendorId = body.vendorId;
-      var query = {}
+      var accountType = body.accountType;
 
+      var query = {};
       if(vendorId != null && vendorId != undefined){
         query._id = vendorId;
+      }
+      if(accountType != null && accountType != undefined) {
+        query.accountType = accountType;
       }
 
       Account.find(query)
