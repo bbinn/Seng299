@@ -41,11 +41,11 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.viewProfile = function(id) {
     alert("you want to view vendor id: " + id);
   }
-  vm.search = function(code){
-    // alert(vm.searchMessage);
-    alert("enter pressed");
+  vm.search = function(){
+
 
   }
+  scope.$watch()
 
 
 }]);
