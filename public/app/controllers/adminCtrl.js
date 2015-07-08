@@ -18,7 +18,7 @@ angular.module('userApp').controller('AdminController', ['$scope', '$http', 'ngD
 
   vm.markConfirm = function(vendor) {
     for(var i = 0; i < vm.pending.length; i++) {
-      if(vm.pending[i].vendor == vendor) {
+      if(vm.pending[i].vendor.username == vendor) {
         vm.pending[i].state = "confirm";
         break;
       }
@@ -27,7 +27,7 @@ angular.module('userApp').controller('AdminController', ['$scope', '$http', 'ngD
 
   vm.markDeny = function(vendor) {
     for(var i = 0; i < vm.pending.length; i++) {
-      if(vm.pending[i].vendor == vendor) {
+      if(vm.pending[i].vendor.username == vendor) {
         vm.pending[i].state = "deny";
         break;
       }
@@ -36,7 +36,7 @@ angular.module('userApp').controller('AdminController', ['$scope', '$http', 'ngD
 
   vm.markCancel = function(vendor) {
     for(var i = 0; i < vm.pending.length; i++) {
-      if(vm.pending[i].vendor == vendor) {
+      if(vm.pending[i].vendor.username == vendor) {
         vm.pending[i].state = "";
         break;
       }
@@ -47,10 +47,10 @@ angular.module('userApp').controller('AdminController', ['$scope', '$http', 'ngD
     for(var i = 0; i < vm.pending.length; i++) {
       var entry = vm.pending[i];
       if(entry.state == "confirm") {
-        vm.confirm(entry.vendor);
+        vm.confirm(entry.vendor.username);
       }
       else if (entry.state == "deny") {
-        vm.deny(entry.vendor);
+        vm.deny(entry.vendor.username);
       }
     }
     vm.repopulate();
