@@ -7,24 +7,61 @@ angular.module('userApp').controller('AdminController', ['$scope', '$http', 'ngD
     $http.post('api/getpending', {body: ''})
     .success(function (data, status, xhr, config) {
       for (var i = 0; i < data.docs.length; i++) {
-        console.log(data.docs[i]);
-        vm.pending[i] = data.docs[i];
+        var vendor = {}
+        vendor.vendor = data.docs[i];
+        vendor.state = "";
+        vm.pending[i] = vendor;
+        console.log(vendor);
       }
     });
   }
 
+  vm.markConfirm = function(vendor) {
+    for(var i = 0; i < vm.pending.length; i++) {
+      if(vm.pending[i].vendor == vendor) {
+        vm.pending[i].state = "confirm";
+        break;
+      }
+    }
+  }
+
+  vm.markDeny = function(vendor) {
+    for(var i = 0; i < vm.pending.length; i++) {
+      if(vm.pending[i].vendor == vendor) {
+        vm.pending[i].state = "deny";
+        break;
+      }
+    }
+  }
+
+  vm.markCancel = function(vendor) {
+    for(var i = 0; i < vm.pending.length; i++) {
+      if(vm.pending[i].vendor == vendor) {
+        vm.pending[i].state = "";
+        break;
+      }
+    }
+  }
+
+  vm.submit = function() {
+    for(var i = 0; i < vm.pending.length; i++) {
+      var entry = vm.pending[i];
+      if(entry.state == "confirm") {
+        vm.confirm(entry.vendor);
+      }
+      else if (entry.state == "deny") {
+        vm.deny(entry.vendor);
+      }
+    }
+    vm.repopulate();
+  }
+
   vm.confirm = function(vendor) {
-    $http.post('api/confirmvendor', {body: JSON.stringify({ username: vendor })})
-    .success(function (data, status, xhr, config) {
-      vm.repopulate();
-    });
+    $http.post('api/confirmvendor', {body: JSON.stringify({ username: vendor })});
   }
 
   vm.deny = function(vendor) {
-    $http.post('api/denyvendor', {body: JSON.stringify({ username: vendor })})
-    .success(function (data, status, xhr, config) {
-      vm.repopulate();
-    });
+    $http.post('api/denyvendor', {body: JSON.stringify({ username: vendor })});
   }
 
   vm.repopulate();
