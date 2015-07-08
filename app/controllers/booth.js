@@ -94,7 +94,7 @@ BoothController = (function() {
     var boothType = body.boothType;
     var boothNumber = body.boothNumber;
 
-    var query = {}
+    var query = {};
     if(timeSlot != null && timeSlot != undefined){
       query.timeSlot = timeSlot;
     }
