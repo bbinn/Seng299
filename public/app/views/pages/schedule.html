@@ -30,7 +30,9 @@
     <table style="width:80%" class="lunchTable">
       <tr>
         <th width="25%"> Lunch Booths </th>
-        <td width="25%"> <a href ng-click="s.showDialog(s.lunchBooths[0]);">{{ s.lunchBooths[0].title}}</a> </td>
+        <td width="25%"> <a href ng-click="s.showDialog(s.lunchBooths[0]);">{{ s.lunchBooths[0].title}}</a><br>
+            <a href ng-click="s.unbookBoothDialog(s.lunchBooths[0]);">{{s.lunchBooths[0].additionalText}}</a>
+        </td>
         <td width="25%"> <a href ng-click="s.showDialog(s.lunchBooths[1]);">{{ s.lunchBooths[1].title}}</a> </td>
         <td width="25%"> <a href ng-click="s.showDialog(s.lunchBooths[2]);">{{ s.lunchBooths[2].title}}</a> </td>
       </tr>

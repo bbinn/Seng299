@@ -80,6 +80,34 @@ BoothController = (function() {
   }
 
 
+  // unbook
+  // timeSlot = body.timeSlot;
+  // boothNumber = body.boothNumber
+  BoothController.unbook = function(req, res) {
+    body = utils.safeParse(req.body.body);
+
+    // router.post('/uploadbanner', [Authenticate.ensureLoggedIn, multipart({uploadDir: 'uploads'})], function(req, res) {
+    //   Account.getAccountInformation(req, res, File.handleBannerComplete);
+    // });
+
+
+    var query = {
+      //timeSlot:
+    }
+
+    Booth.find(query)
+    .exec(function (err, docs) {
+      if(err) {
+        return res.status(200).send(JSON.stringify({docs: []}));
+      }
+      query = {
+
+      }
+      Booth.remove(query)
+    });
+
+  }
+
   // Get booths. Pass into the body OPTIONAL arguments:
   // timeSlot = body.timeSlot;
   // vendorId = body.vendorId;
