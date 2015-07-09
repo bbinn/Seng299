@@ -49,7 +49,7 @@ AuthenticateController = (function() {
 
   // API Call
   AuthenticateController.login = function(req, res) {
-    body = utils.safeParse(req.body.body);
+    var body = utils.safeParse(req.body.body);
     login(body, function(err, sessionToken, account) {
       if(err != null) {
         utils.clearCookie(res);
@@ -64,7 +64,7 @@ AuthenticateController = (function() {
   }
 
   AuthenticateController.reset = function(req, res) {
-    body = utils.safeParse(req.body.body);
+    var body = utils.safeParse(req.body.body);
     var email = body.email;
     if(email == null || email == undefined)
     {
@@ -125,6 +125,54 @@ AuthenticateController = (function() {
         );
       });
     });
+  }
+
+
+  AuthenticateController.doreset = function(req, res) {
+    var body = utils.safeParse(req.body.body);
+    var token = body.email;
+    var newpass = body.newpass;
+    if(token == null || token == undefined)
+    {
+      return res.status(400).send({error: 'Missing token or password'});
+    }
+
+    // Find userId for token
+    ResetModel.find({token: token }, function (err, docs) {
+      if(err)
+      {
+        return res.status(400).send('Invalid token');
+      }
+      if(docs.length == 0)
+      {
+        return res.status(400).send('Invalid token'); // No user, so we pass it as a null
+      }
+      var info = docs[0];
+      accountId = info.accountId;
+
+      // Find account with userId
+      Account.find({
+        _id: accountId,
+      })
+      .exec(function (error, docs) {
+        if(err)
+        {
+          return res.status(400).send('Invalid token');
+        }
+        if(docs.length == 0)
+        {
+          return res.status(400).send('Invalid token'); // No user, so we pass it as a null
+        }
+        var account = docs[0];
+
+        // Update the account password
+
+
+        // Remove the token from the documents
+
+      });
+
+
   }
 
 

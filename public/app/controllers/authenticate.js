@@ -1,7 +1,7 @@
 activeUser = null;
 
 angular.module('userApp')
-.controller('authController', function($scope, $http, $location){
+.controller('authController', function($scope, $http, $location, $routeParams){
   var vm = this;
   vm.activeUser = null;
   activeUser = null;
@@ -106,6 +106,30 @@ angular.module('userApp')
     $http.post('api/reset', {body: JSON.stringify(
       {
         email: email
+      }
+    )})
+    .success(function (data, status, xhr, config){
+      $location.path("/home");
+    })
+    .error(function (data, status, xhr, config) {
+      //TODO: Show popup
+      console.log(data);
+    });
+  }
+
+  $scope.resetPassword = function() {
+    var token = $routeParams.token_id;
+    var password = document.getElementById('password').value.trim();
+    var confirmpassword = document.getElementById('confirmpassword').value.trim();
+    if(password != confirmpassword)
+    {
+      return console.log('Passwords dont match');
+    }
+
+    $http.post('api/doreset', {body: JSON.stringify(
+      {
+        token: token,
+        password: password
       }
     )})
     .success(function (data, status, xhr, config){
