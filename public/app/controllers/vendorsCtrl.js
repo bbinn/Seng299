@@ -4,7 +4,19 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.searchMessage = "";
   vm.vendorName = "";
   vm.vendorsThisWeek = [];
+  vm.header = "All Vendors"
+  vm.filterTypes = [{
+    id: 0,
+    name: "All Vendors",
+  }, {
+    id: 1,
+    name: "This Week's Vendors",
+  }, {
+    id: 2,
+    name: "Top Followed Vendors",
+  }];
 
+//Initialize all vendors in the vendor container.
   $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor" })})
   .success(function(data, status, headers, config) {
     var docs = data.docs;
@@ -29,14 +41,30 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
       var docs = data.docs;
       vm.populateVendorsContainer(docs);
     });
+  }
+
+  vm.filterVendors = function(type){
+
+    if(type.id == 0) {
+      vm.header = "All Vendors"
+      $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor" })})
+      .success(function(data, status, headers, config) {
+        var docs = data.docs;
+        vm.populateVendorsContainer(docs);
+      });
+      vm.vendorSort(0);
+    }
+    else if(type.id == 1) {
+      vm.header = "This Week's Vendors"
+
+    }
+    else if(type.id == 2) {
+      vm.header = "Top Followed Vendors"
+    }
 
   }
+  vm.vendorSort = function(type){
+
+  }
+
 }]);
-
-splitVendors = function(vendorArray, numPerRow){
-  var alteredArray = [];
-  for (var i=0; i < vendorArray.length; i+=numPerRow) {
-    alteredArray.push(vendorArray.slice(i, i+numPerRow));
-  }
-  return alteredArray;
-}

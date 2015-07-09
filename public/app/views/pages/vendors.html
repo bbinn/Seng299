@@ -3,17 +3,19 @@
 
   <!-- Search Box! -->
   <div class="centerText">
-    <input class="searchBox" type="text"
-           id="searchBox" placeholder="Search all Vendors!" ng-model="v.vendorName" ng-change="v.search()">
-    <input class="searchButton" type="button" value="Search!" ng-click="v.search()">
+    <select ng-model="filterTypeSelected" ng-change="v.filterVendors(filterTypeSelected)"
+            data-ng-options="filterType as filterType.name for filterType in v.filterTypes">
+      <option value="">Vendor Filter<option>
+    </select>
+    <input type="text" placeholder="Search all Vendors!" ng-model="v.vendorName" ng-change="v.search()">
+    <!-- <input class="searchButton" type="button" value="Search!" ng-click="v.search()"> -->
     <div class="vendorContainer">
 
       <!-- booked this week -->
       <div class="vendorHeader">
-        <h2>Vendors Booked This Week</h2>
+        <h2>{{v.header}}</h2>
       </div>
       <ul class=".5columns">
-
         <li class="singleVendor" ng-repeat="vendor in v.vendorsThisWeek" ng-click="v.viewProfile(vendor.id)">
           <img class="center-cropped" ng-src="{{vendor.profilePic}}">
           <div class="description">
@@ -22,11 +24,6 @@
           </div>
         </li>
       </ul>
-
-      <!-- top followed vendors -->
-      <div class="vendorHeader">
-        <h2>Most Followed Vendors!</h2>
-      </div>
     </div>
   </div>
 
