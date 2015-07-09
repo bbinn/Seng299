@@ -58,7 +58,7 @@
 
 .description {
 	width: 70%;
-	float: right;
+	float:right;
 	display:table-cell;
 }
 
@@ -72,9 +72,13 @@
 	display: inline-block;
 }
 
-.descriptionEditField {
-	width: 100%;
-	height: 100%;
+#descriptionEditField {
+	display:block;
+	border-color: #AAA;
+	width: 400px;
+	height: 100px;
+	overflow:scroll;
+	word-wrap:normal;
 }
 
 #sidebar {
@@ -84,6 +88,7 @@
 }
 
 #sidebar table, td, th {
+	border-color: #AAA;
 	border-collapse: collapse;
 	border: 1px solid black;
 }

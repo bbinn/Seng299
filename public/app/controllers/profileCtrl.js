@@ -12,7 +12,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.editClicked = false;
 
 		// default profile picture and description
-	vm.avatarLink = $sce.trustAsResourceUrl('../../assets/generic_profile.png');
+	vm.avatarLink = $sce.trustAsResourceUrl('../../assets/images/generic_profile.png');
 	vm.description = "This user has not provided a description.";
 
 	vm.getAccount = function(curr_user_id) {
