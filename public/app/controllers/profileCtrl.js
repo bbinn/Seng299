@@ -73,10 +73,22 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.userID = $routeParams.user_id;
 
 	if (typeof vm.userID === 'undefined') {
-		vm.userID = activeUser._id;
+		if (activeUser != null) {
+			vm.userID = activeUser._id;
+		}	else {
+			vm.userID = null
+		}
 	} 
 
-	vm.getAccount(vm.userID);	
+	if (vm.userID == null) {
+		vm.userName = null;
+		vm.avatarLink = null;
+		vm.bannerLink = null;
+		vm.description = null;
+	} else {
+		vm.getAccount(vm.userID);		
+	}
+
 	vm.getActiveBooths(vm.userID);
 
 }]);
