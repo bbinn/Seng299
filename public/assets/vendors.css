@@ -1,4 +1,10 @@
+.5columns {
+  column-count: 5;
+  -webkit-column-count: 5;
+  display: inline-block;
+  column-fill: auto;
 
+}
 .centerText {
   width: auto;
   text-align: center;
