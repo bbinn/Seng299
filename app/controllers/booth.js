@@ -86,13 +86,16 @@ BoothController = (function() {
   BoothController.unbook = function(req, res) {
     body = utils.safeParse(req.body.body);
 
-    // router.post('/uploadbanner', [Authenticate.ensureLoggedIn, multipart({uploadDir: 'uploads'})], function(req, res) {
-    //   Account.getAccountInformation(req, res, File.handleBannerComplete);
-    // });
+    var timeSlot = body.timeSlot;
+    var boothNumber = body.boothNumber;
+    var boothType = body.boothType;
 
+    console.log(boothNumber);
 
     var query = {
-      //timeSlot:
+      timeSlot: timeSlot,
+      boothNumber: boothNumber,
+      boothType: boothType
     }
 
     Booth.find(query)
@@ -100,10 +103,9 @@ BoothController = (function() {
       if(err) {
         return res.status(200).send(JSON.stringify({docs: []}));
       }
-      query = {
-
-      }
-      Booth.remove(query)
+      Booth.remove(query, function() {
+        console.log("booth removed " + query.timeSlot + " " + query.boothNumber);
+      });
     });
 
   }

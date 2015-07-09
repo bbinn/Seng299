@@ -5,8 +5,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   var vm = this;
   var today = new Date();
-  console.log(today.getFullYear());
-  vm.date = new Date(today.getFullYear(), today.getMonth(), today.getDay(), 0, 0, 0, 0);
+  vm.date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0); //set hours, minutes, seconds, milliseconds to 0
   vm.booths = [];
   vm.lunchBooths = [];
   vm.produceBooths = [];
@@ -46,8 +45,8 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       for (var i = 0; i < data.docs.length; i++) {
         if (data.docs[i].boothType == 'lunch') {
           vm.lunchBooths[data.docs[i].boothNumber] = data.docs[i];
-          console.log(activeUser._id);
-          console.log(data.docs[i].vendorId);
+          //console.log(activeUser._id);
+          //console.log(data.docs[i].vendorId);
           vm.lunchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
         if (data.docs[i].boothType == 'produce') {
@@ -84,9 +83,11 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   vm.unbookBoothDialog = function(booth) {
     ngDialog.openConfirm({
+      template: 'app/views/pages/ConfirmationPopup.html'
     }).then(
       function() {
-        $http.post('api/unbook', {body: JSON.stringify({ timeSlot: vm.date, boothNumber: vm.boothNumber })})
+        $http.post('api/unbook', {body: JSON.stringify({ timeSlot: vm.date, boothNumber: booth.boothNumber, boothType: booth.boothType })})
+        vm.repopulate();
       },
       function() {
         //do nothing
@@ -96,10 +97,10 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   vm.showDialog = function(booth) {
     //only let vendors and admins book booths
-    if (!activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
-      return;
-    }
     if (booth.unbooked) {
+      if (!activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
+        return;
+      }
       //open the book booth dialog
       ngDialog.openConfirm({
         template: 'app/views/pages/BookBoothPopup.html',
@@ -125,7 +126,6 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
                 vm.repopulate();
               })
               .error(function(data, status, xhr, config) {
-                console.log("hello");
                 console.log(data);
               });
             },
