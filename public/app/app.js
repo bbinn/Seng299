@@ -19,6 +19,9 @@ angular.module('userApp', ['ngRoute', 'ngDialog', 'angularFileUpload'])
       .when('/account/:user_id?', {
         templateUrl: '/app/views/pages/account.html'
       })
+      .when('/settings', {
+        templateUrl: '/app/views/pages/settings.html'
+      })
       .when('/contact', {
         templateUrl: '/app/views/pages/contact.html'
       })
