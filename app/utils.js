@@ -97,6 +97,14 @@ ServerUtils = (function() {
     return JSON.parse(JSON.stringify(data));
   }
 
+  // Generate a token
+  ServerUtils.generateToken = function(callback){
+    var rand = function() {
+      return Math.random().toString(36).substr(2); // Only take the decimal as a base 32 number
+    };
+    return callback( Date.now() + '_' + rand() + rand() + rand() + rand() + rand() + rand());
+  }
+
 
   return ServerUtils;
 

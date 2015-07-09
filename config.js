@@ -6,5 +6,17 @@ module.exports = {
   'uploads': 'uploads',
 	'database': 'mongodb://localhost:27017/nodeDB',
 	'secret': 'seng299Group6Secret',
-  'cookieName': 'seng299Group6Cookie'
+  'cookieName': 'seng299Group6Cookie',
+
+  "email": {
+    "from": "group6@seng299.web",
+    "port": 1025,
+    "host": "localhost",
+    "secure": false, // No ssl
+    "auth": {
+      "user": "",
+      "pass": ""
+    }
+  }
+
 };

@@ -101,6 +101,22 @@ angular.module('userApp')
     });
   }
 
+  $scope.tryResetPassword = function() {
+    var email = document.getElementById('resetemail').value.trim();
+    $http.post('api/reset', {body: JSON.stringify(
+      {
+        email: email
+      }
+    )})
+    .success(function (data, status, xhr, config){
+      $location.path("/home");
+    })
+    .error(function (data, status, xhr, config) {
+      //TODO: Show popup
+      console.log(data);
+    });
+  }
+
 
 
 

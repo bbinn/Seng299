@@ -1,8 +1,10 @@
 var Account       = require('../models/account');
+var ResetModel       = require('../models/reset');
 var bcrypt        = require('bcrypt-nodejs');
 var IDController  = require('./id');
 var utils         = require('../utils');
 var config        = require('../../config');
+var EmailController         = require('./email');
 
 var AuthenticateController;
 AuthenticateController = (function() {
@@ -60,6 +62,70 @@ AuthenticateController = (function() {
       }
     })
   }
+
+  AuthenticateController.reset = function(req, res) {
+    body = utils.safeParse(req.body.body);
+    var email = body.email;
+    if(email == null || email == undefined)
+    {
+      return res.status(400).send({error: 'Email is required'});
+    }
+    Account.find({
+      email: email,
+    })
+    .exec(function (error, docs) {
+      //Find to see if this booth is already booked
+      if(error) {
+        return res.status(500).send({error: error});
+      }
+      if(docs.length == 0)
+      {
+        return res.status(200).send();
+      }
+      var account = docs[0];
+      var id = account._id;
+
+      utils.generateToken(function(token){
+        ResetModel.findOneAndUpdate(
+
+          {accountId: id},
+          {$set: {token: token}},
+          {upsert: true},
+          function(error, doc){
+            if(error)
+            {
+              return res.status(500).send(error);
+            }
+            else
+            {
+              if(doc == null)
+              {
+                return res.status(500).send('No file found');
+              }
+            }
+
+            // Send email here to the user with a token
+            opts = {
+              to: 'test@abc.com',
+              subject: 'Password Reset',
+              text: 'Reset password here!'
+            };
+
+            EmailController.sendEmail(opts, function(error){
+              if(error){
+                return res.status(500).send({error: error});
+              }
+              else
+              {
+                return res.status(200).send();
+              }
+            });
+          }
+        );
+      });
+    });
+  }
+
 
   // API Call
   AuthenticateController.logout = function(req, res) {
