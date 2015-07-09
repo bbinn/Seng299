@@ -24,35 +24,32 @@
 	<div class="content">
 
 		<div class="description">
-			<p>{{p.description}}</p>
+			<p ng-bind="p.description"></p>
+			<br>
 			<input class="accountDescriptionEdit" ng-hide="p.editClicked" ng-if="p.userID == auth.activeUser._id" type="button" value="Edit description" ng-click="p.toggleEditField()">
-			<input id="descriptionEditField" ng-show="p.editClicked" type="text" placeholder="{{p.description}}">
+			<input id="descriptionEditField" ng-show="p.editClicked" type="text" ng-model="p.description">
 			<br>
 			<a class="accountDescriptionEdit" href="" ng-show="p.editClicked" ng-click="p.editDescription()">Save</a>
-			<a class="accountDescriptionEdit" href="" ng-show="p.editClicked" ng-click="p.toggleEditField()">Cancel</a>
 		</div>
 
 		<div ng-show="p.canBook" id="sidebar">
-			<div ng-switch on="p.hasBooths">
-				<div ng-switch-when="true">
-					<table>
-					<thead>
-						<tr>
-							<th>Booth</th>
-							<th>Booth Type</th>
-							<th>Time</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="booth in p.activeBooths">
-						<td>{{booth.title}}</td>
-						<td>{{booth.boothType}}</td>
-						<td>{{booth.timeSlot}}</td>
-						</tr>
-					</tbody>
-					</table>
-				</div>
-				<div ng-switch-default> This user has no booths to show</div>
+			<div ng-if="p.hasBooths">
+				<table>
+				<thead>
+					<tr>
+						<th>Booth</th>
+						<th>Booth Type</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="booth in p.activeBooths">
+					<td>{{booth.title}}</td>
+					<td>{{booth.boothType}}</td>
+					<td>{{booth.timeSlot}}</td>
+					</tr>
+				</tbody>
+				</table>
 			</div>
 		</div>
 
