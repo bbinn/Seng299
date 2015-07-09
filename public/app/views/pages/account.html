@@ -3,52 +3,53 @@
 	<link rel="stylesheet" type="test/css" href="../../assets/account.css">
 
 	<div class="header">
-		<img class="profilepic" ng-src="{{auth.activeUser.avatarLink}}">
-		<img class="banner" ng-src="{{auth.activeUser.bannerLink}}">
+		<img class="profilepic" ng-src="{{p.avatarLink}}">
+		<img class="banner" ng-src="{{p.bannerLink}}">
 	</div>
 
 	<div class="accountUsername">
-		{{ auth.activeUser.name }}
-		<div class="accountUpload" ng-controller="uploadController" nv-file-drop="" uploader="avatarUploader">
+		{{ p.userName }}
+		<div class="accountUpload" ng-if="p.userID == auth.activeUser._id" ng-controller="uploadController" nv-file-drop="" uploader="avatarUploader">
 			<input type="file" id="selectedAvatar" nv-file-select="false" uploader="avatarUploader" ngf-max-size='10000000' style="display: none;"/>
 			<input class="accountUpload" type="button" value="Upload Avatar" onclick="document.getElementById('selectedAvatar').click();" />
 		</div>
 
-		<div class="accountUpload" ng-controller="uploadController" nv-file-drop="" uploader="bannerUploader">
+		<div class="accountUpload" ng-if="p.userID == auth.activeUser._id" ng-controller="uploadController" nv-file-drop="" uploader="bannerUploader">
 			<input type="file" id="selectedBanner" nv-file-select="false" uploader="bannerUploader" ngf-max-size='10000000' style="display: none;"/>
 			<input class="accountUpload" type="button" value="Upload Banner" onclick="document.getElementById('selectedBanner').click();" />
 		</div>
+
 	</div>
 
 	<div class="content">
 
 		<div class="description">
-			<p>{{p.desc}}</p>
+			<p ng-bind="p.description"></p>
+			<br>
+			<input class="accountDescriptionEdit" ng-hide="p.editClicked" ng-if="p.userID == auth.activeUser._id" type="button" value="Edit description" ng-click="p.toggleEditField()">
+			<input id="descriptionEditField" ng-show="p.editClicked" type="text" ng-model="p.description">
+			<br>
+			<a class="accountDescriptionEdit" href="" ng-show="p.editClicked" ng-click="p.editDescription()">Save</a>
 		</div>
 
 		<div ng-show="p.canBook" id="sidebar">
-			<div ng-switch on="p.hasBooths">
-				<div ng-switch-when="true">
-					<table>
-					<thead>
-						<tr>
-							<th>Booth</th>
-							<th>Booth Type</th>
-							<th>Time</th>
-							<th>Description</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr ng-repeat="booth in p.activeBooths">
-						<td>{{booth.title}}</td>
-						<td>{{booth.boothType}}</td>
-						<td>{{booth.timeSlot}}</td>
-						<td>{{booth.description}}</td>
-						</tr>
-					</tbody>
-					</table>
-				</div>
-				<div ng-switch-default> This user has no booths to show</div>
+			<div ng-if="p.hasBooths">
+				<table>
+				<thead>
+					<tr>
+						<th>Booth</th>
+						<th>Booth Type</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="booth in p.activeBooths">
+					<td>{{booth.title}}</td>
+					<td>{{booth.boothType}}</td>
+					<td>{{booth.timeSlot}}</td>
+					</tr>
+				</tbody>
+				</table>
 			</div>
 		</div>
 

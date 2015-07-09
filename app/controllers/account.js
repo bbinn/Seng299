@@ -127,11 +127,23 @@ AccountController = (function() {
   // Get account information from a vendor given a vendor ID
   AccountController.getAccount = function(req, res) {
       body = utils.safeParse(req.body.body);
+      var query = {};
       var vendorId = body.vendorId;
-      var query = {}
+      var ids = body.ids; // [1,2,4,7]
+      var accountType = body.accountType;
+      var fuzzyName = body.fuzzyName;
 
       if(vendorId != null && vendorId != undefined){
         query._id = vendorId;
+      }
+      if(ids != null && ids != undefined){
+        query._id = {$in: ids};
+      }
+      if(accountType != null && accountType != undefined){
+        query.accountType = accountType;
+      }
+      if(fuzzyName != null && fuzzyName != undefined){
+        query.username = { $regex: fuzzyName, $options: 'i' };
       }
 
       Account.find(query)
@@ -143,8 +155,40 @@ AccountController = (function() {
       });
   };
 
-  return AccountController;
+  // API call
+  // Change account information 
+  // Must be logged in
+  AccountController.changeAccount = function(req, res, accountInformation) {
+      
+    if(accountInformation == null) {
+        return res.status(401).send({
+        error: "You must be logged in to perform this action"
+      });
+    }
 
+    body = utils.safeParse(req.body.body);
+    var vendorId = body.vendorId;
+    var description = body.description;
+    // TODO: add other attributes
+    var query = {};
+
+    if(vendorId != null && vendorId != undefined) {
+      query._id = vendorId;
+    }
+
+    if(description != null && description != undefined) {
+      query.description = description;
+    }
+
+    Account.update({_id: query._id}, {
+      $set: {description: query.description}
+    }, function(err, doc) {
+      if (err) return res.send(500, {error: err});
+      return res.status(200).send("Success");
+    });
+  };
+
+  return AccountController;
 })();
 
 module.exports = AccountController;
