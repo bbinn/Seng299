@@ -86,8 +86,16 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       template: 'app/views/pages/ConfirmationPopup.html'
     }).then(
       function() {
-        $http.post('api/unbook', {body: JSON.stringify({ timeSlot: vm.date, boothNumber: booth.boothNumber, boothType: booth.boothType })})
-        vm.repopulate();
+        $http.post('api/unbook', {body: JSON.stringify({
+          timeSlot: vm.date,
+          boothNumber: booth.boothNumber,
+          boothType: booth.boothType
+        })})
+        .success (function (data, status, xhr, config) {
+          vm.repopulate();
+        })
+        .error(function (data, status, xhr, config){
+        });
       },
       function() {
         //do nothing

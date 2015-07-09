@@ -90,8 +90,6 @@ BoothController = (function() {
     var boothNumber = body.boothNumber;
     var boothType = body.boothType;
 
-    console.log(boothNumber);
-
     var query = {
       timeSlot: timeSlot,
       boothNumber: boothNumber,
@@ -101,10 +99,10 @@ BoothController = (function() {
     Booth.find(query)
     .exec(function (err, docs) {
       if(err) {
-        return res.status(200).send(JSON.stringify({docs: []}));
+        return res.status(200).send();
       }
       Booth.remove(query, function() {
-        console.log("booth removed " + query.timeSlot + " " + query.boothNumber);
+        return res.status(200).send();
       });
     });
 
