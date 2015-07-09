@@ -6,14 +6,21 @@
     
       <tr ng-repeat="vendor in a.pending">
         <td width="70%">
-          <h3>User: {{vendor.username}}</h3>
+          <h3>User: {{vendor.vendor.username}}</h3>
         </td>
         <td width="15%">
-          <a href ng-click="a.confirm(vendor.username);">Yes</a>
+          <a href ng-if="vendor.state == ''" ng-click="a.markConfirm(vendor.vendor.username);">Confirm</a>
+          <a href ng-if="vendor.state == 'deny'" ng-click="a.markCancel(vendor.vendor.username);">Cancel</a>
+          <h3 style="text-color: #005500;" ng-if="vendor.state == 'confirm'">Confirmed</h3>
         </td>
         <td width="15%">
-          <a href ng-click="a.deny(vendor.username);">No</a>
+          <a href ng-if="vendor.state == ''" ng-click="a.markDeny(vendor.vendor.username);">Deny</a>
+          <a href ng-if="vendor.state == 'confirm'" ng-click="a.markCancel(vendor.vendor.username);">Cancel</a>
+          <h3 style="text-color: #005500;" ng-if="vendor.state == 'deny'">Denied</h3>
         </td>
       </tr>
   </table>
+
+  <a href ng-click="a.submit();">Submit Changes</a>
+
 </div>
