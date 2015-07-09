@@ -2,6 +2,10 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 
 	var vm = this;
 
+	vm.m_names = new Array("January", "February", "March", "April", 
+	"May", "June", "July", "August","September", "October", "November", "December");
+
+
 	vm.date = new Date();
 	vm.activeBooths = [];
 	vm.canBook = false;
@@ -29,9 +33,11 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.getActiveBooths = function(curr_user_id) {
 		$http.post('api/getbooths', {body: JSON.stringify({ vendorId: curr_user_id})})
 			.success(function(data, status, headers, config) {
-
+				var boothDate, dt;
 				for (var i = 0; i < data.docs.length; i++) {
-					vm.activeBooths[i] = {title: data.docs[i].title, boothType: data.docs[i].boothType, timeSlot: data.docs[i].timeSlot, description: data.docs[i].description };
+					dt = new Date(data.docs[i].timeSlot);
+    			boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
+					vm.activeBooths[i] = {title: data.docs[i].title, boothType: data.docs[i].boothType, timeSlot: boothDate, description: data.docs[i].description };
 				}
 
 				if (data.docs.length > 0) {
