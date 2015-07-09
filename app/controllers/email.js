@@ -23,11 +23,9 @@ EmailController = (function() {
 
     var mailOptions = opts;
     mailOptions.from = config.from;
-    console.log('tsend');
 
     transporter.sendMail(mailOptions, function(error, info){
       if(error){
-        console.log(error);
         return callback(error);
       }
       console.log('Message sent: ' + info.response);

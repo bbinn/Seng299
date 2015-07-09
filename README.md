@@ -37,8 +37,9 @@ to see and edit all reservations.
 These are the core features of the system, the rest is up to you. Marks will be
 awarded for creativity.
 
-**Installation Instructions**
+** Installation Instructions **
 npm install
+mailcatcher --foreground --http-ip=0.0.0.0
 node server.js
 navigate to localhost:8080
 

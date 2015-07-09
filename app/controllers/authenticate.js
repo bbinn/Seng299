@@ -1,10 +1,10 @@
-var Account       = require('../models/account');
-var ResetModel       = require('../models/reset');
-var bcrypt        = require('bcrypt-nodejs');
-var IDController  = require('./id');
-var utils         = require('../utils');
-var config        = require('../../config');
-var EmailController         = require('./email');
+var Account           = require('../models/account');
+var ResetModel        = require('../models/reset');
+var bcrypt            = require('bcrypt-nodejs');
+var IDController      = require('./id');
+var utils             = require('../utils');
+var config            = require('../../config');
+var EmailController   = require('./email');
 
 var AuthenticateController;
 AuthenticateController = (function() {
@@ -108,7 +108,8 @@ AuthenticateController = (function() {
             opts = {
               to: 'test@abc.com',
               subject: 'Password Reset',
-              text: 'Reset password here!'
+              text: ('Reset password here! ' + config.server + '/reset/' + token),
+              html: ('<div>Reset Password: <a href="' + config.server + '/reset/' + token + '">Here</a></div>')
             };
 
             EmailController.sendEmail(opts, function(error){
