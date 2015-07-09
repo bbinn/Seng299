@@ -37,6 +37,9 @@ module.exports = function(app, express) {
 
   // Account management
   router.post('/getaccount', Account.getAccount);
+  router.post('/changeaccount', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Account.changeAccount);
+  });
   router.post('/getpending', Authenticate.ensureLoggedIn, function(req, res) {
     Account.getAccountInformation(req, res, Account.getPendingVendors);
   });
