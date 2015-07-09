@@ -25,7 +25,11 @@
 
 		<div class="description">
 			<p>{{p.description}}</p>
-			<input class="accountUpload" type="button" value="Edit description" ng-click="edit_visible"/>
+			<input class="accountDescriptionEdit" ng-hide="p.editClicked" ng-if="p.userID == auth.activeUser._id" type="button" value="Edit description" ng-click="p.toggleEditField()">
+			<input id="descriptionEditField" ng-show="p.editClicked" type="text" placeholder="{{p.description}}">
+			<br>
+			<a class="accountDescriptionEdit" href="" ng-show="p.editClicked" ng-click="p.editDescription()">Save</a>
+			<a class="accountDescriptionEdit" href="" ng-show="p.editClicked" ng-click="p.toggleEditField()">Cancel</a>
 		</div>
 
 		<div ng-show="p.canBook" id="sidebar">
@@ -37,7 +41,6 @@
 							<th>Booth</th>
 							<th>Booth Type</th>
 							<th>Time</th>
-							<th>Description</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -45,7 +48,6 @@
 						<td>{{booth.title}}</td>
 						<td>{{booth.boothType}}</td>
 						<td>{{booth.timeSlot}}</td>
-						<td>{{booth.description}}</td>
 						</tr>
 					</tbody>
 					</table>

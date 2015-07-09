@@ -143,6 +143,39 @@ AccountController = (function() {
       });
   };
 
+  // API call
+  // Change account information 
+  // Must be logged in
+  AccountController.changeAccount = function(req, res, accountInformation) {
+      
+    if(accountInformation == null) {
+        return res.status(401).send({
+        error: "You must be logged in to perform this action"
+      });
+    }
+
+    body = utils.safeParse(req.body.body);
+    var vendorId = body.vendorId;
+    var description = body.description;
+    // TODO: add other attributes
+    var query = {};
+
+    if(vendorId != null && vendorId != undefined) {
+      query._id = vendorId;
+    }
+
+    if(description != null && description != undefined) {
+      query.description = description;
+    }
+
+    Account.update({_id: query._id}, {
+      $set: {description: query.description}
+    }, function(err, doc) {
+      if (err) return res.send(500, {error: err});
+      return res.status(200).send("Success");
+    });
+  };
+
   return AccountController;
 
 })();
