@@ -133,6 +133,7 @@ AccountController = (function() {
       var accountType = body.accountType;
       var fuzzyName = body.fuzzyName;
 
+      var query = {};
       if(vendorId != null && vendorId != undefined){
         query._id = vendorId;
       }
