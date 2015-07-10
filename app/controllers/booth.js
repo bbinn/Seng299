@@ -78,8 +78,6 @@ BoothController = (function() {
 
     });
   }
-
-
   // unbook
   // timeSlot = body.timeSlot;
   // boothNumber = body.boothNumber
@@ -95,7 +93,7 @@ BoothController = (function() {
       boothNumber: boothNumber,
       boothType: boothType,
     }
-    
+
     //if you're not an admin, you must be the vendor who booked the booth in order to unbook it
     if (accountInformation.accountType != "admin") {
       query.vendorId = accountInformation._id;
@@ -104,6 +102,7 @@ BoothController = (function() {
     Booth.find(query)
     .exec(function (err, docs) {
       if(err || docs.length == 0) {
+
         return res.status(200).send();
       }
       Booth.remove(query, function() {
@@ -126,7 +125,6 @@ BoothController = (function() {
     var vendorId = body.vendorId;
     var boothType = body.boothType;
     var boothNumber = body.boothNumber;
-
     var query = {};
     if(timeSlot != null && timeSlot != undefined){
       query.timeSlot = timeSlot;

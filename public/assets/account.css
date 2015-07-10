@@ -1,4 +1,3 @@
-
 .header {
 	position: relative;
 	text-align: center;
@@ -55,13 +54,21 @@
 	margin: 20px 100px;
 	width: 100%;
 }
-
-.description {
-	width: 70%;
-	float: right;
-	display:table-cell;
+p {
+	text-indent: 0;
+	line-height: 120%
 }
-
+.description {
+	width: 65%;
+	text-align: left;
+	padding-left: 20px;
+	word-wrap: break-word;
+	overflow-x: hidden;
+	line-height: 120%
+}
+tbody {
+	margin: 10px;
+}
 .accountDescriptionEdit {
 	background-color: rgb(200, 200, 255);
 	padding: 2px;
@@ -73,12 +80,18 @@
 }
 
 .descriptionEditField {
-	width: 100%;
-	height: 100%;
+	width: 90%;
+	word-wrap: break-word;
+	white-space: normal;
+	min-height: 5em;
+	padding: 5px;
+	font-size: 20px;
 }
-
+h2 {
+	color: : #91b2cc;
+}
 #sidebar {
-	width: 30%;
+	width: 25%;
 	float:left;
 	display:table-cell;
 }
