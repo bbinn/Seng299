@@ -60,13 +60,22 @@ h2 {
 	margin: 15px 100px;
 	width: 100%;
 }
-
-.description {
-	width: 70%;
-	float:right;
-	display:table-cell;
+p {
+	text-indent: 0;
+	line-height: 120%
 }
+.description {
+	width: 65%;
+	text-align: left;
+	padding-left: 20px;
+	word-wrap: break-word;
+	overflow-x: hidden;
+	line-height: 120%
+}
+tbody {
+	margin: 10px;
 
+}
 .accountDescriptionEdit {
 	background-color: rgb(200, 200, 255);
 	padding: 2px;
@@ -77,17 +86,21 @@ h2 {
 	display: inline-block;
 }
 
-#descriptionEditField {
-	display:block;
-	border-color: #AAA;
-	width: 400px;
-	height: 100px;
-	overflow:scroll;
-	word-wrap:normal;
-}
 
+.descriptionEditField {
+	width: 90%;
+	word-wrap: break-word;
+	white-space: normal;
+	min-height: 5em;
+	padding: 5px;
+	font-size: 20px;
+}
+h2 {
+	color: : #91b2cc;
+
+}
 #sidebar {
-	width: 30%;
+	width: 25%;
 	float:left;
 	display:table-cell;
 }
