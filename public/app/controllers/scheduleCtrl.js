@@ -10,6 +10,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   vm.lunchBooths = [];
   vm.produceBooths = [];
   vm.merchBooths = [];
+  activeUser.locked = today;
   vm.currentUser = activeUser;
 
   //Set the current day as checked by default
@@ -79,7 +80,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   vm.unbookBoothDialog = function(booth) {
     ngDialog.openConfirm({
-      template: 'app/views/pages/ConfirmationPopup.html'
+      template: 'app/views/pages/popup/ConfirmationPopup.html'
     }).then(
       function() {
         $http.post('api/unbook', {body: JSON.stringify({
@@ -105,24 +106,26 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       if (+vm.date <= +today || !activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
         return;
       }
-      //open the book booth dialog
-
-      if (activeUser.locked + 48 hours < today) {
-        ngDialog.Open({
-          template: 'app/views/pages/LockedPopup.html',
+      //if the vendor screwed up recently, don't allow bookbooth to happen
+      var twoDaysAgo = new Date(today);
+      twoDaysAgo.setDate(twoDaysAgo.getDate()-2);
+      if (+activeUser.locked > +twoDaysAgo) {
+        ngDialog.open({
+          template: '<h1> You cannot book with a locked account </h1>',
+          plain: true
         });
         return;
       }
-      //else
+      //open the book booth dialog
       ngDialog.openConfirm({
-        template: 'app/views/pages/BookBoothPopup.html',
+        template: 'app/views/pages/popup/BookBoothPopup.html',
         scope: $scope,
         controller: 'BoothPopupController'
       }).then(
         function(value) {
           //find out if the user really wants to book the booth
           ngDialog.openConfirm({
-            template: 'app/views/pages/ConfirmationPopup.html'
+            template: 'app/views/pages/popup/ConfirmationPopup.html'
           }).then(
             function() {
               $http.post('api/bookbooth', {body: JSON.stringify({
@@ -151,7 +154,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       //open the view booth dialog
       currentBooth = booth;
       ngDialog.open({
-        template: 'app/views/pages/ViewBoothPopup.html',
+        template: 'app/views/pages/popup/ViewBoothPopup.html',
         scope: $scope,
         controller: 'BoothPopupController'
       });
@@ -170,7 +173,7 @@ angular.module('userApp').controller('BoothPopupController', function($scope){
     }
 
     ngDialog.openConfirm({
-      template: 'app/views/pages/BookBoothPopup.html',
+      template: 'app/views/pages/popup/BookBoothPopup.html',
       scope: $scope,
       controller: 'BoothPopupController'
     }).then(
