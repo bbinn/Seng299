@@ -1,5 +1,4 @@
-angular.module('userApp').controller('profileController', ['$scope', '$http', '$sce', '$routeParams', function($scope, $http, $sce, $routeParams) {
-
+angular.module('userApp').controller('profileController', ['$scope', '$http', '$sce', '$routeParams', 'ngDialog', function($scope, $http, $sce, $routeParams, ngDialog) {
 	var vm = this;
 
 	vm.m_names = new Array("January", "February", "March", "April",
@@ -32,13 +31,15 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	};
 
 	vm.getActiveBooths = function(curr_user_id) {
+		vm.activeBooths = [];
 		$http.post('api/getbooths', {body: JSON.stringify({ vendorId: curr_user_id})})
 			.success(function(data, status, headers, config) {
 				var boothDate, dt;
-				for (var i = 0; i < data.docs.length; i++) {
-					dt = new Date(data.docs[i].timeSlot);
+				var docs = data.docs;
+				for (var i = 0; i < docs.length; i++) {
+					dt = new Date(docs[i].timeSlot);
     			boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
-					vm.activeBooths[i] = {title: data.docs[i].title, boothType: data.docs[i].boothType, timeSlot: boothDate, description: data.docs[i].description };
+					vm.activeBooths[i] = {title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber };
 				}
 
 				if (data.docs.length > 0) {
@@ -48,6 +49,28 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 			});
 	};
 
+	vm.unbookBoothDialog = function(booth) {
+
+    ngDialog.openConfirm({
+      template: 'app/views/pages/ConfirmationPopup.html'
+    }).then(
+      function() {
+        $http.post('api/unbook', {body: JSON.stringify({
+          timeSlot: booth.timeSlot,
+          boothNumber: booth.boothNumber,
+          boothType: booth.boothType
+        })})
+        .success (function (data, status, xhr, config) {
+					vm.getActiveBooths(vm.userID);
+        })
+        .error(function (data, status, xhr, config){
+        });
+      },
+      function() {
+        //do nothing
+      }
+    )
+  };
 	vm.toggleEditField = function() {
 		if (vm.editClicked == false) {
 			vm.editClicked = true;
@@ -79,4 +102,5 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.getAccount(vm.userID);
 	vm.getActiveBooths(vm.userID);
 
-}]);
+}
+]);
