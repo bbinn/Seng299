@@ -78,29 +78,33 @@ BoothController = (function() {
 
     });
   }
+  // unbook
+  // timeSlot = body.timeSlot;
+  // boothNumber = body.boothNumber
   BoothController.unbook = function(req, res) {
-      body = utils.safeParse(req.body.body);
+    body = utils.safeParse(req.body.body);
 
-      var timeSlot = body.timeSlot;
-      var boothNumber = body.boothNumber;
-      var boothType = body.boothType;
+    var timeSlot = body.timeSlot;
+    var boothNumber = body.boothNumber;
+    var boothType = body.boothType;
+    console.log("called132");
 
-      var query = {
-        timeSlot: timeSlot,
-        boothNumber: boothNumber,
-        boothType: boothType
-      }
-
-      Booth.find(query)
-      .exec(function (err, docs) {
-        if(err) {
-          return res.status(200).send();
-        }
-        Booth.remove(query, function() {
-          return res.status(200).send();
-        });
-      });
+    var query = {
+      timeSlot: timeSlot,
+      boothNumber: boothNumber,
+      boothType: boothType
     }
+
+    Booth.find(query)
+    .exec(function (err, docs) {
+      if(err) {
+        return res.status(200).send();
+      }
+      Booth.remove(query, function() {
+        return res.status(200).send();
+      });
+    });
+  }
   // Get booths. Pass into the body OPTIONAL arguments:
   // timeSlot = body.timeSlot;
   // vendorId = body.vendorId;
@@ -114,7 +118,6 @@ BoothController = (function() {
     var vendorId = body.vendorId;
     var boothType = body.boothType;
     var boothNumber = body.boothNumber;
-
     var query = {};
     if(timeSlot != null && timeSlot != undefined){
       query.timeSlot = timeSlot;
