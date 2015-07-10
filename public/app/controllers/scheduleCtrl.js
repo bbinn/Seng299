@@ -17,7 +17,6 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   var daybox = document.getElementById(days[vm.date.getDay()]);
   daybox.checked = true;
 
-
   vm.repopulate = function() {
     var defaultText = "Empty";
 
@@ -58,7 +57,6 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       }
     });
   }
-
 
   vm.changeDay = function(newDay) {
     var oldDay = vm.date.getDay();
