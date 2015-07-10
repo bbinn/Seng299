@@ -206,7 +206,6 @@ AccountController = (function() {
     if(description != null && description != undefined) {
       query.description = description;
     }
-    console.log(query);
     Account.update({_id: id}, {
       $set: query
     }, function(err, doc) {
