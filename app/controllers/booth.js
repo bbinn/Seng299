@@ -81,23 +81,6 @@ BoothController = (function() {
   // unbook
   // timeSlot = body.timeSlot;
   // boothNumber = body.boothNumber
-  BoothController.unbook = function(req, res) {
-    body = utils.safeParse(req.body.body);
-
-    var timeSlot = body.timeSlot;
-    var boothNumber = body.boothNumber;
-    var boothType = body.boothType;
-    console.log("called132");
-
-    var query = {
-      timeSlot: timeSlot,
-      boothNumber: boothNumber,
-      boothType: boothType
-    }
-
-  // unbook
-  // timeSlot = body.timeSlot;
-  // boothNumber = body.boothNumber
   BoothController.unbook = function(req, res, accountInformation) {
     body = utils.safeParse(req.body.body);
 

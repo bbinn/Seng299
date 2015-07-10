@@ -16,12 +16,12 @@
       <div class="vendorHeader">
         <h2>{{v.header}}</h2>
       </div>
-        <ul>
+        <ul class="vendorList">
           <li class="singleVendor" ng-repeat="vendor in v.vendors" ng-click="v.viewProfile(vendor.id)">
             <img class="center-cropped" ng-src="{{vendor.profilePic}}">
-            <div class="description">
+            <div class="vendorDescription">
               <h2>{{vendor.username}}</h2>
-              <p>{{vendor.description}}</p>
+              <label>{{vendor.description}}</label>
             </div>
           </li>
         </ul>

@@ -1,13 +1,11 @@
-ul {
+.vendorList {
   list-style: none;
   width: auto;
   overflow: hidden;
   text-align: center;
+  white-space: normal;
 }
-li {
-  float: left;
-  display: inline;
-}
+
 input[type="text"] {
   padding: 4px 6px 4px 6px;
   text-align: left;
@@ -80,7 +78,7 @@ h2 {
   word-wrap: break-word;
   white-space: normal;
 }
-p {
+label {
   font-size: 10px;
   word-wrap: break-word;
   white-space: normal;
@@ -88,11 +86,13 @@ p {
   text-indent: 0;
   height: 100vh;
 }
-.description {
+.vendorDescription {
   height: 70px;
-  text-overflow: ellipsis;
   overflow: hidden;
-  width: 100%;
+  width: auto;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .singleVendor {
   padding: 15px 15px 15px 15px;
