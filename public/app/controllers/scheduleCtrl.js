@@ -110,6 +110,14 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
         return;
       }
       //open the book booth dialog
+
+      if (activeUser.locked + 48 hours < today) {
+        ngDialog.Open({
+          template: 'app/views/pages/LockedPopup.html',
+        });
+        return;
+      }
+      //else
       ngDialog.openConfirm({
         template: 'app/views/pages/BookBoothPopup.html',
         scope: $scope,

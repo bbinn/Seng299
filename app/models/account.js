@@ -17,6 +17,7 @@ var AccountSchema = new Schema({
 	username: { type: String, required: true, select: true, index: { unique: true } },
 	password: { type: String, required: true, select: false},
 	accountType:  { type: String, required: true, select: true },
+	locked: {type: Date, required: false, select: true },
 
 	// Description
 	description:  { type: String, required: false, select: true },
