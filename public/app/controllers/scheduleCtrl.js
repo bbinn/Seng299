@@ -21,7 +21,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
     var defaultText = "Empty";
 
     //allow vendors and admins to book booths
-    if (activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
+    if (+vm.date > +today && activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
       defaultText = "+ Book this booth";
     }
 
