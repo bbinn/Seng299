@@ -39,6 +39,7 @@ awarded for creativity.
 
 ** Installation Instructions **
 npm install
+make sure ruby is installed (required for mailcatcher, for emails on localhost)
 gem install mailcatcher (if not installed already)
 mailcatcher --foreground --http-ip=0.0.0.0
 node server.js
