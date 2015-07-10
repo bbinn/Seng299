@@ -44,7 +44,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="booth in p.activeBooths">
-					<td>{{booth.title}}</td>
+					<td><a href ng-click="p.unbookBoothDialog(booth)">{{booth.title}}</td>
 					<td>{{booth.boothType}}</td>
 					<td>{{booth.timeSlot}}</td>
 					</tr>

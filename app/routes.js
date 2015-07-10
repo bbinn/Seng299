@@ -24,7 +24,7 @@ module.exports = function(app, express) {
   router.post('/bookbooth', Authenticate.ensureLoggedIn, function(req, res) {
     Account.getAccountInformation(req, res, Booth.book);
   });
-
+  router.post('/unbook', Authenticate.ensureLoggedIn, Booth.unbook);
 
   //File routes
   router.post('/uploadavatar', [Authenticate.ensureLoggedIn, multipart({uploadDir: 'uploads'})], function(req, res) {
@@ -54,6 +54,3 @@ module.exports = function(app, express) {
   //Return
   return router;
 };
-
-
-

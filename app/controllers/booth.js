@@ -78,8 +78,29 @@ BoothController = (function() {
 
     });
   }
+  BoothController.unbook = function(req, res) {
+      body = utils.safeParse(req.body.body);
 
+      var timeSlot = body.timeSlot;
+      var boothNumber = body.boothNumber;
+      var boothType = body.boothType;
 
+      var query = {
+        timeSlot: timeSlot,
+        boothNumber: boothNumber,
+        boothType: boothType
+      }
+
+      Booth.find(query)
+      .exec(function (err, docs) {
+        if(err) {
+          return res.status(200).send();
+        }
+        Booth.remove(query, function() {
+          return res.status(200).send();
+        });
+      });
+    }
   // Get booths. Pass into the body OPTIONAL arguments:
   // timeSlot = body.timeSlot;
   // vendorId = body.vendorId;

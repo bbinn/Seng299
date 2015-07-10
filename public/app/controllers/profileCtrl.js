@@ -1,5 +1,4 @@
-angular.module('userApp').controller('profileController', ['$scope', '$http', '$sce', '$routeParams', function($scope, $http, $sce, $routeParams) {
-
+angular.module('userApp').controller('profileController', ['$scope', '$http', '$sce', '$routeParams', 'ngDialog', function($scope, $http, $sce, $routeParams, ngDialog) {
 	var vm = this;
 
 	vm.m_names = new Array("January", "February", "March", "April",
@@ -48,6 +47,27 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 			});
 	};
 
+	vm.unbookBoothDialog = function(booth) {
+    ngDialog.openConfirm({
+      template: 'app/views/pages/ConfirmationPopup.html'
+    }).then(
+      function() {
+        $http.post('api/unbook', {body: JSON.stringify({
+          timeSlot: vm.date,
+          boothNumber: booth.boothNumber,
+          boothType: booth.boothType
+        })})
+        .success (function (data, status, xhr, config) {
+          vm.repopulate();
+        })
+        .error(function (data, status, xhr, config){
+        });
+      },
+      function() {
+        //do nothing
+      }
+    )
+  };
 	vm.toggleEditField = function() {
 		if (vm.editClicked == false) {
 			vm.editClicked = true;
@@ -79,4 +99,5 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.getAccount(vm.userID);
 	vm.getActiveBooths(vm.userID);
 
-}]);
+}
+]);
