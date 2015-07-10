@@ -15,9 +15,11 @@ module.exports = function(app, express) {
 
   // Authentication routes
   router.post('/auth', Authenticate.auth);
-  router.post('/login', Authenticate.ensureLoggedOut, Authenticate.login);
+  router.post('/login', Authenticate.login);
   router.post('/logout', Authenticate.ensureLoggedIn, Authenticate.logout);
-  router.post('/signup', Authenticate.ensureLoggedOut, Authenticate.signup);
+  router.post('/signup', Authenticate.signup);
+  router.post('/reset', Authenticate.reset);      // Generate a token and send an email to the user with said token
+  router.post('/doreset', Authenticate.doreset);  // Check to see if token is correct, and reset the password
 
   // Booth Routes (book booth, unbook booth, etc.) ..
   router.post('/getbooths', Booth.getBooths);
