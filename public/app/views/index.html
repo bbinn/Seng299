@@ -23,6 +23,8 @@
 
 		<!-- Order here is important. app.js must* come first -->
 		<script src="app/app.js"></script>
+		<script src="app/utils.js"></script>
+		<script src="app/controllers/alertCtrl.js"></script>
 		<script src="app/controllers/authenticate.js"></script>
 		<script src="app/controllers/scheduleCtrl.js"></script>
 		<script src="app/controllers/vendorsCtrl.js"></script>
@@ -34,13 +36,15 @@
 
 	<body ng-app="userApp">
 		<div ng-controller="authController as auth">
-			<div ng-include="'app/views/navbar/index.html'"></div>
-			<div class="container">
-				<div class="ngViewContainer">
-					<div ng-view></div>
+			<div ng-controller="alertController as alert" id="alertController" >
+				<div ng-include="'app/views/navbar/index.html'"></div>
+				<div class="container">
+					<div class="ngViewContainer">
+						<div ng-view></div>
+					</div>
 				</div>
+				<div ng-include="'app/views/footer/index.html'"></div>
 			</div>
-			<div ng-include="'app/views/footer/index.html'"></div>
 		</div>
 	</body>
 </html>

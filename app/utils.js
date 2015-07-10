@@ -2,7 +2,7 @@
 config = require('../config');
 crypto = require('crypto');
 
-var ServerUtils
+var ServerUtils;
 ServerUtils = (function() {
 
   //Empty constructor
@@ -105,8 +105,10 @@ ServerUtils = (function() {
     return callback( Date.now() + '_' + rand() + rand() + rand() + rand() + rand() + rand());
   }
 
+  // Note: This regex is not perfect, nor will it accept every email. Format:
+  // [#@#.#]
   ServerUtils.validateEmail = function(email){
-    var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}./
+    var re = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]+/
     return re.test(email);
   }
 

@@ -320,7 +320,7 @@ signup = function(body, callback) {
     return callback('Invalid arguments');
   }
 
-  if(!utils.validateEmail()){
+  if(!utils.validateEmail(email)){
     return callback('A valid email is required!');
   }
 
