@@ -21,7 +21,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
     var defaultText = "Empty";
 
     //allow vendors and admins to book booths
-    if (activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
+    if (+vm.date > +today && activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
       defaultText = "+ Book this booth";
     }
 
@@ -44,17 +44,15 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       for (var i = 0; i < data.docs.length; i++) {
         if (data.docs[i].boothType == 'lunch') {
           vm.lunchBooths[data.docs[i].boothNumber] = data.docs[i];
-          //console.log(activeUser._id);
-          //console.log(data.docs[i].vendorId);
-          vm.lunchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+          vm.lunchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
         if (data.docs[i].boothType == 'produce') {
           vm.produceBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.produceBooths[data.docs[i].boothNumber].additionalText = (activeUser && (data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+          vm.produceBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
         if (data.docs[i].boothType == 'merch') {
           vm.merchBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.merchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+          vm.merchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
       }
     });
@@ -104,7 +102,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   vm.showDialog = function(booth) {
     //only let vendors and admins book booths
     if (booth.unbooked) {
-      if (!activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
+      if (+vm.date <= +today || !activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
         return;
       }
       //open the book booth dialog
