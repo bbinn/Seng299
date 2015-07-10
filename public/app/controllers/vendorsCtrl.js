@@ -1,13 +1,18 @@
-angular.module('userApp').controller('VendorController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
+angular.module('userApp')
+.controller('VendorController',
+['$scope', '$http', '$sce', '$location',
+function($scope, $http, $sce, $location) {
 
   var vm = this;
   vm.searchMessage = "";
   vm.vendorName = "";
   vm.vendors = [];
   vm.header = "All Vendors"
+  vm.noVendors = false;
+  vm.noVendorsImg = $sce.trustAsResourceUrl('../../assets/images/sadCat.jpg');
 
   var today = new Date();
-  vm.date = new Date(today.getYear(), today.getMonth(), today.getDay(), 0, 0, 0, 0);
+  vm.date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0);
 
   vm.filterTypes = [{
     id: 0,
@@ -36,13 +41,23 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   }
 
   vm.viewProfile = function(id) {
-    document.location.href = "http://localhost:8080/account/" + id;
+    $location.path("/account/" + id);
   }
   vm.search = function(){
     $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor", fuzzyName: vm.vendorName  })})
     .success(function(data, status, headers, config) {
       var docs = data.docs;
-      vm.populateVendors(docs);
+      if(docs.length == 0)
+      {
+        vm.noVendors = true;
+        vm.vendors = [];
+      }
+      else
+      {
+        vm.populateVendors(docs);
+        vm.noVendors = false;
+      }
+
     });
   }
 
@@ -59,10 +74,22 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
     }
     else if(type.id == 1) {
       vm.header = "This Week's Vendors"
-      $http.post('api/getbooths', {body: JSON.stringify({ timeSlot: vm.date })})
+      vm.vendors = [];
+      $http.post('api/getbooths', {body: JSON.stringify({ timeSlotMin: vm.date.getDate, timeSlotMax: (vm.date.getDate() + 7)})})
       .success(function (data, status, xhr, config) {
         var docs = data.docs;
-        vm.populateVendors(docs);
+        var vendorsids = [];
+        console.log(docs);
+        for(var i = 0; i < docs.length; i++){
+          vendorsids.push(docs[i].vendorId);
+        }
+        console.log(vendorsids);
+        $http.post('api/getAccount', {body: JSON.stringify({ ids: vendorsids })})
+        .success(function (data, status, xhr, config) {
+          var docs = data.docs;
+          console.log(docs);
+          vm.populateVendors(docs);
+        });
       });
     }
     else if(type.id == 2) {

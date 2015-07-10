@@ -16,6 +16,10 @@
       <div class="vendorHeader">
         <h2>{{v.header}}</h2>
       </div>
+        <div ng-if="v.noVendors">
+          <h1>OH NOOO! VENDOR NOT FOUND!</h1>
+          <img ng-src="{{v.noVendorsImg}}">
+        </div>
         <ul class="vendorList">
           <li class="singleVendor" ng-repeat="vendor in v.vendors" ng-click="v.viewProfile(vendor.id)">
             <img class="center-cropped" ng-src="{{vendor.profilePic}}">
