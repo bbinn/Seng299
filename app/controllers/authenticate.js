@@ -2,6 +2,7 @@ var Account           = require('../models/account');
 var ResetModel        = require('../models/reset');
 var bcrypt            = require('bcrypt-nodejs');
 var IDController      = require('./id');
+var bcrypt            = require('bcrypt-nodejs');
 var utils             = require('../utils');
 var config            = require('../../config');
 var EmailController   = require('./email');
@@ -165,15 +166,23 @@ AuthenticateController = (function() {
         }
         var account = docs[0];
 
-        // Update the account password
-        Account.update({_id: accountId}, {$set: {password: newpass}}, function(error, results){
-          if(error){
-            return res.status(500).send({error: error});
+        // Hash the new password
+        bcrypt.hash(newpass, null, null, function(err, hash) {
+          if (err) {
+            res.status(500).send({error: 'Generating hash'});
           }
-          console.log(newpass);
-          // Remove the token from the documents
-          res.status(200).send();
+          // Update the account password (hash it)
+          Account.update({_id: accountId}, {$set: {password: hash}}, function(error, results){
+            if(error){
+              return res.status(500).send({error: error});
+            }
+
+            // Remove the token from the documents
+            res.status(200).send();
+          });
         });
+
+
       });
     });
   }

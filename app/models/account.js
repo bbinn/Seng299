@@ -48,21 +48,6 @@ AccountSchema.pre('save', function(next) {
 	});
 });
 
-AccountSchema.pre('update', function(next) {
-	var account = this;
-	// hash the password only if the password has been changed or account is new
-	if (!account.isModified('password')){
-		return next();
-	}
-	bcrypt.hash(account.password, null, null, function(err, hash) {
-		if (err) {
-			return next(err);
-		}
-		account.password = hash; // change the password to the hashed version
-		return next();
-	});
-});
-
 
 // method to compare a given password with the database hash
 AccountSchema.methods.comparePassword = function(password, callback) {
