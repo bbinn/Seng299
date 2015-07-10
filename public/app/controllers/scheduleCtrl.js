@@ -5,11 +5,12 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   var vm = this;
   var today = new Date();
-  vm.date = new Date(today.getYear(), today.getMonth(), today.getDay(), 0, 0, 0, 0);
+  vm.date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0); //set hours, minutes, seconds, milliseconds to 0
   vm.booths = [];
   vm.lunchBooths = [];
   vm.produceBooths = [];
   vm.merchBooths = [];
+  vm.currentUser = activeUser;
 
   //Set the current day as checked by default
   var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
@@ -18,12 +19,10 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   vm.repopulate = function() {
     var defaultText = "Empty";
-    var defaultId = -1;
 
     //allow vendors and admins to book booths
-    if (activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
+    if (+vm.date > +today && activeUser && (activeUser.accountType == "vendor" || activeUser.accountType == "admin")) {
       defaultText = "+ Book this booth";
-      defaultId = 0;
     }
 
     $http.post('api/getbooths', {body: JSON.stringify({ timeSlot: vm.date })})
@@ -45,12 +44,15 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       for (var i = 0; i < data.docs.length; i++) {
         if (data.docs[i].boothType == 'lunch') {
           vm.lunchBooths[data.docs[i].boothNumber] = data.docs[i];
+          vm.lunchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
         if (data.docs[i].boothType == 'produce') {
           vm.produceBooths[data.docs[i].boothNumber] = data.docs[i];
+          vm.produceBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
         if (data.docs[i].boothType == 'merch') {
           vm.merchBooths[data.docs[i].boothNumber] = data.docs[i];
+          vm.merchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
       }
     });
@@ -74,12 +76,35 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
     vm.repopulate();
   }
 
+
+  vm.unbookBoothDialog = function(booth) {
+    ngDialog.openConfirm({
+      template: 'app/views/pages/ConfirmationPopup.html'
+    }).then(
+      function() {
+        $http.post('api/unbook', {body: JSON.stringify({
+          timeSlot: vm.date,
+          boothNumber: booth.boothNumber,
+          boothType: booth.boothType
+        })})
+        .success (function (data, status, xhr, config) {
+          vm.repopulate();
+        })
+        .error(function (data, status, xhr, config){
+        });
+      },
+      function() {
+        //do nothing
+      }
+    )
+  }
+
   vm.showDialog = function(booth) {
-    //-1 means unauthenticated
-    if (booth.id == -1) {
-      return;
-    }
+    //only let vendors and admins book booths
     if (booth.unbooked) {
+      if (+vm.date <= +today || !activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
+        return;
+      }
       //open the book booth dialog
       ngDialog.openConfirm({
         template: 'app/views/pages/BookBoothPopup.html',
@@ -87,23 +112,31 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
         controller: 'BoothPopupController'
       }).then(
         function(value) {
-          $http.post('api/bookbooth', {body: JSON.stringify({
-            title:       value[0],
-            timeSlot:    vm.date,
-            vendorId:    activeUser.id,
-            boothType:   booth.type,
-            boothNumber: booth.id,
-            description: value[1]
-          })})
-          .success(function(data, status, xhr, config) {
-            console.log(data);
-            vm.repopulate();
-          })
-          .error(function(data, status, xhr, config) {
-            console.log(data);
-          });
+          //find out if the user really wants to book the booth
+          ngDialog.openConfirm({
+            template: 'app/views/pages/ConfirmationPopup.html'
+          }).then(
+            function() {
+              $http.post('api/bookbooth', {body: JSON.stringify({
+                title:       value[0],
+                timeSlot:    vm.date,
+                vendorId:    activeUser.id,
+                boothType:   booth.type,
+                boothNumber: booth.id,
+                description: value[1]
+              })})
+              .success(function(data, status, xhr, config) {
+                console.log(data);
+                vm.repopulate();
+              })
+              .error(function(data, status, xhr, config) {
+                console.log(data);
+              });
+            },
+            function(value) { } //just close if "no" was pressed to the confirmation dialog
+          )
         },
-        function(value) { }
+        function(value) { } //just close if "cancel" was pressed in the book booth dialog
       );
     }
     else {
