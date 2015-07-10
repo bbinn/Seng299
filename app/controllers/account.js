@@ -168,24 +168,53 @@ AccountController = (function() {
     }
 
     body = utils.safeParse(req.body.body);
+
     var vendorId = body.vendorId;
+    var name = body.name;
+    var company = body.company;
+    var age = body.age;
+    var email = body.email;
+    var phone = body.phone;
     var description = body.description;
-    // TODO: add other attributes
-    var query = {};
+
+    var query= {};
 
     if(vendorId != null && vendorId != undefined) {
-      query._id = vendorId;
+      var id = vendorId;
+    }
+
+    if(name != null && name != undefined) {
+      query.name = name;
+    }
+
+    if(company != null && company != undefined) {
+      query.company = company;
+    }
+
+    if(age != null && age != undefined) {
+      query.age = age;
+    }
+
+    if(email != null && email != undefined) {
+      query.email = email;
+    }
+
+    if(phone != null && phone != undefined) {
+      query.phone = phone;
     }
 
     if(description != null && description != undefined) {
       query.description = description;
     }
-
-    Account.update({_id: query._id}, {
-      $set: {description: query.description}
+    console.log(query);
+    Account.update({_id: id}, {
+      $set: query
     }, function(err, doc) {
-      if (err) return res.send(500, {error: err});
-      return res.status(200).send("Success");
+      if (err) {
+        console.log(err);
+        return res.status(500).send({error: err});
+      }
+      res.status(200).send("Success");
     });
   };
 
