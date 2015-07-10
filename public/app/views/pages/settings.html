@@ -1,0 +1,42 @@
+<body>
+  <div ng-controller="profileController as p">
+  <link rel="stylesheet" type="test/css" href="../../assets/login.css">
+
+    <h2>Edit account information</h2>
+    <div class="editInformation" ng-controller="profileEditController as e">
+      Name: <span ng-bind="p.userName"></span>
+      <br>
+      <input class="editField" type="button" ng-hide="e.editName" value="Edit account name" ng-click="e.toggleEdit(e.editName, e.edits.NAME)">
+      <input id="name" ng-show="e.editName" type="text" ng-model="p.userName">
+      <input class="saveField" type="button" ng-show="e.editName" value="Save" ng-click="e.saveEdit(e.editName, e.editsName, p.userID)">
+      <br>
+      <div class="field" >
+        Company:
+      </div>
+      <input id="company" type="text" name="company">
+      <br>
+      <div class="field" >
+        Age:
+      </div>
+      <input id="age" type="text" name="age">
+      <br>
+      <div class="field" >
+        Email:
+      </div>
+      <input id="email" type="text" name="email">
+      <br>
+      <div class="field" >
+        Phone:
+      </div>
+      <input id="phone" type="text" name="phone">
+      <br>
+      <div class="field" >
+        Address:
+      </div>
+      <input id="address" type="text" name="address">
+      <br>
+      <!--<a href="" ng-controller="authController as a" ng-click="updateInformation">Save</a>-->
+
+    </div>
+  </div>
+</body>

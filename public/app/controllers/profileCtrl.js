@@ -91,3 +91,78 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.getActiveBooths(vm.userID);
 
 }]);
+
+angular.module('userApp').controller('profileEditController', ['$scope', '$http', function($scope, $http) {
+
+	var vm = this;
+
+	vm.edits = {
+		NAME: 0,
+		COMPANY: 1,
+		AGE: 2,
+		EMAIL: 3,
+		ADDRESS: 4,
+		PHONE: 5
+	}
+
+	vm.editName = false;
+	vm.editCompany = false;
+	vm.editAge = false;
+	vm.editEmail = false;
+	vm.editAddress = false;
+	vm.editPhone = false;
+
+	vm.toggleEdit = function(field, editType) {
+		var temp = field;
+		if (temp == false) {
+			temp = true;
+		} else {
+			temp = false;
+		}
+
+		switch (editType) {
+			case vm.edits.NAME:
+				vm.editName = temp;
+				break;
+			case vm.edits.COMPANY:
+				vm.editCompany = temp;
+				break;
+			case vm.edits.AGE:
+				vm.editAge = temp;
+				break;
+			case vm.edits.EMAIL:
+				vm.editEmail = temp;
+				break;
+			case vm.edits.ADDRESS:
+				vm.editAddress = temp;
+				break;
+			case vm.edits.PHONE:
+				vm.editPhone = temp;
+				break;
+			default:
+				break;	
+		}
+	}
+
+	vm.saveEdit = function(field, editType, userID) {
+		
+		switch (editType) {
+			case vm.edits.NAME:
+				break;
+			case vm.edits.COMPANY:
+				break;
+			case vm.edits.AGE:
+				break;
+			case vm.edits.EMAIL:
+				break;
+			case vm.edits.ADDRESS:
+				break;
+			case vm.edits.PHONE:
+				break;
+			default:
+				break;	
+		}
+
+		vm.toggleEdit(field, editType);
+	}
+}]);

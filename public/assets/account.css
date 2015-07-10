@@ -1,3 +1,8 @@
+h2 {
+	font-size: 24px;
+	margin: 15px 0px;
+	text-align: center;
+}
 
 .header {
 	position: relative;
@@ -52,7 +57,7 @@
 }
 
 .content {
-	margin: 20px 100px;
+	margin: 15px 100px;
 	width: 100%;
 }
 
