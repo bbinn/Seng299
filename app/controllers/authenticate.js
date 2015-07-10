@@ -178,11 +178,11 @@ AuthenticateController = (function() {
             }
 
             // Remove the token from the documents
-            res.status(200).send();
+            ResetModel.remove({token: token}, function() {
+              return res.status(200).send();
+            });
           });
         });
-
-
       });
     });
   }
