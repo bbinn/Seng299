@@ -176,6 +176,9 @@ angular.module('userApp').controller('profileEditController', ['$scope', '$http'
 				break;
 			case vm.edits.EMAIL:
 				new_value = document.getElementById('emailEdit').value.trim();
+        if(!ClientUtils.validateEmail(new_value)){
+       		return angular.element(document.getElementById('alertController')).scope().alert.showAlert('Please enter a valid email');
+				}
 				$http.post('api/changeaccount', {body: JSON.stringify({vendorId: curr_user_id, email: new_value})})
 					.success(function(data, status, headers, config) {
 				});
