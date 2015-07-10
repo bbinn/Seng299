@@ -3,8 +3,17 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   var vm = this;
   vm.searchMessage = "";
   vm.vendorName = "";
-  vm.vendorsThisWeek = [];
+  vm.vendors = [];
   vm.header = "All Vendors"
+
+  var today = new Date();
+  vm.date = new Date(today.getYear(), today.getMonth(), today.getDay(), 0, 0, 0, 0);
+
+  console.log(vm.date.getYear());
+  console.log(vm.date.getMonth());
+  console.log(vm.date.getDay());
+  console.log(today.getDay());
+
   vm.filterTypes = [{
     id: 0,
     name: "All Vendors",
@@ -20,13 +29,14 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor" })})
   .success(function(data, status, headers, config) {
     var docs = data.docs;
-    vm.populateVendorsContainer(docs);
+    vm.populateVendors(docs);
+    vm.vendorSort(0);
   });
 
-  vm.populateVendorsContainer = function(docs){
-    vm.vendorsThisWeek = [];
+  vm.populateVendors = function(docs){
+    vm.vendors = [];
     for(var i = 0; i < docs.length; i++){
-      vm.vendorsThisWeek.push({id: docs[i]._id,  username: docs[i].username, description: docs[i].description, profilePic: docs[i].avatarLink});
+      vm.vendors.push({id: docs[i]._id,  username: docs[i].username, description: docs[i].description, profilePic: docs[i].avatarLink});
     }
   }
 
@@ -39,7 +49,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
     $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor", fuzzyName: vm.vendorName  })})
     .success(function(data, status, headers, config) {
       var docs = data.docs;
-      vm.populateVendorsContainer(docs);
+      vm.populateVendors(docs);
     });
   }
 
@@ -50,13 +60,17 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
       $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor" })})
       .success(function(data, status, headers, config) {
         var docs = data.docs;
-        vm.populateVendorsContainer(docs);
+        vm.populateVendors(docs);
+        vm.vendorSort(0);
       });
-      vm.vendorSort(0);
     }
     else if(type.id == 1) {
       vm.header = "This Week's Vendors"
-
+      $http.post('api/getbooths', {body: JSON.stringify({ timeSlot: vm.date })})
+      .success(function (data, status, xhr, config) {
+        var docs = data.docs;
+        vm.populateVendors(docs);
+      });
     }
     else if(type.id == 2) {
       vm.header = "Top Followed Vendors"
@@ -65,6 +79,16 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   }
   vm.vendorSort = function(type){
 
+    //alphabetically sort vendors list
+    if(type == 0) {
+      vm.vendors.sort(function(a, b){
+        var aUsername = a.username.toLowerCase();
+        var bUsername = b.username.toLowerCase();
+        if(aUsername < bUsername) return -1;
+        if(aUsername > bUsername) return 1;
+        return 0;
+      });
+    }
   }
 
 }]);

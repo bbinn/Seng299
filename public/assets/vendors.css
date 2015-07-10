@@ -19,9 +19,37 @@ input[type="text"]:focus {
   outline: 0;
   box-shadow: none;
 }
-select {
+.dropdown {
+    /* Size and position */
+  width: auto;
+  padding: 7px;
+  margin: 0 auto;
   text-align: left;
+
+  /* Styles */
+  background: #9bc7de;
+  color: #fff;
+  outline: none;
   cursor: pointer;
+
+  /* Font settings */
+  font-weight: bold;
+}
+.dropdown:after {
+  content: "";
+  right: 16px;
+  margin-top: -6px;
+  border-width: 6px 0 6px 6px;
+  border-style: solid;
+  border-color: transparent #fff;
+}
+.dropdown:focus {
+  outline: none;
+  box-shadow: none;
+  background: #91b2cc;
+}
+.dropdown:hover {
+  background: #91b2cc;
 }
 /*.searchButton {
   padding: 6px 4px 6px 4px;

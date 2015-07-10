@@ -3,11 +3,12 @@
 
   <!-- Search Box! -->
   <div class="centerText">
-    <select ng-model="filterTypeSelected" ng-change="v.filterVendors(filterTypeSelected)"
+
+    <input type="text" placeholder="Search all Vendors!" ng-model="v.vendorName" ng-change="v.search()">
+    <select class="dropdown" ng-model="filterTypeSelected" ng-change="v.filterVendors(filterTypeSelected)"
             data-ng-options="filterType as filterType.name for filterType in v.filterTypes">
       <option value="">Vendor Filter<option>
     </select>
-    <input type="text" placeholder="Search all Vendors!" ng-model="v.vendorName" ng-change="v.search()">
     <!-- <input class="searchButton" type="button" value="Search!" ng-click="v.search()"> -->
     <div class="vendorContainer">
 
@@ -15,8 +16,8 @@
       <div class="vendorHeader">
         <h2>{{v.header}}</h2>
       </div>
-      <ul class=".5columns">
-        <li class="singleVendor" ng-repeat="vendor in v.vendorsThisWeek" ng-click="v.viewProfile(vendor.id)">
+      <ul>
+        <li class="singleVendor" ng-repeat="vendor in v.vendors" ng-click="v.viewProfile(vendor.id)">
           <img class="center-cropped" ng-src="{{vendor.profilePic}}">
           <div class="description">
             <h2>{{vendor.username}}</h2>
