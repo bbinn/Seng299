@@ -102,7 +102,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   vm.showDialog = function(booth) {
     //only let vendors and admins book booths
     if (booth.unbooked) {
-      if (+vm.date <= +today && !activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
+      if (+vm.date <= +today || !activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
         return;
       }
       //open the book booth dialog
