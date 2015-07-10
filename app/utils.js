@@ -2,7 +2,7 @@
 config = require('../config');
 crypto = require('crypto');
 
-var ServerUtils
+var ServerUtils;
 ServerUtils = (function() {
 
   //Empty constructor
@@ -95,6 +95,21 @@ ServerUtils = (function() {
   // Do a deep clone
   ServerUtils.deepClone = function(data){
     return JSON.parse(JSON.stringify(data));
+  }
+
+  // Generate a token
+  ServerUtils.generateToken = function(callback){
+    var rand = function() {
+      return Math.random().toString(36).substr(2); // Only take the decimal as a base 32 number
+    };
+    return callback( Date.now() + '_' + rand() + rand() + rand() + rand() + rand() + rand());
+  }
+
+  // Note: This regex is not perfect, nor will it accept every email. Format:
+  // [#@#.#]
+  ServerUtils.validateEmail = function(email){
+    var re = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]+/
+    return re.test(email);
   }
 
 
