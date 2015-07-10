@@ -9,11 +9,6 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   var today = new Date();
   vm.date = new Date(today.getYear(), today.getMonth(), today.getDay(), 0, 0, 0, 0);
 
-  console.log(vm.date.getYear());
-  console.log(vm.date.getMonth());
-  console.log(vm.date.getDay());
-  console.log(today.getDay());
-
   vm.filterTypes = [{
     id: 0,
     name: "All Vendors",

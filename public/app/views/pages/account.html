@@ -23,17 +23,10 @@
 
 	<div class="content">
 
-		<div class="description">
-			<p ng-bind="p.description"></p>
-			<br>
-			<input class="accountDescriptionEdit" ng-hide="p.editClicked" ng-if="p.userID == auth.activeUser._id" type="button" value="Edit description" ng-click="p.toggleEditField()">
-			<input id="descriptionEditField" ng-show="p.editClicked" type="text" ng-model="p.description">
-			<br>
-			<a class="accountDescriptionEdit" href="" ng-show="p.editClicked" ng-click="p.editDescription()">Save</a>
-		</div>
-
 		<div ng-show="p.canBook" id="sidebar">
-			<div ng-if="p.hasBooths">
+			<!-- <h2>Booked Booths</h2> -->
+			<!-- <div ng-if="p.hasBooths"> -->
+			<div>
 				<table>
 				<thead>
 					<tr>
@@ -41,9 +34,13 @@
 						<th>Booth Type</th>
 						<th>Time</th>
 					</tr>
+					<tr>
+						<th colspan="3" ng-if="!p.hasBooths">This user does not have any booked booths.</th>
+					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="booth in p.activeBooths">
+
 					<td ng-if="auth.activeUser._id == p.userID"><a href ng-click="p.unbookBoothDialog(booth)">{{booth.title}}</td>
 					<td ng-if="auth.activeUser._id != p.userID">{{booth.title}}</td>
 					<td>{{booth.boothType}}</td>
@@ -53,6 +50,17 @@
 				</table>
 			</div>
 		</div>
+
+		<div class="description">
+			<p ng-hide="p.editClicked" ng-bind="p.description"></p>
+			<br>
+			<input class="accountDescriptionEdit" ng-hide="p.editClicked" ng-if="p.userID == auth.activeUser._id" type="button" value="Edit description" ng-click="p.toggleEditField()">
+			<textarea id="descriptionEditField" class="descriptionEditField" ng-show="p.editClicked" type="text" ng-model="p.description"></textarea>
+			<br>
+			<a class="accountDescriptionEdit" href="" ng-show="p.editClicked" ng-click="p.editDescription()">Save</a>
+		</div>
+
+
 
 </div>
 </body>
