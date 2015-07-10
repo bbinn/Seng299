@@ -51,8 +51,6 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 
 	vm.unbookBoothDialog = function(booth) {
 
-		console.log(booth.boothType);
-
     ngDialog.openConfirm({
       template: 'app/views/pages/ConfirmationPopup.html'
     }).then(

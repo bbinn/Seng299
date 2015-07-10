@@ -39,8 +39,6 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
     document.location.href = "http://localhost:8080/account/" + id;
   }
   vm.search = function(){
-    console.log("you just searched: " + vm.vendorName);
-
     $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor", fuzzyName: vm.vendorName  })})
     .success(function(data, status, headers, config) {
       var docs = data.docs;
