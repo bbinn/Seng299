@@ -40,7 +40,12 @@ awarded for creativity.
 ** Installation Instructions **
 npm install
 make sure ruby is installed (required for mailcatcher, for emails on localhost)
-gem install mailcatcher (if not installed already)
+to do so, install rvm, ruby, and mailcatcher, using the following commands:
+curl -sSL https://get.rvm.io | bash
+rvm install ruby
+gem install mailcatcher
+
+** Instructions to run the project **
 mailcatcher --foreground --http-ip=0.0.0.0
 node server.js
 navigate to localhost:8080
