@@ -2,7 +2,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 
 	var vm = this;
 
-	vm.m_names = new Array("January", "February", "March", "April", 
+	vm.m_names = new Array("January", "February", "March", "April",
 	"May", "June", "July", "August","September", "October", "November", "December");
 
 	vm.date = new Date();
@@ -74,9 +74,9 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 
 	if (typeof vm.userID === 'undefined') {
 		vm.userID = activeUser._id;
-	} 
+	}
 
-	vm.getAccount(vm.userID);	
+	vm.getAccount(vm.userID);
 	vm.getActiveBooths(vm.userID);
 
 }]);

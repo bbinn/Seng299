@@ -1,8 +1,11 @@
-var Account       = require('../models/account');
-var bcrypt        = require('bcrypt-nodejs');
-var IDController  = require('./id');
-var utils         = require('../utils');
-var config        = require('../../config');
+var Account           = require('../models/account');
+var ResetModel        = require('../models/reset');
+var bcrypt            = require('bcrypt-nodejs');
+var IDController      = require('./id');
+var bcrypt            = require('bcrypt-nodejs');
+var utils             = require('../utils');
+var config            = require('../../config');
+var EmailController   = require('./email');
 
 var AuthenticateController;
 AuthenticateController = (function() {
@@ -47,7 +50,7 @@ AuthenticateController = (function() {
 
   // API Call
   AuthenticateController.login = function(req, res) {
-    body = utils.safeParse(req.body.body);
+    var body = utils.safeParse(req.body.body);
     login(body, function(err, sessionToken, account) {
       if(err != null) {
         utils.clearCookie(res);
@@ -60,6 +63,129 @@ AuthenticateController = (function() {
       }
     })
   }
+
+  AuthenticateController.reset = function(req, res) {
+    var body = utils.safeParse(req.body.body);
+    var email = body.email;
+    if(email == null || email == undefined)
+    {
+      return res.status(400).send({error: 'Email is required'});
+    }
+    if(!utils.validateEmail(email)){
+      return res.status(400).send({error: 'A valid email is required'});
+    }
+    Account.find({
+      email: email
+    })
+    .exec(function (error, docs) {
+      //Find to see if this booth is already booked
+      if(error) {
+        return res.status(500).send({error: error});
+      }
+      if(docs.length == 0)
+      {
+        return res.status(200).send();
+      }
+      var account = docs[0];
+      var id = account._id;
+
+      utils.generateToken(function(token){
+        ResetModel.findOneAndUpdate(
+          {accountId: id},
+          {$set: {token: token}},
+          {upsert: true},
+          function(error, doc){
+            if(error)
+            {
+              return res.status(500).send(error);
+            }
+            if(doc == null)
+            {
+              return res.status(500).send('No file found');
+            }
+
+            // Send email here to the user with a token
+            opts = {
+              to: email,
+              subject: 'Password Reset',
+              text: ('Reset password here! ' + config.server + '/reset/' + token),
+              html: ('<div>Reset Password: <a href="' + config.server + '/reset/' + token + '">Here</a></div>')
+            };
+
+            EmailController.sendEmail(opts, function(error){
+              if(error){
+                return res.status(500).send({error: error});
+              }
+              else
+              {
+                return res.status(200).send();
+              }
+            });
+          }
+        );
+      });
+    });
+  }
+
+
+  AuthenticateController.doreset = function(req, res) {
+    var body = utils.safeParse(req.body.body);
+    var token = body.token;
+    var newpass = body.password;
+    if(token == null || token == undefined || newpass == null || newpass == undefined)
+    {
+      return res.status(400).send({error: 'Missing token or password'});
+    }
+
+    // Find userId for token
+    ResetModel.find({token: token }, function (err, docs) {
+      if(err)
+      {
+        return res.status(400).send('Invalid token');
+      }
+      if(docs.length == 0)
+      {
+        return res.status(400).send('Invalid token'); // No user, so we pass it as a null
+      }
+      var info = docs[0];
+      accountId = info.accountId;
+
+      // Find account with userId
+      Account.find({
+        _id: accountId,
+      })
+      .exec(function (error, docs) {
+        if(err)
+        {
+          return res.status(400).send('Invalid token');
+        }
+        if(docs.length == 0)
+        {
+          return res.status(400).send('Invalid token'); // No user, so we pass it as a null
+        }
+        var account = docs[0];
+
+        // Hash the new password
+        bcrypt.hash(newpass, null, null, function(err, hash) {
+          if (err) {
+            res.status(500).send({error: 'Generating hash'});
+          }
+          // Update the account password (hash it)
+          Account.update({_id: accountId}, {$set: {password: hash}}, function(error, results){
+            if(error){
+              return res.status(500).send({error: error});
+            }
+
+            // Remove the token from the documents
+            ResetModel.remove({token: token}, function() {
+              return res.status(200).send();
+            });
+          });
+        });
+      });
+    });
+  }
+
 
   // API Call
   AuthenticateController.logout = function(req, res) {
@@ -85,8 +211,6 @@ AuthenticateController = (function() {
           });
         }
       }
-      console.log(sessionToken);
-      console.log(results);
       //Handle success
       utils.setCookie(res, sessionToken);
       res.status(200).send(
@@ -196,6 +320,10 @@ signup = function(body, callback) {
     return callback('Invalid arguments');
   }
 
+  if(!utils.validateEmail(email)){
+    return callback('A valid email is required!');
+  }
+
   var account = new Account();
 
   // User info
@@ -237,12 +365,3 @@ signup = function(body, callback) {
 }
 
 module.exports = AuthenticateController;
-
-
-
-
-
-
-
-
-
