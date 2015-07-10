@@ -83,7 +83,7 @@ BoothController = (function() {
   // unbook
   // timeSlot = body.timeSlot;
   // boothNumber = body.boothNumber
-  BoothController.unbook = function(req, res) {
+  BoothController.unbook = function(req, res, accountInformation) {
     body = utils.safeParse(req.body.body);
 
     var timeSlot = body.timeSlot;
@@ -93,12 +93,17 @@ BoothController = (function() {
     var query = {
       timeSlot: timeSlot,
       boothNumber: boothNumber,
-      boothType: boothType
+      boothType: boothType,
+    }
+    
+    //if you're not an admin, you must be the vendor who booked the booth in order to unbook it
+    if (accountInformation.accountType != "admin") {
+      query.vendorId = accountInformation._id;
     }
 
     Booth.find(query)
     .exec(function (err, docs) {
-      if(err) {
+      if(err || docs.length == 0) {
         return res.status(200).send();
       }
       Booth.remove(query, function() {

@@ -45,17 +45,15 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       for (var i = 0; i < data.docs.length; i++) {
         if (data.docs[i].boothType == 'lunch') {
           vm.lunchBooths[data.docs[i].boothNumber] = data.docs[i];
-          //console.log(activeUser._id);
-          //console.log(data.docs[i].vendorId);
-          vm.lunchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+          vm.lunchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
         if (data.docs[i].boothType == 'produce') {
           vm.produceBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.produceBooths[data.docs[i].boothNumber].additionalText = (activeUser && (data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+          vm.produceBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
         if (data.docs[i].boothType == 'merch') {
           vm.merchBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.merchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+          vm.merchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
         }
       }
     });
