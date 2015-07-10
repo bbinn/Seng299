@@ -34,6 +34,12 @@ angular.module('userApp', ['ngRoute', 'ngDialog', 'angularFileUpload'])
       .when('/admin', {
         templateUrl: '/app/views/pages/admin.html'
       })
+      .when('/forgot', {
+        templateUrl: '/app/views/pages/forgot.html'
+      })
+      .when('/reset/:token_id?', {
+        templateUrl: '/app/views/pages/reset.html'
+      })
     $locationProvider.html5Mode(true);
 }])
 .filter('trustUrl', function ($sce) {

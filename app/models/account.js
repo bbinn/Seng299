@@ -9,7 +9,7 @@ var AccountSchema = new Schema({
 	name:  { type: String, required: true, select: true},
 	company:  { type: String, required: true, select: true },
 	age:  { type: String, required: true, select: true },
-	email:  { type: String, required: true, select: true },
+	email:  { type: String, required: true, select: true, index: {unique: true} },
 	phone:  { type: String, required: true, select: true },
 	address:  { type: String, required: true, select: true },
 
@@ -35,12 +35,10 @@ var AccountSchema = new Schema({
 // hash the password before the account is saved & generate an ID for them.
 AccountSchema.pre('save', function(next) {
 	var account = this;
-
 	// hash the password only if the password has been changed or account is new
 	if (!account.isModified('password')){
 		return next();
 	}
-
 	bcrypt.hash(account.password, null, null, function(err, hash) {
 		if (err) {
 			return next(err);
@@ -48,7 +46,6 @@ AccountSchema.pre('save', function(next) {
 		account.password = hash; // change the password to the hashed version
 		return next();
 	});
-
 });
 
 
