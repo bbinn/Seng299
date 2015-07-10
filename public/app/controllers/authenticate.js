@@ -1,7 +1,7 @@
 activeUser = null;
 
 angular.module('userApp')
-.controller('authController', function($scope, $http, $location){
+.controller('authController', function($scope, $http, $location, $routeParams, ngDialog){
   var vm = this;
   vm.activeUser = null;
   activeUser = null;
@@ -11,16 +11,20 @@ angular.module('userApp')
   .success(function (data, status, xhr, config){
     if(!data.error)
     {
-      console.log('Successfully Authentificated');
       vm.activeUser = data;
       activeUser = data;
     }
   })
   .error(function (data, status, xhr, config) {
-    console.log(data);
+    ngDialog.open({
+      template: 'app/views/pages/popup/error.html'
+    });
   });
 
   $scope.trySignup = function() {
+
+    var alert = angular.element(document.getElementById('alertController')).scope().alert;
+
     var name = document.getElementById('name').value.trim();
     var company = document.getElementById('company').value.trim();
     var age = document.getElementById('age').value.trim();
@@ -35,10 +39,29 @@ angular.module('userApp')
 
     var accountType = accountTypeField.options[accountTypeField.selectedIndex].value.trim();
 
+    // All fields are filled in
+    if(name.length == 0 ||
+      company.length ==0 ||
+      age.length == 0 ||
+      email.length == 0 ||
+      phone.length == 0 ||
+      address.length == 0 ||
+      username.length == 0||
+      password.length == 0 ||
+      accountType.length == 0
+    ){
+      return alert.showAlert('Please fill out all the fields');
+    }
+
     // Password != confirm password
     if(password != confirmPassword)
     {
-      return console.log('Passwords do not match');
+      return alert.showAlert('Passwords do not match');
+    }
+
+    // Invalid email
+    if(!ClientUtils.validateEmail(email)){
+      return alert.showAlert('Please enter a valid email');
     }
 
     $http.post('api/signup', {body: JSON.stringify(
@@ -61,13 +84,20 @@ angular.module('userApp')
       activeUser = data;
     })
     .error(function (data, status, xhr, config){
-      // TODO: Show popup
       console.log(data);
+      if(data.error){
+        return alert.showAlert(data.error);
+      }
+      else
+      {
+        return alert.showAlert('An error occured on the server');
+      }
     });
   }
 
 
   $scope.tryLogin = function() {
+    var alert = angular.element(document.getElementById('alertController')).scope().alert;
     var username = document.getElementById('loginusername').value.trim();
     var password = document.getElementById('loginpassword').value.trim();
     $http.post('api/login', {body: JSON.stringify(
@@ -82,13 +112,13 @@ angular.module('userApp')
       activeUser = data;
     })
     .error(function (data, status, xhr, config){
-      //TODO: Show popup
-      console.log(data);
+      return alert.showAlert(data.error);
     });
   }
 
 
   $scope.tryLogout =  function() {
+    var alert = angular.element(document.getElementById('alertController')).scope().alert;
     $http.post('api/logout', {body: JSON.stringify({})})
     .success(function (data, status, xhr, config){
       $location.path("/login");
@@ -96,8 +126,50 @@ angular.module('userApp')
       activeUser = null;
     })
     .error(function (data, status, xhr, config) {
-      //TODO: Show popup
-      console.log(data);
+      return alert.showAlert(data.error);
+    });
+  }
+
+  $scope.tryResetPassword = function() {
+    var alert = angular.element(document.getElementById('alertController')).scope().alert;
+    var email = document.getElementById('resetemail').value.trim();
+    if(!ClientUtils.validateEmail(email)){
+      return alert.showAlert('Please enter a valid email');
+    }
+    $http.post('api/reset', {body: JSON.stringify(
+      {
+        email: email
+      }
+    )})
+    .success(function (data, status, xhr, config){
+      return alert.showAlert('An email has been sent!');
+    })
+    .error(function (data, status, xhr, config) {
+      return alert.showAlert('An error occured on the server');
+    });
+  }
+
+  $scope.resetPassword = function() {
+    var alert = angular.element(document.getElementById('alertController')).scope().alert;
+    var token = $routeParams.token_id;
+    var password = document.getElementById('password').value.trim();
+    var confirmpassword = document.getElementById('confirmpassword').value.trim();
+    if(password != confirmpassword)
+    {
+      return alert.showAlert('Passwords do not match');
+    }
+
+    $http.post('api/doreset', {body: JSON.stringify(
+      {
+        token: token,
+        password: password
+      }
+    )})
+    .success(function (data, status, xhr, config){
+      return alert.showAlert('Success! You may log in now.');
+    })
+    .error(function (data, status, xhr, config) {
+      return alert.showAlert(data.error);
     });
   }
 
