@@ -18,9 +18,16 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.getAccount = function(curr_user_id) {
 		$http.post('api/getaccount', {body: JSON.stringify({ vendorId: curr_user_id})})
 			.success(function(data, status, headers, config) {
+
 				vm.userName = data.docs[0].name;
+				vm.company = data.docs[0].company;
+				vm.age = data.docs[0].age;
+				vm.email = data.docs[0].email;
+				vm.address = data.docs[0].address;
+				vm.phone = data.docs[0].phone;
 				vm.avatarLink = data.docs[0].avatarLink;
 				vm.bannerLink = data.docs[0].bannerLink;
+				
 				if (typeof data.docs[0].description !== "undefined") {
 					vm.description = data.docs[0].description;
 				}
@@ -144,20 +151,46 @@ angular.module('userApp').controller('profileEditController', ['$scope', '$http'
 		}
 	}
 
-	vm.saveEdit = function(field, editType, userID) {
+	vm.saveEdit = function(field, editType, curr_user_id) {
 		
+		var new_value;
+
 		switch (editType) {
 			case vm.edits.NAME:
+				new_value = document.getElementById('nameEdit').value.trim();
+				$http.post('api/changeaccount', {body: JSON.stringify({vendorId: curr_user_id, name: new_value})})
+					.success(function(data, status, headers, config) {
+				});
 				break;
 			case vm.edits.COMPANY:
+				new_value = document.getElementById('companyEdit').value.trim();
+				$http.post('api/changeaccount', {body: JSON.stringify({vendorId: curr_user_id, company: new_value})})
+					.success(function(data, status, headers, config) {
+				});
 				break;
 			case vm.edits.AGE:
+				new_value = document.getElementById('ageEdit').value.trim();
+				$http.post('api/changeaccount', {body: JSON.stringify({vendorId: curr_user_id, age: new_value})})
+					.success(function(data, status, headers, config) {
+				});
 				break;
 			case vm.edits.EMAIL:
+				new_value = document.getElementById('emailEdit').value.trim();
+				$http.post('api/changeaccount', {body: JSON.stringify({vendorId: curr_user_id, email: new_value})})
+					.success(function(data, status, headers, config) {
+				});
 				break;
 			case vm.edits.ADDRESS:
+				new_value = document.getElementById('addressEdit').value.trim();
+				$http.post('api/changeaccount', {body: JSON.stringify({vendorId: curr_user_id, address: new_value})})
+					.success(function(data, status, headers, config) {
+				});
 				break;
 			case vm.edits.PHONE:
+				new_value = document.getElementById('phoneEdit').value.trim();
+				$http.post('api/changeaccount', {body: JSON.stringify({vendorId: curr_user_id, phone: new_value})})
+					.success(function(data, status, headers, config) {
+				});
 				break;
 			default:
 				break;	
