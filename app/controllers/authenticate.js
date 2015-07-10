@@ -237,12 +237,3 @@ signup = function(body, callback) {
 }
 
 module.exports = AuthenticateController;
-
-
-
-
-
-
-
-
-

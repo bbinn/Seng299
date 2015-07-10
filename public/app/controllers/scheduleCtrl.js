@@ -3,8 +3,6 @@ var currentBooth = null;
 angular.module('userApp').controller('ScheduleController', ['$scope', '$http', 'ngDialog', function($scope, $http, ngDialog) {
   'use strict';
 
-
-
   var vm = this;
   var today = new Date();
   vm.date = new Date(today.getYear(), today.getMonth(), today.getDay(), 0, 0, 0, 0);
@@ -17,7 +15,6 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   var days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
   var daybox = document.getElementById(days[vm.date.getDay()]);
   daybox.checked = true;
-
 
   vm.repopulate = function() {
     var defaultText = "Empty";
@@ -58,7 +55,6 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       }
     });
   }
-
 
   vm.changeDay = function(newDay) {
     var oldDay = vm.date.getDay();

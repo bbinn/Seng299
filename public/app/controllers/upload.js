@@ -36,9 +36,3 @@ angular.module('userApp')
 
 
 }]);
-
-
-
-
-
-
