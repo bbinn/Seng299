@@ -71,8 +71,11 @@ AuthenticateController = (function() {
     {
       return res.status(400).send({error: 'Email is required'});
     }
+    if(!utils.validateEmail(email)){
+      return res.status(400).send({error: 'A valid email is required'});
+    }
     Account.find({
-      email: email,
+      email: email
     })
     .exec(function (error, docs) {
       //Find to see if this booth is already booked
@@ -88,7 +91,6 @@ AuthenticateController = (function() {
 
       utils.generateToken(function(token){
         ResetModel.findOneAndUpdate(
-
           {accountId: id},
           {$set: {token: token}},
           {upsert: true},
@@ -97,12 +99,9 @@ AuthenticateController = (function() {
             {
               return res.status(500).send(error);
             }
-            else
+            if(doc == null)
             {
-              if(doc == null)
-              {
-                return res.status(500).send('No file found');
-              }
+              return res.status(500).send('No file found');
             }
 
             // Send email here to the user with a token
@@ -212,8 +211,6 @@ AuthenticateController = (function() {
           });
         }
       }
-      console.log(sessionToken);
-      console.log(results);
       //Handle success
       utils.setCookie(res, sessionToken);
       res.status(200).send(
@@ -321,6 +318,10 @@ signup = function(body, callback) {
     accountType.length == 0
   ){
     return callback('Invalid arguments');
+  }
+
+  if(!utils.validateEmail()){
+    return callback('A valid email is required!');
   }
 
   var account = new Account();

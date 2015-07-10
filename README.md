@@ -39,6 +39,7 @@ awarded for creativity.
 
 ** Installation Instructions **
 npm install
+gem install mailcatcher (if not installed already)
 mailcatcher --foreground --http-ip=0.0.0.0
 node server.js
 navigate to localhost:8080

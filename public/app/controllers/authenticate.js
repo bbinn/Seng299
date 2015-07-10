@@ -1,7 +1,7 @@
 activeUser = null;
 
 angular.module('userApp')
-.controller('authController', function($scope, $http, $location, $routeParams){
+.controller('authController', function($scope, $http, $location, $routeParams, ngDialog){
   var vm = this;
   vm.activeUser = null;
   activeUser = null;
@@ -17,7 +17,9 @@ angular.module('userApp')
     }
   })
   .error(function (data, status, xhr, config) {
-    console.log(data);
+    ngDialog.open({
+      template: 'app/views/pages/popup/error.html',
+    });
   });
 
   $scope.trySignup = function() {
@@ -61,8 +63,9 @@ angular.module('userApp')
       activeUser = data;
     })
     .error(function (data, status, xhr, config){
-      // TODO: Show popup
-      console.log(data);
+      ngDialog.open({
+        template: 'app/views/pages/popup/error.html',
+      });
     });
   }
 
@@ -82,8 +85,9 @@ angular.module('userApp')
       activeUser = data;
     })
     .error(function (data, status, xhr, config){
-      //TODO: Show popup
-      console.log(data);
+      ngDialog.open({
+        template: 'app/views/pages/popup/error.html',
+      });
     });
   }
 
@@ -96,8 +100,9 @@ angular.module('userApp')
       activeUser = null;
     })
     .error(function (data, status, xhr, config) {
-      //TODO: Show popup
-      console.log(data);
+      ngDialog.open({
+        template: 'app/views/pages/popup/error.html',
+      });
     });
   }
 
@@ -109,11 +114,14 @@ angular.module('userApp')
       }
     )})
     .success(function (data, status, xhr, config){
-      $location.path("/home");
+      ngDialog.open({
+        template: 'app/views/pages/popup/reset.html',
+      });
     })
     .error(function (data, status, xhr, config) {
-      //TODO: Show popup
-      console.log(data);
+      ngDialog.open({
+        template: 'app/views/pages/popup/error.html',
+      });
     });
   }
 
@@ -123,7 +131,9 @@ angular.module('userApp')
     var confirmpassword = document.getElementById('confirmpassword').value.trim();
     if(password != confirmpassword)
     {
-      return console.log('Passwords dont match');
+      ngDialog.open({
+        template: 'app/views/pages/popup/passworddontmatch.html',
+      });
     }
 
     $http.post('api/doreset', {body: JSON.stringify(
@@ -133,11 +143,14 @@ angular.module('userApp')
       }
     )})
     .success(function (data, status, xhr, config){
-      $location.path("/home");
+      ngDialog.open({
+        template: 'app/views/pages/popup/resetsuccess.html',
+      });
     })
     .error(function (data, status, xhr, config) {
-      //TODO: Show popup
-      console.log(data);
+      ngDialog.open({
+        template: 'app/views/pages/popup/error.html',
+      });
     });
   }
 
