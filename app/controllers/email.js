@@ -1,5 +1,6 @@
 var utils         = require('../utils');
-var nodemailer = require('nodemailer');
+var nodemailer    = require('nodemailer');
+var config        = require('../../config');
 
 var transporter = nodemailer.createTransport({
     host: config.email.host,

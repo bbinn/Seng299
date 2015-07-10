@@ -106,7 +106,7 @@ AuthenticateController = (function() {
 
             // Send email here to the user with a token
             opts = {
-              to: 'test@abc.com',
+              to: email,
               subject: 'Password Reset',
               text: ('Reset password here! ' + config.server + '/reset/' + token),
               html: ('<div>Reset Password: <a href="' + config.server + '/reset/' + token + '">Here</a></div>')
@@ -130,9 +130,9 @@ AuthenticateController = (function() {
 
   AuthenticateController.doreset = function(req, res) {
     var body = utils.safeParse(req.body.body);
-    var token = body.email;
-    var newpass = body.newpass;
-    if(token == null || token == undefined)
+    var token = body.token;
+    var newpass = body.password;
+    if(token == null || token == undefined || newpass == null || newpass == undefined)
     {
       return res.status(400).send({error: 'Missing token or password'});
     }
@@ -166,13 +166,16 @@ AuthenticateController = (function() {
         var account = docs[0];
 
         // Update the account password
-
-
-        // Remove the token from the documents
-
+        Account.update({_id: accountId}, {$set: {password: newpass}}, function(error, results){
+          if(error){
+            return res.status(500).send({error: error});
+          }
+          console.log(newpass);
+          // Remove the token from the documents
+          res.status(200).send();
+        });
       });
-
-
+    });
   }
 
 

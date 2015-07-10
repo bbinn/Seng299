@@ -35,12 +35,10 @@ var AccountSchema = new Schema({
 // hash the password before the account is saved & generate an ID for them.
 AccountSchema.pre('save', function(next) {
 	var account = this;
-
 	// hash the password only if the password has been changed or account is new
 	if (!account.isModified('password')){
 		return next();
 	}
-
 	bcrypt.hash(account.password, null, null, function(err, hash) {
 		if (err) {
 			return next(err);
@@ -48,7 +46,21 @@ AccountSchema.pre('save', function(next) {
 		account.password = hash; // change the password to the hashed version
 		return next();
 	});
+});
 
+AccountSchema.pre('update', function(next) {
+	var account = this;
+	// hash the password only if the password has been changed or account is new
+	if (!account.isModified('password')){
+		return next();
+	}
+	bcrypt.hash(account.password, null, null, function(err, hash) {
+		if (err) {
+			return next(err);
+		}
+		account.password = hash; // change the password to the hashed version
+		return next();
+	});
 });
 
 
