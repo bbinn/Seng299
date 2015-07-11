@@ -91,10 +91,17 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       template: 'app/views/pages/popup/unbookConfirm.html'
     }).then(
       function() {
+        var locked = null
+        var oneDayFromNow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1, 0, 0, 0, 0); //set hours, minutes, seconds, milliseconds to 0
+        if (vm.date <= oneDayFromNow && vm.date > today && activeUser.accountType != "admin") {
+          locked = today;
+          console.log(locked);
+        }
         $http.post('api/unbook', {body: JSON.stringify({
           timeSlot: vm.date,
           boothNumber: booth.boothNumber,
-          boothType: booth.boothType
+          boothType: booth.boothType,
+          locked: locked
         })})
         .success (function (data, status, xhr, config) {
           vm.repopulate();
@@ -117,7 +124,10 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       //if the vendor screwed up recently, don't allow bookbooth to happen
       var twoDaysAgo = new Date(today);
       twoDaysAgo.setDate(twoDaysAgo.getDate()-2);
-      if (+activeUser.locked > +twoDaysAgo) {
+      console.log(+activeUser.locked);
+      console.log(+twoDaysAgo);
+      var locked = new Date(activeUser.locked);
+      if (+locked > +twoDaysAgo) {
         ngDialog.open({
           template: '<h1> You cannot book with a locked account </h1>',
           plain: true
@@ -187,6 +197,4 @@ angular.module('userApp').controller('BoothPopupController', function($scope, $h
   .error (function (data, status, xhr, config) {
 
   });
-
-  pp.booth.vendorName = "ross";
 })
