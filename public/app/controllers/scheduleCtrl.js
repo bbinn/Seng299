@@ -10,7 +10,6 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
   vm.lunchBooths = [];
   vm.produceBooths = [];
   vm.merchBooths = [];
-  activeUser.locked = today;
   vm.currentUser = activeUser;
 
   //Set the current day as checked by default
@@ -45,15 +44,24 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       for (var i = 0; i < data.docs.length; i++) {
         if (data.docs[i].boothType == 'lunch') {
           vm.lunchBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.lunchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+
+          if ((+vm.date > +today) && activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id)) {
+            vm.lunchBooths[data.docs[i].boothNumber].additionalText = "- Unbook This Booth";
+          }
         }
         if (data.docs[i].boothType == 'produce') {
           vm.produceBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.produceBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+
+          if ((+vm.date > +today) && activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id)) {
+            vm.produceBooths[data.docs[i].boothNumber].additionalText = "- Unbook This Booth";
+          }
         }
         if (data.docs[i].boothType == 'merch') {
           vm.merchBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.merchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+
+          if ((+vm.date > +today) && activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id)) {
+            vm.merchBooths[data.docs[i].boothNumber].additionalText = "- Unbook This Booth";
+          }
         }
       }
     });
@@ -80,7 +88,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   vm.unbookBoothDialog = function(booth) {
     ngDialog.openConfirm({
-      template: 'app/views/pages/popup/ConfirmationPopup.html'
+      template: 'app/views/pages/popup/unbookConfirm.html'
     }).then(
       function() {
         $http.post('api/unbook', {body: JSON.stringify({
@@ -164,30 +172,21 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
 
 }]);
-angular.module('userApp').controller('BoothPopupController', function($scope){
+angular.module('userApp').controller('BoothPopupController', function($scope, $http){
   var pp = this;
   pp.booth = currentBooth;
-  vm.showDialog = function(boothId) {
-    if (boothId == -1) {
-      return;
-    }
-
-    ngDialog.openConfirm({
-      template: 'app/views/pages/popup/BookBoothPopup.html',
-      scope: $scope,
-      controller: 'BoothPopupController'
-    }).then(
-      function(value) {
-        console.log(value);
-      },
-      function(value) {
-        console.log(value);
-      }
-    );
+  if (currentBooth == null) {
+    return;
   }
+  $http.post('api/getaccount', {body: JSON.stringify({
+    vendorId: pp.booth.vendorId
+  })})
+  .success (function (data, status, xhr, config) {
+    pp.booth.vendorName = data.docs[0].username;
+  })
+  .error (function (data, status, xhr, config) {
 
-});
-angular.module('userApp').controller('BoothPopupController', function($scope){
-  var pp = this;
-  pp.booth = currentBooth;
+  });
+
+  pp.booth.vendorName = "ross";
 })

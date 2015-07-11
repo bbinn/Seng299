@@ -52,7 +52,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.unbookBoothDialog = function(booth) {
 
     ngDialog.openConfirm({
-      template: 'app/views/pages/popup/ConfirmationPopup.html'
+      template: 'app/views/pages/popup/unbookConfirm.html'
     }).then(
       function() {
         $http.post('api/unbook', {body: JSON.stringify({
