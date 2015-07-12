@@ -138,12 +138,14 @@ BoothController = (function() {
     var timeRangeMax = body.timeRangeMax;
 
     var query = {};
+
     if(timeSlot != null && timeSlot != undefined){
       query.timeSlot = timeSlot;
     }
     if(timeRangeMin != null && timeRangeMin != undefined &&
       timeRangeMax != null && timeRangeMax != undefined){
-      query.timeSlot = {timeSlot : {$gte : timeRangeMin, $lte : timeRangeMax}};
+      query.timeSlot = {$gte : timeRangeMin.toString(), $lte : timeRangeMax.toString()};
+      console.log(timeRangeMin + " : " + timeRangeMax);
     }
     if(vendorId != null && vendorId != undefined){
       query.vendorId = vendorId;

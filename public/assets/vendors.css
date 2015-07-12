@@ -78,7 +78,7 @@ h2 {
   word-wrap: break-word;
   white-space: normal;
 }
-p {
+.descriptionText {
   font-size: 10px;
   word-wrap: break-word;
   white-space: normal;

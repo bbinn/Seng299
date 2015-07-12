@@ -91,12 +91,12 @@ function($scope, $http, $sce, $location) {
       // var max = vm.maxDate.toISOString();
       // console.log(vm.maxDate.toISOString() + "  max ----- min     " + vm.date.toISOString());
       // $http.post('api/getbooths', {body: JSON.stringify({ timeSlotMin: vm.date.toISOString(), timeSlotMax: vm.maxDate.toISOString()})})
-      $http.post('api/getbooths', {body: JSON.stringify({ timeSlotMin: date, timeSlotMax: maxDate})})
+      $http.post('api/getbooths', {body: JSON.stringify({ timeRangeMin: date, timeRangeMax: maxDate})})
       .success(function (data, status, xhr, config) {
         var docs = data.docs;
         var vendorsids = [];
         console.log(docs);
-        console.log(docs[0].timeSlot);
+
         for(var i = 0; i < docs.length; i++){
           vendorsids.push(docs[i].vendorId);
         }

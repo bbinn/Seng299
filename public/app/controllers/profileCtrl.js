@@ -1,3 +1,5 @@
+var currentBooth = null;
+
 angular.module('userApp').controller('profileController', ['$scope', '$http', '$sce', '$routeParams', 'ngDialog', function($scope, $http, $sce, $routeParams, ngDialog) {
 	var vm = this;
 
@@ -39,30 +41,26 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 				for (var i = 0; i < docs.length; i++) {
 					dt = new Date(docs[i].timeSlot);
     			boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
-					vm.activeBooths[i] = {title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber };
+					vm.activeBooths[i] = {title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber, vendorId: docs[i].vendorId};
 				}
 
 				if (data.docs.length > 0) {
 					vm.hasBooths = true;
 				}
-
 			});
 	};
 
 	vm.boothDescriptionDialog = function(booth){
-		boothObject={
-  		title: booth.title,
-			description: booth.description,
-			timeSlot: booth.timeSlot,
-			type: booth.Type,
-		};
+		currentBooth = booth;
 
 		ngDialog.openConfirm({
-			template: 'app/views/pages/boothDescriptionPopup.html',
-			data: $scope.boothObject
+			template: 'app/views/pages/popup/ViewBoothPopup.html',
+			scope: $scope,
+			controller: 'BoothPopupController'
 		}).then(
 			function() {
-				unbookBoothDialog(booth);
+				console.log("being called");
+				vm.unbookBoothDialog(booth);
 			},
 			function() {
 				//do nothing
