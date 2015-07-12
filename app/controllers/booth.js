@@ -145,7 +145,6 @@ BoothController = (function() {
     if(timeRangeMin != null && timeRangeMin != undefined &&
       timeRangeMax != null && timeRangeMax != undefined){
       query.timeSlot = {$gte : timeRangeMin.toString(), $lte : timeRangeMax.toString()};
-      console.log(timeRangeMin + " : " + timeRangeMax);
     }
     if(vendorId != null && vendorId != undefined){
       query.vendorId = vendorId;

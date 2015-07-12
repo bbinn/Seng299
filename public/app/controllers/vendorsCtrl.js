@@ -85,23 +85,18 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
       vm.vendors = [];
 
       maxDate.setDate(maxDate.getDate() + 7);
-      // var max = vm.maxDate.toISOString();
-      // console.log(vm.maxDate.toISOString() + "  max ----- min     " + vm.date.toISOString());
-      // $http.post('api/getbooths', {body: JSON.stringify({ timeSlotMin: vm.date.toISOString(), timeSlotMax: vm.maxDate.toISOString()})})
+
       $http.post('api/getbooths', {body: JSON.stringify({ timeRangeMin: date, timeRangeMax: maxDate})})
       .success(function (data, status, xhr, config) {
         var docs = data.docs;
         var vendorsids = [];
-        console.log(docs);
 
         for(var i = 0; i < docs.length; i++){
           vendorsids.push(docs[i].vendorId);
         }
-        console.log(vendorsids);
         $http.post('api/getAccount', {body: JSON.stringify({ ids: vendorsids })})
         .success(function (data, status, xhr, config) {
           var docs = data.docs;
-          console.log(docs);
           vm.populateVendors(docs);
         });
       });
