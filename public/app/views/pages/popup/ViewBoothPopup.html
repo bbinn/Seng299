@@ -1,0 +1,10 @@
+<div ng-controller="BoothPopupController as pp">
+  <div>
+    <h1>{{pp.booth.title}}</h1>
+    <br>
+    <p> By: <a ng-href="/account/{{pp.booth.vendorId}}" ng-click="closeThisDialog(0)">{{pp.booth.vendorName}}</a> </p>
+    <br>
+    <p>{{pp.booth.description}}</p>
+    <br>
+  </div>
+</div>
