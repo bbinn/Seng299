@@ -1,4 +1,4 @@
-angular.module('userApp').controller('VendorController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
+angular.module('userApp').controller('VendorController', ['$scope', '$http', '$sce', '$location', function($scope, $http, $sce, $location) {
 
   var vm = this;
   vm.searchMessage = "";
@@ -36,7 +36,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   }
 
   vm.viewProfile = function(id) {
-    document.location.href = "http://localhost:8080/account/" + id;
+    $location.path("/account/" + id);
   }
   vm.search = function(){
     $http.post('api/getAccount', {body: JSON.stringify({ accountType: "vendor", fuzzyName: vm.vendorName  })})
