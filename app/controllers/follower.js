@@ -99,8 +99,7 @@ FollowerController = (function() {
       var vendorsids = [];
       for(var i = 0; i < docs.length; i++){
         vendorsids.push(docs[i]._id);
-      }
-      console.log(vendorsids.length);
+      };
       Follower.find({vendorId: {$in: vendorsids}})
       .exec (function (err, docs){
         if(err) {
@@ -147,7 +146,6 @@ FollowerController = (function() {
             newdocs.push(utils.deepClone(docs[i]));
             newdocs[i].numFollowers = hash[docs[i]._id];
           }
-          console.log(newdocs);
           return res.status(200).send(JSON.stringify({docs: newdocs}));
         });
       });
@@ -158,7 +156,6 @@ FollowerController = (function() {
     body = utils.safeParse(req.body.body);
     var username = body.username;
     var ids = body.ids;
-    console.log("called");
 
     var query = {};
     if(username == null && ids == null) {
@@ -169,7 +166,6 @@ FollowerController = (function() {
       query.vendorId = username;
     }
     if(ids != null && ids != undefined){
-      console.log("called");
       query.vendorId = {$in: ids};
     }
     Follower.find(query)

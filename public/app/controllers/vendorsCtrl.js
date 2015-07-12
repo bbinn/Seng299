@@ -111,7 +111,6 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
       vm.header = "Top Followed Vendors";
       $http.post('api/topfollowers')
       .success(function(data, status, xhr, config) {
-        console.log(data.docs);
         vm.populateVendors(data.docs);
       });
 
