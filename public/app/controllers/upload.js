@@ -15,6 +15,8 @@ angular.module('userApp')
   avatarUploader.onCompleteItem = function(fileItem, response, status, headers) {
     console.log("Uploaded: " + response.file);
     activeUser.avatarLink = response.file;
+    var avatar = angular.element(document.getElementById('profileController')).scope().p;
+    avatar.avatarLink = response.file;
     $rootScope.$apply();
   };
 
@@ -31,6 +33,8 @@ angular.module('userApp')
   bannerUploader.onCompleteItem = function(fileItem, response, status, headers) {
     console.log("Uploaded: " + response.file);
     activeUser.bannerLink = response.file;
+    var banner = angular.element(document.getElementById('profileController')).scope().p;
+    banner.bannerLink = response.file;
     $rootScope.$apply();
   };
 

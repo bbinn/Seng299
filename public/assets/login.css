@@ -10,6 +10,14 @@
   padding: 20px 0 4px 0;
 }
 
+.login .inputDetailsText {
+  height: 400px;
+  width: 600px;
+  padding: 10px;
+  line-height: 2em;
+  resize: none;
+}
+
 .login input {
   padding: 10px;
   height: 30px;

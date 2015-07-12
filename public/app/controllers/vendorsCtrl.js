@@ -1,7 +1,4 @@
-angular.module('userApp')
-.controller('VendorController',
-['$scope', '$http', '$sce', '$location',
-function($scope, $http, $sce, $location) {
+angular.module('userApp').controller('VendorController', ['$scope', '$http', '$sce', '$location', function($scope, $http, $sce, $location) {
 
   var vm = this;
   vm.searchMessage = "";
