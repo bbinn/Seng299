@@ -53,7 +53,7 @@
 		</div>
 
 		<div class="description">
-			<p ng-hide="p.editClicked" ng-bind="p.description"></p>
+			<p class="accountParagraph"ng-hide="p.editClicked" ng-bind="p.description"></p>
 			<br>
 			<input class="accountDescriptionEdit" ng-hide="p.editClicked" ng-if="p.userID == auth.activeUser._id" type="button" value="Edit description" ng-click="p.toggleEditField()">
 			<textarea id="descriptionEditField" class="descriptionEditField" ng-show="p.editClicked" type="text" ng-model="p.description"></textarea>

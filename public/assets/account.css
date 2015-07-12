@@ -54,7 +54,7 @@
 	margin: 20px 100px;
 	width: 100%;
 }
-p {
+.accountParagraph {
 	text-indent: 0;
 	line-height: 120%;
 	white-space: pre;
