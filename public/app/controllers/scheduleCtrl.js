@@ -44,15 +44,24 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       for (var i = 0; i < data.docs.length; i++) {
         if (data.docs[i].boothType == 'lunch') {
           vm.lunchBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.lunchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+
+          if ((+vm.date > +today) && activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id)) {
+            vm.lunchBooths[data.docs[i].boothNumber].additionalText = "- Unbook This Booth";
+          }
         }
         if (data.docs[i].boothType == 'produce') {
           vm.produceBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.produceBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+
+          if ((+vm.date > +today) && activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id)) {
+            vm.produceBooths[data.docs[i].boothNumber].additionalText = "- Unbook This Booth";
+          }
         }
         if (data.docs[i].boothType == 'merch') {
           vm.merchBooths[data.docs[i].boothNumber] = data.docs[i];
-          vm.merchBooths[data.docs[i].boothNumber].additionalText = (activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id))? "- Unbook This Booth": "";
+
+          if ((+vm.date > +today) && activeUser && (activeUser.accountType === "admin" || data.docs[i].vendorId === activeUser._id)) {
+            vm.merchBooths[data.docs[i].boothNumber].additionalText = "- Unbook This Booth";
+          }
         }
       }
     });
@@ -79,13 +88,20 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
   vm.unbookBoothDialog = function(booth) {
     ngDialog.openConfirm({
-      template: 'app/views/pages/ConfirmationPopup.html'
+      template: 'app/views/pages/popup/unbookConfirm.html'
     }).then(
       function() {
+        var locked = null
+        var oneDayFromNow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1, 0, 0, 0, 0); //set hours, minutes, seconds, milliseconds to 0
+        if (vm.date <= oneDayFromNow && vm.date > today && activeUser.accountType != "admin") {
+          locked = today;
+          console.log(locked);
+        }
         $http.post('api/unbook', {body: JSON.stringify({
           timeSlot: vm.date,
           boothNumber: booth.boothNumber,
-          boothType: booth.boothType
+          boothType: booth.boothType,
+          locked: locked
         })})
         .success (function (data, status, xhr, config) {
           vm.repopulate();
@@ -105,16 +121,29 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       if (+vm.date <= +today || !activeUser || (activeUser.accountType != "vendor" && activeUser.accountType != "admin")) {
         return;
       }
+      //if the vendor screwed up recently, don't allow bookbooth to happen
+      var twoDaysAgo = new Date(today);
+      twoDaysAgo.setDate(twoDaysAgo.getDate()-2);
+      console.log(+activeUser.locked);
+      console.log(+twoDaysAgo);
+      var locked = new Date(activeUser.locked);
+      if (+locked > +twoDaysAgo) {
+        ngDialog.open({
+          template: '<h1> You cannot book with a locked account </h1>',
+          plain: true
+        });
+        return;
+      }
       //open the book booth dialog
       ngDialog.openConfirm({
-        template: 'app/views/pages/BookBoothPopup.html',
+        template: 'app/views/pages/popup/BookBoothPopup.html',
         scope: $scope,
         controller: 'BoothPopupController'
       }).then(
         function(value) {
           //find out if the user really wants to book the booth
           ngDialog.openConfirm({
-            template: 'app/views/pages/ConfirmationPopup.html'
+            template: 'app/views/pages/popup/ConfirmationPopup.html'
           }).then(
             function() {
               $http.post('api/bookbooth', {body: JSON.stringify({
@@ -143,7 +172,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
       //open the view booth dialog
       currentBooth = booth;
       ngDialog.open({
-        template: 'app/views/pages/ViewBoothPopup.html',
+        template: 'app/views/pages/popup/ViewBoothPopup.html',
         scope: $scope,
         controller: 'BoothPopupController'
       });
@@ -153,30 +182,19 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
 
 
 }]);
-angular.module('userApp').controller('BoothPopupController', function($scope){
+angular.module('userApp').controller('BoothPopupController', function($scope, $http){
   var pp = this;
   pp.booth = currentBooth;
-  vm.showDialog = function(boothId) {
-    if (boothId == -1) {
-      return;
-    }
-
-    ngDialog.openConfirm({
-      template: 'app/views/pages/BookBoothPopup.html',
-      scope: $scope,
-      controller: 'BoothPopupController'
-    }).then(
-      function(value) {
-        console.log(value);
-      },
-      function(value) {
-        console.log(value);
-      }
-    );
+  if (currentBooth == null) {
+    return;
   }
+  $http.post('api/getaccount', {body: JSON.stringify({
+    vendorId: pp.booth.vendorId
+  })})
+  .success (function (data, status, xhr, config) {
+    pp.booth.vendorName = data.docs[0].username;
+  })
+  .error (function (data, status, xhr, config) {
 
-});
-angular.module('userApp').controller('BoothPopupController', function($scope){
-  var pp = this;
-  pp.booth = currentBooth;
+  });
 })

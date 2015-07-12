@@ -1,3 +1,4 @@
+var Account       = require('../models/account');
 var Booth       = require('../models/booth');
 var utils         = require('../utils');
 
@@ -87,6 +88,14 @@ BoothController = (function() {
     var timeSlot = body.timeSlot;
     var boothNumber = body.boothNumber;
     var boothType = body.boothType;
+    var locked = body.locked;
+
+    if (locked) {
+      Account.update({_id: accountInformation._id}, {
+        $set: {locked: locked}
+      }, function(err, affected, resp) {
+      });
+    }
 
     var query = {
       timeSlot: timeSlot,
