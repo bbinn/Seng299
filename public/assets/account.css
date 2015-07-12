@@ -77,7 +77,6 @@ h2 {
 }
 tbody {
 	margin: 10px;
-
 }
 .accountDescriptionEdit {
 	background-color: rgb(200, 200, 255);
@@ -122,4 +121,13 @@ h2 {
 #sidebar th {
 	text-align: center;
 	vertical-align: middle;
+}
+
+.followerStatus {
+	padding: 0 0 0 10px;
+}
+
+.followButtonAccountPage {
+	padding: 3px;
+	margin: 0 0 6px 0;
 }

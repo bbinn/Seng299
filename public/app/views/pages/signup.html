@@ -23,7 +23,7 @@
   <div class="field" >
     Phone:
   </div>
-  <input id="phone" type="text" name="phone">
+  <input id="phone" type="text" name="phone" onkeyup="this.value=this.value.replace(/[^\d]*/,'')">
   <br>
   <div class="field" >
     Address:
