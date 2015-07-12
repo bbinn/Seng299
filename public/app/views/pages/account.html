@@ -56,7 +56,6 @@
 
 		<div class="description">
 			<div ng-show="!p.canBook">
-				<a href ng-click="p.showFollowers();">{{p.followers.length}} followers</a>
                                 <a href ng-click="p.showFollowing();">{{p.following.length}} following</a>
 			</div>
 			<p ng-hide="p.editClicked" ng-bind="p.description"></p>
