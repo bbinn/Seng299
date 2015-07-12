@@ -1,3 +1,4 @@
+var Account       = require('../models/account');
 var Booth       = require('../models/booth');
 var utils         = require('../utils');
 
@@ -78,8 +79,6 @@ BoothController = (function() {
 
     });
   }
-
-
   // unbook
   // timeSlot = body.timeSlot;
   // boothNumber = body.boothNumber
@@ -89,13 +88,21 @@ BoothController = (function() {
     var timeSlot = body.timeSlot;
     var boothNumber = body.boothNumber;
     var boothType = body.boothType;
+    var locked = body.locked;
+
+    if (locked) {
+      Account.update({_id: accountInformation._id}, {
+        $set: {locked: locked}
+      }, function(err, affected, resp) {
+      });
+    }
 
     var query = {
       timeSlot: timeSlot,
       boothNumber: boothNumber,
       boothType: boothType,
     }
-    
+
     //if you're not an admin, you must be the vendor who booked the booth in order to unbook it
     if (accountInformation.accountType != "admin") {
       query.vendorId = accountInformation._id;
@@ -104,6 +111,7 @@ BoothController = (function() {
     Booth.find(query)
     .exec(function (err, docs) {
       if(err || docs.length == 0) {
+
         return res.status(200).send();
       }
       Booth.remove(query, function() {
@@ -126,7 +134,6 @@ BoothController = (function() {
     var vendorId = body.vendorId;
     var boothType = body.boothType;
     var boothNumber = body.boothNumber;
-
     var query = {};
     if(timeSlot != null && timeSlot != undefined){
       query.timeSlot = timeSlot;
