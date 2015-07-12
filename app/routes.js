@@ -9,6 +9,8 @@ var Account = require('./controllers/account');
 var Authenticate  = require('./controllers/authenticate');
 var Booth = require('./controllers/booth');
 var File = require('./controllers/file');
+var Email = require('./controllers/email');
+var Follower = require('./controllers/follower');
 
 module.exports = function(app, express) {
   var router = express.Router();
@@ -20,6 +22,9 @@ module.exports = function(app, express) {
   router.post('/signup', Authenticate.signup);
   router.post('/reset', Authenticate.reset);      // Generate a token and send an email to the user with said token
   router.post('/doreset', Authenticate.doreset);  // Check to see if token is correct, and reset the password
+
+  // Support!
+  router.post('/contact', Email.contactSupport);
 
   // Booth Routes (book booth, unbook booth, etc.) ..
   router.post('/getbooths', Booth.getBooths);
@@ -54,6 +59,15 @@ module.exports = function(app, express) {
     Account.getAccountInformation(req, res, Account.denyVendor);
   });
 
+  // Followers
+  router.post('/follow', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Follower.follow);
+  });
+  router.post('/unfollow', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Follower.unfollow);
+  });
+  router.post('/getfollowing', Follower.getfollowing);
+  router.post('/getfollowers', Follower.getfollowers);
 
   //Return
   return router;

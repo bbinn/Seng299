@@ -21,7 +21,6 @@ EmailController = (function() {
   // text
   // html
   EmailController.sendEmail = function(opts, callback) {
-
     var mailOptions = opts;
     mailOptions.from = config.from;
 
@@ -32,7 +31,33 @@ EmailController = (function() {
       console.log('Message sent: ' + info.response);
       return callback();
     });
+  }
 
+
+  EmailController.contactSupport = function(req, res) {
+    var body = utils.safeParse(req.body.body);
+
+    var from = body.from;
+    var subject = body.subject;
+    var text = body.text;
+
+    opts = {
+      to: 'seng299Admins@seng299',
+      from: from,
+      subject: subject,
+      text: (text),
+      html: ('<div>' + text + '</div>')
+    };
+
+    EmailController.sendEmail(opts, function(error){
+      if(error){
+        return res.status(500).send({error: error});
+      }
+      else
+      {
+        return res.status(200).send();
+      }
+    });
   }
 
   return EmailController;
