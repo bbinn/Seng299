@@ -1,0 +1,58 @@
+<body>
+  <div id="profileController" ng-controller="profileController as p">
+  <link rel="stylesheet" type="test/css" href="../../assets/account.css">
+
+    <h2>Edit account information</h2>
+
+    <div class="login" ng-controller="profileEditController as e">
+      <div class="field">
+        Name: <span ng-bind="p.userName"></span>
+        <br>
+        <input class="editField" type="button" ng-hide="e.editName" value="Edit account name" ng-click="e.toggleEdit(e.editName, e.edits.NAME)">
+        <input id="nameEdit" ng-show="e.editName" type="text" ng-model="p.userName">
+        <input class="saveField" type="button" ng-show="e.editName" value="Save" ng-click="e.saveEdit(e.editName, e.edits.NAME, p.userID)">
+        <br>
+      </div>
+      <div class="field" >
+        Company: <span ng-bind="p.company"></span>
+        <br>
+        <input class="editField" type="button" ng-hide="e.editCompany" value="Edit company name" ng-click="e.toggleEdit(e.editCompany, e.edits.COMPANY)">
+        <input id="companyEdit" ng-show="e.editCompany" type="text" ng-model="p.company">
+        <input class="saveField" type="button" ng-show="e.editCompany" value="Save" ng-click="e.saveEdit(e.editCompany, e.edits.COMPANY, p.userID)">
+        <br>
+      </div>
+      <div class="field" >
+        Age: <span ng-bind="p.age"></span>
+        <br>
+        <input class="editField" type="button" ng-hide="e.editAge" value="Edit age" ng-click="e.toggleEdit(e.editAge, e.edits.AGE)">
+        <input id="ageEdit" ng-show="e.editAge" type="text" ng-model="p.age">
+        <input class="saveField" type="button" ng-show="e.editAge" value="Save" ng-click="e.saveEdit(e.editAge, e.edits.AGE, p.userID)">
+        <br>
+      </div>
+      <div class="field" >
+        E-mail: <span ng-bind="p.email"></span>
+        <br>
+        <input class="editField" type="button" ng-hide="e.editEmail" value="Edit e-mail address" ng-click="e.toggleEdit(e.editEmail, e.edits.EMAIL)">
+        <input id="emailEdit" ng-show="e.editEmail" type="text" ng-model="p.email">
+        <input class="saveField" type="button" ng-show="e.editEmail" value="Save" ng-click="e.saveEdit(e.editEmail, e.edits.EMAIL, p.userID)">
+        <br>
+      </div>
+      <div class="field" >
+        Phone number: <span ng-bind="p.phone"></span>
+        <br>
+        <input class="editField" type="button" ng-hide="e.editPhone" value="Edit phone number" ng-click="e.toggleEdit(e.editPhone, e.edits.PHONE)">
+        <input id="phoneEdit" ng-show="e.editPhone" type="text" ng-model="p.phone">
+        <input class="saveField" type="button" ng-show="e.editPhone" value="Save" ng-click="e.saveEdit(e.editPhone, e.edits.PHONE, p.userID)">
+        <br>
+      </div>
+      <div class="field" >
+        Address: <span ng-bind="p.address"></span>
+        <br>
+        <input class="editField" type="button" ng-hide="e.editAddress" value="Edit address" ng-click="e.toggleEdit(e.editAddress, e.edits.ADDRESS)">
+        <input id="addressEdit" ng-show="e.editAddress" type="text" ng-model="p.address">
+        <input class="saveField" type="button" ng-show="e.editAddress" value="Save" ng-click="e.saveEdit(e.editAddress, e.edits.ADDRESS, p.userID)">
+        <br>
+      </div>
+    </div>
+  </div>
+</body>
