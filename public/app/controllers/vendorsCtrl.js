@@ -54,7 +54,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
       } else {
         avatarLink = docs[i].avatarLink;
       }
-      vm.vendors.push({id: docs[i]._id,  username: docs[i].username, description: docs[i].description, profilePic: avatarLink, numFollowers: docs[i].numFollowers});
+      vm.vendors.push({id: docs[i]._id,  name: docs[i].name, description: docs[i].description, profilePic: avatarLink, numFollowers: docs[i].numFollowers});
     }
   }
 
