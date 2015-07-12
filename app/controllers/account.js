@@ -157,10 +157,10 @@ AccountController = (function() {
   };
 
   // API call
-  // Change account information 
+  // Change account information
   // Must be logged in
   AccountController.changeAccount = function(req, res, accountInformation) {
-      
+
     if(accountInformation == null) {
         return res.status(401).send({
         error: "You must be logged in to perform this action"

@@ -56,7 +56,7 @@ input[type="text"]:focus {
   background: #91b2cc;
 }
 .vendorHeader {
-  margin: 20px;
+  margin: 15px;
   border-bottom-style: solid;
   border-width: medium;
 }
@@ -72,22 +72,22 @@ input[type="text"]:focus {
   margin: 1%;
   overflow-y: scroll;
 }
-h2 {
+h3 {
+  margin: 10px 0px;
   font-size: 20px;
-  padding: 4px 0px 8px 0px;
   word-wrap: break-word;
   white-space: normal;
 }
 .descriptionText {
   font-size: 10px;
   word-wrap: break-word;
-  white-space: normal;
+  white-space: pre-line;
   line-height: 100%;
   text-indent: 0;
-  height: 100vh;
+  height: 50px;
 }
 .vendorDescription {
-  height: 70px;
+
   overflow: hidden;
   width: auto;
   text-align: center;

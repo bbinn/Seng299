@@ -20,9 +20,10 @@
         <ul class="vendorList">
           <li class="singleVendor" ng-repeat="vendor in v.vendors" ng-click="v.viewProfile(vendor.id)">
             <img class="center-cropped" ng-src="{{vendor.profilePic}}">
-            <div class="vendorDescription">
-              <h2>{{vendor.username}}</h2>
+            <div class="vendorDescription vendorName">
+              <h3>{{vendor.username}}</h3>
               <p class="descriptionText">{{vendor.description}}</p>
+              <p ng-if="vendor.numFollowers != null" class="descriptionText">Number Of Followers: {{vendor.numFollowers}}</h5>
             </div>
           </li>
         </ul>

@@ -23,7 +23,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 		$http.post('api/getaccount', {body: JSON.stringify({ vendorId: curr_user_id})})
 			.success(function(data, status, headers, config) {
 
-				vm.userName = data.docs[0].name;
+				vm.userName = data.docs[0].repopulateFollowersname;
 				vm.company = data.docs[0].company;
 				vm.age = data.docs[0].age;
 				vm.email = data.docs[0].email;
@@ -36,7 +36,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 					vm.description = data.docs[0].description;
 				}
 				// user has the ability to book booths
-				if (data.docs[0].accountType === "vendor") {
+				if (data.docs[0].accountType === "vendor" || data.docs[0].accountType === "admin") {
 					vm.canBook = true;
 				}
 			});
