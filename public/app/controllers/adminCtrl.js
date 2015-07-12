@@ -11,7 +11,6 @@ angular.module('userApp').controller('AdminController', ['$scope', '$http', 'ngD
         vendor.vendor = data.docs[i];
         vendor.state = "";
         vm.pending[i] = vendor;
-        console.log(vendor);
       }
     });
   }

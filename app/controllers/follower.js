@@ -37,6 +37,38 @@ FollowerController = (function() {
     });
   }
 
+  FollowerController.unfollow = function(req, res, accountInformation) {
+    if(accountInformation == null) {
+      return res.status(401).send({
+        error: "You must be logged in to do this action"
+      });
+    }
+    body = utils.safeParse(req.body.body);
+
+    var username = body.username;
+    var vendor = body.vendor;
+    if(username == null || vendor == null) {
+      return res.status(400).send({
+        error: "Missing part of the body"
+      });
+    }
+
+    var query = {
+      userId: username,
+      vendorId: vendor,
+    }
+
+    Follower.find(query)
+    .exec(function(err, docs) {
+      if(err || docs.length == 0) {
+        return res.status(200).send();
+      }
+      Follower.remove(query, function() {
+        return res.status(200).send();
+      });
+    });
+  }
+
   FollowerController.getfollowing = function(req, res) {
     body = utils.safeParse(req.body.body);
     var username = body.username;
@@ -45,7 +77,7 @@ FollowerController = (function() {
         error: "Missing part of the body"
       });
     }
-    Follower.find({vendorId: username})
+    Follower.find({userId: username})
     .exec(function (err, docs) {
       if(err) {
         return res.status(200).send(JSON.stringify({docs: []}));
@@ -62,7 +94,7 @@ FollowerController = (function() {
         error: "Missing part of the body"
       });
     }
-    Follower.find({userId: username})
+    Follower.find({vendorId: username})
     .exec(function (err, docs) {
       if(err) {
         return res.status(200).send(JSON.stringify({docs: []}));

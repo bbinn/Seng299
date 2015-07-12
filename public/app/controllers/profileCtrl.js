@@ -14,6 +14,9 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	vm.avatarLink = $sce.trustAsResourceUrl('../../assets/generic_profile.png');
 	vm.description = "This user has not provided a description.";
 
+	vm.followers = [];
+	vm.following = [];
+
 	vm.getAccount = function(curr_user_id) {
 		$http.post('api/getaccount', {body: JSON.stringify({ vendorId: curr_user_id})})
 			.success(function(data, status, headers, config) {
@@ -91,6 +94,60 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 		vm.toggleEditField();
 	};
 
+	vm.repopulateFollowers = function() {
+		vm.followers.length = 0;
+		$http.post('api/getfollowers', {body: JSON.stringify({username: vm.userID})})
+		.success(function(data, status, xhr, config) {
+			for(var i = 0; i < data.docs.length; i++) {
+				vm.followers[i] = data.docs[i];
+			}
+		});
+		vm.following.length = 0;
+		$http.post('api/getfollowing', {body: JSON.stringify({username: vm.userID})})
+                .success(function(data, status, xhr, config) {
+                        for(var i = 0; i < data.docs.length; i++) {
+                                vm.following[i] = data.docs[i];
+                        }
+                });
+	};
+
+	vm.follow = function() {
+		$http.post('api/follow', {body: JSON.stringify({username: activeUser._id, vendor: vm.userID})})
+                .success(function(data, status, xhr, config) {
+			vm.repopulateFollowers();
+                });
+	};
+
+	vm.unfollow = function() {
+		$http.post('api/unfollow', {body: JSON.stringify({username: activeUser._id, vendor: vm.userID})})
+		.success(function(data, status, xhr, config) {
+			vm.repopulateFollowers();
+		});
+	};
+
+	vm.showFollowers = function() {
+		vm.repopulateFollowers();
+		console.log("followers");
+			
+	};
+
+	vm.showFollowing = function() {
+		vm.repopulateFollowers();
+		console.log("following");
+	};
+
+	vm.isFollowing = function() {
+		console.log("checking");
+		console.log(vm.followers);
+		for (var i = 0; i < vm.followers.length; i++) {
+			console.log("Checking " + vm.followers[i] + " " + activeUser._id);
+			if (vm.followers[i].userId == activeUser._id) {
+				return true;
+			}
+		}
+		return false;
+	};
+
 	var user;
 
 	vm.userID = $routeParams.user_id;
@@ -101,6 +158,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 
 	vm.getAccount(vm.userID);
 	vm.getActiveBooths(vm.userID);
+	vm.repopulateFollowers();
 
 }
 ]);

@@ -63,8 +63,11 @@ module.exports = function(app, express) {
   router.post('/follow', Authenticate.ensureLoggedIn, function(req, res) {
     Account.getAccountInformation(req, res, Follower.follow);
   });
-  router.post('getfollowing', Follower.getfollowing);
-  router.post('getfollowers', Follower.getfollowers);
+  router.post('/unfollow', Authenticate.ensureLoggedIn, function(req, res) {
+    Account.getAccountInformation(req, res, Follower.unfollow);
+  });
+  router.post('/getfollowing', Follower.getfollowing);
+  router.post('/getfollowers', Follower.getfollowers);
 
   //Return
   return router;

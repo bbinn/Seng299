@@ -22,10 +22,13 @@
 	</div>
 
 	<div class="content">
-
 		<div ng-show="p.canBook" id="sidebar">
 			<!-- <h2>Booked Booths</h2> -->
 			<!-- <div ng-if="p.hasBooths"> -->
+			<button ng-if="!p.isFollowing();" ng-click="p.follow();">Follow</button>
+			<button ng-if="p.isFollowing();" ng-click="p.unfollow();">Unfollow</button>
+			<a href ng-click="p.showFollowers();">{{p.followers.length}} followers</a>
+			<a href ng-click="p.showFollowing();">{{p.following.length}} following</a>
 			<div>
 				<table>
 				<thead>
@@ -52,6 +55,10 @@
 		</div>
 
 		<div class="description">
+			<div ng-show="!p.canBook">
+				<a href ng-click="p.showFollowers();">{{p.followers.length}} followers</a>
+                                <a href ng-click="p.showFollowing();">{{p.following.length}} following</a>
+			</div>
 			<p ng-hide="p.editClicked" ng-bind="p.description"></p>
 			<br>
 			<input class="accountDescriptionEdit" ng-hide="p.editClicked" ng-if="p.userID == auth.activeUser._id" type="button" value="Edit description" ng-click="p.toggleEditField()">
