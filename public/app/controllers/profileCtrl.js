@@ -127,13 +127,10 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 
 	vm.showFollowers = function() {
 		vm.repopulateFollowers();
-		console.log("followers");
-			
 	};
 
 	vm.showFollowing = function() {
 		vm.repopulateFollowers();
-		console.log("following");
 	};
 
 	vm.isFollowing = function() {
