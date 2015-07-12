@@ -9,6 +9,7 @@ var Account = require('./controllers/account');
 var Authenticate  = require('./controllers/authenticate');
 var Booth = require('./controllers/booth');
 var File = require('./controllers/file');
+var Email = require('./controllers/email');
 
 module.exports = function(app, express) {
   var router = express.Router();
@@ -20,6 +21,9 @@ module.exports = function(app, express) {
   router.post('/signup', Authenticate.signup);
   router.post('/reset', Authenticate.reset);      // Generate a token and send an email to the user with said token
   router.post('/doreset', Authenticate.doreset);  // Check to see if token is correct, and reset the password
+
+  // Support!
+  router.post('/contact', Email.contactSupport);
 
   // Booth Routes (book booth, unbook booth, etc.) ..
   router.post('/getbooths', Booth.getBooths);
