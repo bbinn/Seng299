@@ -128,14 +128,13 @@ BoothController = (function() {
     var timeRangeMin = body.timeRangeMin;
     var timeRangeMax = body.timeRangeMax;
 
-
     var query = {};
     if(timeSlot != null && timeSlot != undefined){
       query.timeSlot = timeSlot;
     }
     if(timeRangeMin != null && timeRangeMin != undefined &&
-       timeRangeMax != null && timeRangeMax != undefined){
-      query.timeSlot = {gte : timeRangeMin, lte : timeRangeMax};
+      timeRangeMax != null && timeRangeMax != undefined){
+      query.timeSlot = {timeSlot : {$gte : timeRangeMin, $lte : timeRangeMax}};
     }
     if(vendorId != null && vendorId != undefined){
       query.vendorId = vendorId;

@@ -41,8 +41,9 @@
 				<tbody>
 					<tr ng-repeat="booth in p.activeBooths">
 
-					<td ng-if="auth.activeUser._id == p.userID"><a href ng-click="p.unbookBoothDialog(booth)">{{booth.title}}</td>
-					<td ng-if="auth.activeUser._id != p.userID">{{booth.title}}</td>
+					<td><a href ng-click="p.boothDescriptionDialog(booth)">{{booth.title}}</td>
+					<!-- <td ng-if="auth.activeUser._id == p.userID"><a href ng-click="p.unbookBoothDialog(booth)">{{booth.title}}</td>
+					<td ng-if="auth.activeUser._id != p.userID">{{booth.title}}</td> -->
 					<td>{{booth.boothType}}</td>
 					<td>{{booth.timeSlot}}</td>
 					</tr>

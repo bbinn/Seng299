@@ -12,7 +12,8 @@ function($scope, $http, $sce, $location) {
   vm.noVendorsImg = $sce.trustAsResourceUrl('../../assets/images/sadCat.jpg');
 
   var today = new Date();
-  vm.date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0);
+  var date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0);
+  var maxDate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0);
 
   vm.filterTypes = [{
     id: 0,
@@ -85,11 +86,17 @@ function($scope, $http, $sce, $location) {
     else if(type.id == 1) {
       vm.header = "This Week's Vendors"
       vm.vendors = [];
-      $http.post('api/getbooths', {body: JSON.stringify({ timeSlotMin: vm.date.getDate, timeSlotMax: (vm.date.getDate() + 7)})})
+
+      maxDate.setDate(maxDate.getDate() + 7);
+      // var max = vm.maxDate.toISOString();
+      // console.log(vm.maxDate.toISOString() + "  max ----- min     " + vm.date.toISOString());
+      // $http.post('api/getbooths', {body: JSON.stringify({ timeSlotMin: vm.date.toISOString(), timeSlotMax: vm.maxDate.toISOString()})})
+      $http.post('api/getbooths', {body: JSON.stringify({ timeSlotMin: date, timeSlotMax: maxDate})})
       .success(function (data, status, xhr, config) {
         var docs = data.docs;
         var vendorsids = [];
         console.log(docs);
+        console.log(docs[0].timeSlot);
         for(var i = 0; i < docs.length; i++){
           vendorsids.push(docs[i].vendorId);
         }

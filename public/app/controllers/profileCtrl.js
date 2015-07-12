@@ -49,6 +49,27 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 			});
 	};
 
+	vm.boothDescriptionDialog = function(booth){
+		boothObject={
+  		title: booth.title,
+			description: booth.description,
+			timeSlot: booth.timeSlot,
+			type: booth.Type,
+		};
+
+		ngDialog.openConfirm({
+			template: 'app/views/pages/boothDescriptionPopup.html',
+			data: $scope.boothObject
+		}).then(
+			function() {
+				unbookBoothDialog(booth);
+			},
+			function() {
+				//do nothing
+			}
+		)
+	};
+
 	vm.unbookBoothDialog = function(booth) {
 
     ngDialog.openConfirm({
