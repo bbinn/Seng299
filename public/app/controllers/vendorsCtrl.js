@@ -47,7 +47,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.populateVendors = function(docs){
     vm.vendors = [];
     for(var i = 0; i < docs.length; i++){
-      vm.vendors.push({id: docs[i]._id,  username: docs[i].username, description: docs[i].description, profilePic: docs[i].avatarLink, numFollowers: docs[i].numFollowers});
+      vm.vendors.push({id: docs[i]._id,  name: docs[i].name, description: docs[i].description, profilePic: docs[i].avatarLink, numFollowers: docs[i].numFollowers});
     }
   }
 
@@ -121,8 +121,8 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
     //alphabetically sort vendors list
     if(type == 0) {
       vm.vendors.sort(function(a, b){
-        var aUsername = a.username.toLowerCase();
-        var bUsername = b.username.toLowerCase();
+        var aUsername = a.name.toLowerCase();
+        var bUsername = b.name.toLowerCase();
         if(aUsername < bUsername) {
           return -1;
         }
