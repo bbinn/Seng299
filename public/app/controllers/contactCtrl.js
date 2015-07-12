@@ -3,16 +3,16 @@ activeUser = null;
 angular.module('userApp')
 .controller('contactController', function($scope, $http, $location, $routeParams, ngDialog){
 
-  $scope.sendContactEmail = function() {
+  $scope.sendContact = function() {
     var alert = angular.element(document.getElementById('alertController')).scope().alert;
     var username = document.getElementById('email').value.trim();
-    var password = document.getElementById('subject').value.trim();
-    var password = document.getElementById('inputDetailsText').value.trim();
+    var subject = document.getElementById('subject').value.trim();
+    var inputDetailsText = document.getElementById('inputDetailsText').value.trim();
     $http.post('api/contact', {body: JSON.stringify(
       {
         from: email,
         subject: subject,
-        text: text
+        text: inputDetailsText
       }
     )})
     .success(function (data, status, xhr, config){
