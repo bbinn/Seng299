@@ -70,7 +70,6 @@ input[type="text"]:focus {
   border-width: 1px;
   border-radius: 16px;
   margin: 1%;
-  overflow-y: scroll;
 }
 
 h3 {
