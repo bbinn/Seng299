@@ -31,6 +31,16 @@ function($scope, $http, $sce, $location) {
     var docs = data.docs;
     vm.populateVendors(docs);
     vm.vendorSort(0);
+    if(docs.length == 0)
+    {
+      vm.noVendors = true;
+      vm.vendors = [];
+    }
+    else
+    {
+      vm.populateVendors(docs);
+      vm.noVendors = false;
+    }
   });
 
   vm.populateVendors = function(docs){
