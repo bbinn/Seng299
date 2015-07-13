@@ -171,11 +171,19 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
     else {
       //open the view booth dialog
       currentBooth = booth;
-      ngDialog.open({
+      ngDialog.openConfirm({
         template: 'app/views/pages/popup/ViewBoothPopup.html',
         scope: $scope,
         controller: 'BoothPopupController'
-      });
+      })
+      .then(
+        function() {
+          vm.unbookBoothDialog(booth);
+        },
+        function() {
+          //do nothing
+        }
+      );
     }
   }
   vm.repopulate();
