@@ -54,7 +54,14 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
         dt = new Date(docs[i].timeSlot);
         if (dt >= today) {
           boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
-          vm.activeBooths.push({title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber, vendorId: vm.userID});
+          vm.activeBooths.push({
+            title: docs[i].title,
+            boothType: docs[i].boothType,
+            timeSlot: boothDate,
+            description: docs[i].description,
+            boothNumber: docs[i].boothNumber,
+            vendorId: vm.userID
+          });
         }
       }
       if (data.docs.length > 0) {
