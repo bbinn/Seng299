@@ -320,44 +320,55 @@ signup = function(body, callback) {
     return callback('A valid email is required!');
   }
 
-  var account = new Account();
-
-  // User info
-  account.name = name;
-  account.company = company;
-  account.age = age;
-  account.email = email;
-  account.phone = phone;
-  account.address = address;
-
-  // Account info
-  account.username = username;
-  account.password = password;
-  account.accountType = accountType;
-
-  IDController.getNextID(function(error, id){
+  Account.find({email: email})
+  .exec(function(error, existingAccounts){
     if(error){
-      return callback(error)
+      return callback(error);
     }
-    account._id = id;
-    return account.save( function(err){
-      if(err)
-      {
-        return callback(err);
-      }
-      else
-      {
-        var token = utils.generateSessionToken(id);
+    if(existingAccounts.length != 0){
+      return callback('An account with this email already exists');
+    }
+    var account = new Account();
 
-        cloned = utils.deepClone(account);
-        delete cloned.password;
-        delete cloned.__v;
+    // User info
+    account.name = name;
+    account.company = company;
+    account.age = age;
+    account.email = email;
+    account.phone = phone;
+    account.address = address;
 
-        return callback(null, token, cloned);
+    // Account info
+    account.username = username;
+    account.password = password;
+    account.accountType = accountType;
+
+    IDController.getNextID(function(error, id){
+      if(error){
+        return callback(error)
       }
+      account._id = id;
+      return account.save( function(err){
+        if(err)
+        {
+          return callback(err);
+        }
+        else
+        {
+          var token = utils.generateSessionToken(id);
+
+          cloned = utils.deepClone(account);
+          delete cloned.password;
+          delete cloned.__v;
+
+          return callback(null, token, cloned);
+        }
+      });
+
     });
-
   });
+
+
 }
 
 module.exports = AuthenticateController;
