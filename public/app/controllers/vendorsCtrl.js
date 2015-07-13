@@ -7,6 +7,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.header = "All Vendors"
   vm.noVendors = false;
   vm.noVendorsImg = $sce.trustAsResourceUrl('../../assets/images/sadCat.jpg');
+  vm.defaultAvatarLink = $sce.trustAsResourceUrl('../../assets/images/generic_profile.png');
 
   var today = new Date();
   var date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0);
@@ -43,8 +44,14 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
 
   vm.populateVendors = function(docs){
     vm.vendors = [];
-    for(var i = 0; i < docs.length; i++){
-      vm.vendors.push({id: docs[i]._id,  username: docs[i].username, description: docs[i].description, profilePic: docs[i].avatarLink});
+    var avatarLink;
+    for(var i = 0; i < docs.length; i++){  
+      if (typeof docs[i].avatarLink == "undefined") {
+        avatarLink = vm.defaultAvatarLink;
+      } else {
+        avatarLink = docs[i].avatarLink;
+      }
+      vm.vendors.push({id: docs[i]._id,  username: docs[i].username, description: docs[i].description, profilePic: avatarLink});
     }
   }
 
