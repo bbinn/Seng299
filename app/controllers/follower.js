@@ -138,7 +138,7 @@ FollowerController = (function() {
 
         var ids = [];
         for(var i=0; i<arr.length; ++i){
-          if(i > 10){break;}
+          if(i >= 10){break;}
           ids.push(arr[i].vendorId);
         }
 
