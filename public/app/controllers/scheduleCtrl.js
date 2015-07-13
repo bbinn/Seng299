@@ -192,7 +192,7 @@ angular.module('userApp').controller('BoothPopupController', function($scope, $h
     vendorId: pp.booth.vendorId
   })})
   .success (function (data, status, xhr, config) {
-    pp.booth.vendorName = data.docs[0].username;
+    pp.booth.vendorName = data.docs[0].name;
   })
   .error (function (data, status, xhr, config) {
 
