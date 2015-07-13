@@ -3,7 +3,7 @@ Seng 299 Project (Group 6)
 A live copy of this site for demo and testing purposes can be found at [the test site (seng.nick.coffee)].
 
 **Available Technologies**
-Javascript, node, express, Mongodb, css, html, jquery, ajax, other things too
+Javascript, node, angularjs, express, Mongodb, css, html, ajax, other things too
 
 **Members**
 
