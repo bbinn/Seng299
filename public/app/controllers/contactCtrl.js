@@ -5,9 +5,14 @@ angular.module('userApp')
 
   $scope.sendContact = function() {
     var alert = angular.element(document.getElementById('alertController')).scope().alert;
-    var username = document.getElementById('email').value.trim();
+    var email = document.getElementById('email').value.trim();
     var subject = document.getElementById('subject').value.trim();
     var inputDetailsText = document.getElementById('inputDetailsText').value.trim();
+
+    if(!ClientUtils.validateEmail(email)) {
+      return alert.showAlert('Please enter a valid email');
+    }
+
     $http.post('api/contact',
       {
         body: JSON.stringify( {
