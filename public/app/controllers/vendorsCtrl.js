@@ -6,6 +6,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.vendors = [];
   vm.header = "All Vendors"
   vm.noVendors = false;
+  vm.filterTypeSelected;
   vm.noVendorsImg = $sce.trustAsResourceUrl('../../assets/images/sadCat.jpg');
   vm.defaultAvatarLink = $sce.trustAsResourceUrl('../../assets/images/generic_profile.png');
 
@@ -44,7 +45,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
     vm.vendorSort(0);
   });
 
-
+  //populate the vendors array with the results from the query
   vm.populateVendors = function(docs){
     vm.vendors = [];
     var avatarLink;
@@ -58,10 +59,16 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
     }
   }
 
+  //change html page to the selected vendor profile page
   vm.viewProfile = function(id) {
     $location.path("/account/" + id);
   }
+
+  //dynamically search all vendors for the typed vendor name
   vm.search = function(){
+    vm.filterTypeSelected = 0;
+    vm.header = "All Vendors";
+    
     $http.post('api/getAccount', {body: JSON.stringify({$or:[{accountType: "vendor", accountType: "admin"}] , fuzzyName: vm.vendorName })})
     .success(function(data, status, headers, config) {
       var docs = data.docs;
@@ -79,9 +86,17 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
     });
   }
 
+  //filter the displayed vendor depending on:
+  // 0: All Vendors
+  // 1: This Weeks vendors
+  // 2: Top followers
   vm.filterVendors = function(type){
     if(type == null)
       return;
+
+    vm.noVendors = false;
+    vm.vendorName = "";
+
 
     vm.vendors = [];
     if(type.id == 0) {
@@ -124,6 +139,8 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
 
     }
   }
+
+  //alphabetically sort the list of all vendors
   vm.vendorSort = function(type){
     //alphabetically sort vendors list
     if(type == 0) {
