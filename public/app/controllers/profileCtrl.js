@@ -66,6 +66,8 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
       }
       if (data.docs.length > 0) {
         vm.hasBooths = true;
+      } else {
+        vm.hasBooths = false;
       }
 
       vm.activeBooths.sort(function(a, b) {
@@ -109,6 +111,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
           vm.getActiveBooths(vm.userID);
         })
         .error(function (data, status, xhr, config){
+          vm.getActiveBooths(vm.userID);
         });
       },
       function() {
