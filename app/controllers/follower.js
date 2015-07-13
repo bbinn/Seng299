@@ -1,4 +1,5 @@
 var Follower      = require('../models/follower');
+var Account      = require('../models/account');
 var utils         = require('../utils');
 
 var FollowerController;
@@ -72,6 +73,7 @@ FollowerController = (function() {
   FollowerController.getfollowing = function(req, res) {
     body = utils.safeParse(req.body.body);
     var username = body.username;
+
     if(username == null) {
       return res.status(400).send({
         error: "Missing part of the body"
@@ -86,15 +88,87 @@ FollowerController = (function() {
     });
   }
 
+  FollowerController.topfollowers = function(req, res) {
+    body = utils.safeParse(req.body.body);
+
+    Account.find({$or:[{accountType: "admin"}, {accountType: "vendor" }]})
+    .exec(function (err, docs){
+      if(err) {
+        return res.status(200).send(JSON.stringify({docs: []}));
+      }
+      var vendorsids = [];
+      for(var i = 0; i < docs.length; i++){
+        vendorsids.push(docs[i]._id);
+      };
+      Follower.find({vendorId: {$in: vendorsids}})
+      .exec (function (err, docs){
+        if(err) {
+          return res.status(200).send(JSON.stringify({docs: []}));
+        }
+        hash = {};
+        for(var i = 0; i < docs.length; i++) {
+          if(hash[docs[i].vendorId] ==  undefined){
+            hash[docs[i].vendorId] = 1;
+          }
+          else {
+            hash[docs[i].vendorId]++;
+          }
+        }
+        var k;
+        var arr = [];
+        for(k in hash){
+          arr.push({vendorId: k, numFollowers: hash[k]});
+        }
+        arr.sort(function(a, b){
+
+          if(a.numFollowers < b.numFollowers) {
+            return -1;
+          }
+          if(a.numFollowers > b.numFollowers) {
+            return 1;
+          }
+          return 0;
+        });
+
+        var ids = [];
+        for(var i=0; i<arr.length; ++i){
+          if(i > 10){break;}
+          ids.push(arr[i].vendorId);
+        }
+
+        Account.find({_id: {$in: ids}})
+        .exec(function (err, docs){
+          if(err) {
+            return res.status(200).send(JSON.stringify({docs: []}));
+          }
+          var newdocs = [];
+          for(var i = 0; i < docs.length; i++){
+            newdocs.push(utils.deepClone(docs[i]));
+            newdocs[i].numFollowers = hash[docs[i]._id];
+          }
+          return res.status(200).send(JSON.stringify({docs: newdocs}));
+        });
+      });
+    });
+  }
+
   FollowerController.getfollowers = function(req, res) {
     body = utils.safeParse(req.body.body);
     var username = body.username;
-    if(username == null) {
+    var ids = body.ids;
+
+    var query = {};
+    if(username == null && ids == null) {
       return res.status(400).send({
         error: "Missing part of the body"
       });
+    }else {
+      query.vendorId = username;
     }
-    Follower.find({vendorId: username})
+    if(ids != null && ids != undefined){
+      query.vendorId = {$in: ids};
+    }
+    Follower.find(query)
     .exec(function (err, docs) {
       if(err) {
         return res.status(200).send(JSON.stringify({docs: []}));

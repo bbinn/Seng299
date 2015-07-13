@@ -25,8 +25,12 @@
 		<div ng-show="p.canBook" id="sidebar">
 			<button class="followButtonAccountPage" ng-if="!p.isFollowing();" ng-click="p.follow();">Follow</button>
 			<button class="followButtonAccountPage" ng-if="p.isFollowing();" ng-click="p.unfollow();">Unfollow</button>
-			<a class="followerStatus" ng-click="p.showFollowers();">{{p.followers.length}} followers</a>
-			<a class="followerStatus"  ng-click="p.showFollowing();">{{p.following.length}} following</a>
+			<br/>
+			<div class="followerStatus">
+				<a ng-click="p.showFollowers();">{{p.followers.length}} followers</a>
+				<a ng-click="p.showFollowing();">{{p.following.length}} following</a>
+			</div>
+			<br/>
 			<div>
 				<table>
 				<thead>
@@ -40,7 +44,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="booth in p.activeBooths">
+					<tr ng-repeat="booth in p.activeBooths track by $index">
 					<td><a href ng-click="p.boothDescriptionDialog(booth)">{{booth.title}}</td>
 					<td>{{booth.boothType}}</td>
 					<td>{{booth.timeSlot}}</td>

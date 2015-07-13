@@ -23,7 +23,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 		$http.post('api/getaccount', {body: JSON.stringify({ vendorId: curr_user_id})})
 			.success(function(data, status, headers, config) {
 
-				vm.userName = data.docs[0].name;
+				vm.userName = data.docs[0].repopulateFollowersname;
 				vm.company = data.docs[0].company;
 				vm.age = data.docs[0].age;
 				vm.email = data.docs[0].email;
@@ -36,7 +36,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 					vm.description = data.docs[0].description;
 				}
 				// user has the ability to book booths
-				if (data.docs[0].accountType === "vendor") {
+				if (data.docs[0].accountType === "vendor" || data.docs[0].accountType === "admin") {
 					vm.canBook = true;
 				}
 			});
@@ -48,15 +48,25 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 			.success(function(data, status, headers, config) {
 				var boothDate, dt;
 				var docs = data.docs;
+				var today = new Date();
+
 				for (var i = 0; i < docs.length; i++) {
 					dt = new Date(docs[i].timeSlot);
-    			boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
-					vm.activeBooths[i] = {title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber, vendorId: docs[i].vendorId};
+					if (dt >= today) {
+    				boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
+						vm.activeBooths.push({title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber });
+					}
 				}
 
 				if (data.docs.length > 0) {
 					vm.hasBooths = true;
 				}
+
+				vm.activeBooths.sort(function(a, b) {
+					var date1 = new Date(a.timeSlot);
+					var date2 = new Date(b.timeSlot);
+					return date1 - date2;
+				});
 			});
 	};
 

@@ -63,7 +63,9 @@ h2 {
 .accountParagraph {
 	text-indent: 0;
 	line-height: 120%;
-	white-space: pre;
+	white-space: pre-line;
+	word-wrap: break-word;
+
 }
 .description {
 	width: 65%;
@@ -84,16 +86,17 @@ tbody {
 	font-size: 16px;
 	border: none;
 	display: inline-block;
+
 }
-
-
 .descriptionEditField {
 	width: 90%;
+	height: 50vh;
 	word-wrap: break-word;
 	white-space: normal;
 	min-height: 5em;
 	padding: 5px;
 	font-size: 20px;
+	resize: none;
 }
 h2 {
 	color: : #91b2cc;
@@ -122,9 +125,11 @@ h2 {
 
 .followerStatus {
 	padding: 0 0 0 10px;
+	text-align: center;
 }
 
 .followButtonAccountPage {
 	padding: 3px;
 	margin: 0 0 6px 0;
+	width: 100%;
 }
