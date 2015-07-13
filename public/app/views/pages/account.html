@@ -8,7 +8,7 @@
   </div>
 
   <div class="accountUsername">
-    {{ p.userName }}
+    {{ p.name }}
     <div class="accountUpload" ng-if="p.userID == auth.activeUser._id" ng-controller="uploadController" nv-file-drop="" uploader="avatarUploader">
       <input type="file" id="selectedAvatar" nv-file-select="false" uploader="avatarUploader" ngf-max-size='10000000' style="display: none;"/>
       <input class="accountUpload" type="button" value="Upload Avatar" onclick="document.getElementById('selectedAvatar').click();" />
