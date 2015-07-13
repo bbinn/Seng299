@@ -1,8 +1,33 @@
-Seng 299 Project
+###**Farmers’ Market Booth Online Scheduling**
+Seng 299 Project (Group 6)
+A live copy of this site for demo and testing purposes can be found at [the test site (seng.nick.coffee)].
 
-**Farmers’ Market Booth Online Scheduling**
----
-**Problem Description**
+**Available Technologies**
+Javascript, node, express, Mongodb, css, html, jquery, ajax, other things too
+
+**Members**
+
+- Brett Binnersley, V00776751
+- Ross Gorden-Baker, V00741538
+- Brett A. Blashko, V00759982
+- Tyler Becker, V00169236
+- Charlotte Fedderly, V00721942
+- Nick Conde, V00781910
+
+###Installation
+- npm install
+- make sure ruby is installed (required for mailcatcher, for emails on localhost)
+to do so, install rvm, ruby, and mailcatcher, using the following commands:
+	- curl -sSL https://get.rvm.io | bash
+	- rvm install ruby
+	- gem install mailcatcher
+
+###Running
+- mailcatcher --foreground --http-ip=0.0.0.0
+- node server.js
+- navigate to localhost:8080
+
+###**Problem Description**
 The Fernwood Farmers’ Market would like to improve their quality of service for
 vendors by providing a more convenient way for vendors to reserve a booth. To aid
 them in this new venture, your expertise is required to develop their online booth
@@ -37,39 +62,18 @@ to see and edit all reservations.
 These are the core features of the system, the rest is up to you. Marks will be
 awarded for creativity.
 
-** Installation Instructions **
-npm install
-make sure ruby is installed (required for mailcatcher, for emails on localhost)
-to do so, install rvm, ruby, and mailcatcher, using the following commands:
-curl -sSL https://get.rvm.io | bash
-rvm install ruby
-gem install mailcatcher
-
-** Instructions to run the project **
-mailcatcher --foreground --http-ip=0.0.0.0
-node server.js
-navigate to localhost:8080
-
-**Available Technologies**
-Javascript, node, express, Mongodb, css, html, jquery, ajax, other things too
-
-**Members**
-- Brett Binnersley, V00776751
-- Ross Gorden-Baker, V00741538
-- Brett A. Blashko, V00759982
-- Tyler Becker, V00169236
-- Charlotte Fedderly, V00721942
-- Nick Conde, V00781910
 
 **Disclaimer**
 This application is built for education purposes only and is not intended for production use. Any usage of this software is undertaken at the users risk with the understanding that this software may be not be secure or safe for use.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENTSHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+[the test site (seng.nick.coffee)]: http://seng.nick.coffee/
 
 
