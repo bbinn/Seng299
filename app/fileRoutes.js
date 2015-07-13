@@ -17,7 +17,7 @@ module.exports = function(app, express){
         res.set("Cache-Control", "public, max-age=1209600");
         res.set("ETag", id);
         console.info("Sending file: " + id);
-        res.sendfile(filepath);
+        res.sendFile(filepath);
       }
       else
       {

@@ -1,0 +1,57 @@
+.adminVendorsList {
+	width: 100%;
+}
+
+.adminButton {
+	width: 100%;
+}
+
+.adminTableHeader {
+	font: inherit;
+	font-size: 24px;
+	text-align: left;
+}
+
+.adminTable {
+	width: 80%;
+	margin-bottom: 20px;
+}
+
+.adminTableName {
+	font-weight: bold;
+	font-size: 20px;
+	margin-left: 8px;
+}
+
+.adminSubmitButton {
+	width: 200px;
+	height: 30px;
+}
+
+.adminConfirmedText {
+	font: inherit;
+	font-size: 16px;
+	margin-left: 8px;
+}
+
+.adminDeniedText {
+	font: inherit;
+	font-size: 16px;
+	margin-left: 8px;
+}
+
+.adminNameCell {
+	width: 70%;
+}
+
+.adminButtonCell {
+	width: 15%;
+}
+
+.adminConfirmedCell {
+	background: #88ff8f;
+}
+
+.adminDeniedCell {
+	background: #ff8888;
+}
