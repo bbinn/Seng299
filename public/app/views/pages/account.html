@@ -40,7 +40,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="booth in p.activeBooths">
+					<tr ng-repeat="booth in p.activeBooths track by $index">
 					<td><a href ng-click="p.boothDescriptionDialog(booth)">{{booth.title}}</td>
 					<td>{{booth.boothType}}</td>
 					<td>{{booth.timeSlot}}</td>
