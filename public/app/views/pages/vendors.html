@@ -9,19 +9,20 @@
             data-ng-options="filterType as filterType.name for filterType in v.filterTypes">
       <option value="">Vendor Filter<option>
     </select>
-    <!-- <input class="searchButton" type="button" value="Search!" ng-click="v.search()"> -->
     <div class="vendorContainer">
-
-      <!-- booked this week -->
       <div class="vendorHeader">
         <h2>{{v.header}}</h2>
       </div>
+        <div ng-if="v.noVendors">
+          <h1>OH NOOO! VENDOR NOT FOUND!</h1>
+          <img ng-src="{{v.noVendorsImg}}">
+        </div>
         <ul class="vendorList">
           <li class="singleVendor" ng-repeat="vendor in v.vendors" ng-click="v.viewProfile(vendor.id)">
             <img class="center-cropped" ng-src="{{vendor.profilePic}}">
             <div class="vendorDescription">
               <h2>{{vendor.username}}</h2>
-              <label>{{vendor.description}}</label>
+              <p class="descriptionText">{{vendor.description}}</p>
             </div>
           </li>
         </ul>

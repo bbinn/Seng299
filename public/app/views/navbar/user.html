@@ -1,4 +1,5 @@
 <ul ng-if="auth.activeUser != null" class="nav navbar-nav navbar-right">
   <li><a href="/account">{{auth.activeUser.name}}'s Profile</a></li>
   <li><a href="" ng-click="tryLogout()">Logout</a></li>
+  <li><a href="/settings"><span class="glyphicon glyphicon-cog" title="Settings"></span></a></li>
 </ul>

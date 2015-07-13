@@ -1,3 +1,9 @@
+h2 {
+	font-size: 24px;
+	margin: 15px 0px;
+	text-align: center;
+}
+
 .header {
 	position: relative;
 	text-align: center;
@@ -17,7 +23,7 @@
 	left: 0;
 }
 
-.accountUsername {
+.accountUsername{
 	font: inherit;
 	font-size: 50px;
 	margin: 0 100px;
@@ -51,12 +57,13 @@
 }
 
 .content {
-	margin: 20px 100px;
+	margin: 15px 100px;
 	width: 100%;
 }
-p {
+.accountParagraph {
 	text-indent: 0;
-	line-height: 120%
+	line-height: 120%;
+	white-space: pre;
 }
 .description {
 	width: 65%;
@@ -68,6 +75,7 @@ p {
 }
 tbody {
 	margin: 10px;
+
 }
 .accountDescriptionEdit {
 	background-color: rgb(200, 200, 255);
@@ -79,6 +87,7 @@ tbody {
 	display: inline-block;
 }
 
+
 .descriptionEditField {
 	width: 90%;
 	word-wrap: break-word;
@@ -89,6 +98,7 @@ tbody {
 }
 h2 {
 	color: : #91b2cc;
+
 }
 #sidebar {
 	width: 25%;
@@ -97,6 +107,7 @@ h2 {
 }
 
 #sidebar table, td, th {
+	border-color: #AAA;
 	border-collapse: collapse;
 	border: 1px solid black;
 }
