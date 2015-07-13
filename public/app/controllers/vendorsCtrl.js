@@ -6,6 +6,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.vendors = [];
   vm.header = "All Vendors"
   vm.noVendors = false;
+  vm.filterTypeSelected;
   vm.noVendorsImg = $sce.trustAsResourceUrl('../../assets/images/sadCat.jpg');
   vm.defaultAvatarLink = $sce.trustAsResourceUrl('../../assets/images/generic_profile.png');
 
@@ -65,6 +66,9 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
 
   //dynamically search all vendors for the typed vendor name
   vm.search = function(){
+    vm.filterTypeSelected = 0;
+    vm.header = "All Vendors";
+    
     $http.post('api/getAccount', {body: JSON.stringify({$or:[{accountType: "vendor", accountType: "admin"}] , fuzzyName: vm.vendorName })})
     .success(function(data, status, headers, config) {
       var docs = data.docs;
@@ -91,6 +95,9 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
       return;
 
     vm.noVendors = false;
+    vm.vendorName = "";
+
+
     vm.vendors = [];
     if(type.id == 0) {
       vm.header = "All Vendors";
