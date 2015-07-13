@@ -133,3 +133,8 @@ h3 {
   border-width: 1px;
   border-color: #000000;
 }
+.numFollowers {
+  font-size: 12px;
+  text-align: center;
+  text-indent: 0;
+}

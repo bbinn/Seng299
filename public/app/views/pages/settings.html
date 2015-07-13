@@ -6,10 +6,10 @@
 
     <div class="login" ng-controller="profileEditController as e">
       <div class="field">
-        Name: <span ng-bind="p.userName"></span>
+        Name: <span ng-bind="p.name"></span>
         <br>
         <input class="editField" type="button" ng-hide="e.editName" value="Edit account name" ng-click="e.toggleEdit(e.editName, e.edits.NAME)">
-        <input id="nameEdit" ng-show="e.editName" type="text" ng-model="p.userName">
+        <input id="nameEdit" ng-show="e.editName" type="text" ng-model="p.name">
         <input class="saveField" type="button" ng-show="e.editName" value="Save" ng-click="e.saveEdit(e.editName, e.edits.NAME, p.userID)">
         <br>
       </div>

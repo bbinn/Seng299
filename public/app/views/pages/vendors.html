@@ -23,7 +23,9 @@
             <div class="vendorDescription vendorName">
               <h3>{{vendor.name}}</h3>
               <p class="descriptionText">{{vendor.description}}</p>
-              <p ng-if="vendor.numFollowers != null" class="descriptionText">Number Of Followers: {{vendor.numFollowers}}</h5>
+            </div>
+            <div >
+              <p class="numFollowers" ng-if="vendor.numFollowers != null" >Number Of Followers: {{vendor.numFollowers}}</p>
             </div>
           </li>
         </ul>
