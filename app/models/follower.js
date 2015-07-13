@@ -8,9 +8,7 @@ var FollowerSchema = new Schema({
   userId:   { type: Number, required: true, select: true, index: true },
   __v: { select: false },
   _id: { select: false }
-
 });
 
 
 module.exports = mongoose.model('Follower', FollowerSchema);
-

@@ -1,26 +1,40 @@
 <div ng-controller="AdminController as a">
   <h1>Admin Page</h1>
-  <h2>List of pending vendors:</h2>
+  <div class="adminVendorsList" ng-hide="a.pending.length == 0">
+    <h2 class="adminTableHeader">List of pending vendors:</h2>
 
-  <table style="width: 80%">
+    <table class="adminTable">
     
       <tr ng-repeat="vendor in a.pending">
-        <td width="70%">
-          <h3>User: {{vendor.vendor.username}}</h3>
+        <td class="adminNameCell" ng-if="vendor.state == ''">
+          <h3 class="adminTableName">{{vendor.vendor.username}}</h3>
         </td>
-        <td width="15%">
-          <a href ng-if="vendor.state == ''" ng-click="a.markConfirm(vendor.vendor.username);">Confirm</a>
-          <a href ng-if="vendor.state == 'deny'" ng-click="a.markCancel(vendor.vendor.username);">Cancel</a>
-          <h3 style="text-color: #005500;" ng-if="vendor.state == 'confirm'">Confirmed</h3>
+	<td class="adminNameCell adminConfirmedCell" ng-if="vendor.state == 'confirm'">
+          <h3 class="adminTableName">{{vendor.vendor.username}}</h3>
         </td>
-        <td width="15%">
-          <a href ng-if="vendor.state == ''" ng-click="a.markDeny(vendor.vendor.username);">Deny</a>
-          <a href ng-if="vendor.state == 'confirm'" ng-click="a.markCancel(vendor.vendor.username);">Cancel</a>
-          <h3 style="text-color: #005500;" ng-if="vendor.state == 'deny'">Denied</h3>
+        <td class="adminNameCell adminDeniedCell" ng-if="vendor.state == 'deny'">
+          <h3 class="adminTableName">{{vendor.vendor.username}}</h3>
+        </td>
+        <td class="adminButtonCell" ng-if="vendor.state == ''">
+          <button class="adminButton" ng-click="a.markConfirm(vendor.vendor.username);">Confirm</button>
+        </td>
+        <td class="adminDeniedCell adminButtonCell" ng-if="vendor.state == 'deny'">
+          <h3 class="adminDeniedText">Denied</h3>
+        </td>
+        <td class="adminConfirmedCell adminButtonCell" ng-if="vendor.state == 'confirm'">
+          <h3 class="adminConfirmedText">Confirmed</h3>
+        </td>
+        <td class="adminButtonCell">
+          <button class="adminButton" ng-if="vendor.state == ''" ng-click="a.markDeny(vendor.vendor.username);">Deny</button>
+          <button class="adminButton" ng-if="vendor.state != ''" ng-click="a.markCancel(vendor.vendor.username);">Cancel</button>
         </td>
       </tr>
-  </table>
+    </table>
 
-  <a href ng-click="a.submit();">Submit Changes</a>
+    <button class="adminSubmitButton" ng-click="a.submit();" ng-disabled="!a.hasChanges();">Submit Changes</button>
 
+  </div>
+  <div class="adminVendorsList" ng-show="a.pending.length == 0">
+    <h2 class="adminTableHeader">No pending vendors found.</h2>
+  </div>
 </div>

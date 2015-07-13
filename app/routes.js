@@ -68,6 +68,8 @@ module.exports = function(app, express) {
   });
   router.post('/getfollowing', Follower.getfollowing);
   router.post('/getfollowers', Follower.getfollowers);
+  router.post('/topfollowers', Follower.topfollowers);
+
 
   //Return
   return router;
