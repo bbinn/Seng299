@@ -1,35 +1,33 @@
-<div ng-controller="ScheduleController as s">
+<div class="schedulePage" ng-controller="ScheduleController as s">
   <link rel="stylesheet" href="assets/schedule.css">
 
-  <div class = DayPicker style = "text-align: center">
+  <div class ="dayPicker">
     <h1> Schedule for {{s.date.toDateString()}} </h1>
-    <fieldset class="dayPicker">
-      <button ng-click="s.prevWeek()">&lt</button>
+    <fieldset>
+      <button class="dayButton" ng-click="s.prevWeek()">&lt</button>
       <input type="radio" name="day" id="sunday" ng-click="s.changeDay(0)">
-      <label for="sunday" class="dayLabel">SUN</label>
+      <label class="dayButton"  for="sunday" class="dayLabel">Sunday</label>
       <input type="radio" name="day" id="monday" ng-click="s.changeDay(1)">
-      <label for="monday" class="dayLabel">MON</label>
+      <label class="dayButton" for="monday" class="dayLabel">Monday</label>
       <input type="radio" name="day" id="tuesday" ng-click="s.changeDay(2)">
-      <label for="tuesday" class="dayLabel">TUE</label>
+      <label class="dayButton"  for="tuesday" class="dayLabel">Tuesday</label>
       <input type="radio" name="day" id="wednesday" ng-click="s.changeDay(3)">
-      <label for="wednesday" class="dayLabel">WED</label>
+      <label class="dayButton"  for="wednesday" class="dayLabel">Wednesday</label>
       <input type="radio" name="day" id="thursday" ng-click="s.changeDay(4)">
-      <label for="thursday" class="dayLabel">THU</label>
+      <label class="dayButton"  for="thursday" class="dayLabel">Thursday</label>
       <input type="radio" name="day" id="friday" ng-click="s.changeDay(5)">
-      <label for="friday" class="dayLabel">FRI</label>
+      <label class="dayButton"  for="friday" class="dayLabel">Friday</label>
       <input type="radio" name="day" id="saturday" ng-click="s.changeDay(6)">
-      <label for="saturday" class="dayLabel">SAT</label>
-      <button ng-click="s.nextWeek()">&gt</button>
+      <label class="dayButton"  for="saturday" class="dayLabel">Saturday</label>
+      <button class="dayButton" ng-click="s.nextWeek()">&gt</button>
     </fieldset>
   </div>
-  <br>
-  <br>
 
   <div class="scheduleTable" ng-show="s.date.getDay() != 0 && s.date.getDay() != 1">
-    <h1 style="text-align: center"> 10:00am - 2:00pm</h1>
+    <h1> 10:00am - 2:00pm</h1>
     <table style="width:80%" class="lunchTable">
       <tr>
-        <th width="25%"> Lunch Booths </th>
+        <th width="25%"> Lunch </th>
         <td width="25%"> <a href ng-click="s.showDialog(s.lunchBooths[0]);">{{ s.lunchBooths[0].title}}</a><br>
             <a href ng-click="s.unbookBoothDialog(s.lunchBooths[0]);">{{s.lunchBooths[0].additionalText}}</a>
         </td>
@@ -43,7 +41,7 @@
     </table>
     <table style="width:80%" class="produceTable">
       <tr>
-        <th width="25%"> Produce Booths </th>
+        <th width="25%"> Produce </th>
         <td width="18.75%"> <a href ng-click="s.showDialog(s.produceBooths[0]);">{{ s.produceBooths[0].title}}</a> <br>
             <a href ng-click="s.unbookBoothDialog(s.produceBooths[0]);">{{s.produceBooths[0].additionalText}}</a>
         </td>
@@ -60,7 +58,7 @@
     </table>
     <table style="width:80%" class="MerchTable">
       <tr>
-        <th width="25%"> Merchandise Booths </th>
+        <th width="25%"> Merchandise </th>
         <td width="15%"> <a href ng-click="s.showDialog(s.merchBooths[0]);">{{ s.merchBooths[0].title}}</a> <br>
             <a href ng-click="s.unbookBoothDialog(s.merchBooths[0]);">{{s.merchBooths[0].additionalText}}</a>
         </td>
@@ -78,10 +76,10 @@
         </td>
       </tr>
     </table>
-    <h1 style="text-align: center"> 4:00pm - 8:00pm</h1>
+    <h1> 4:00pm - 8:00pm</h1>
     <table style="width:80%" class="lunchTable">
       <tr>
-        <th width="25%"> Lunch Booths </th>
+        <th width="25%"> Lunch </th>
         <td width="25%"> <a href ng-click="s.showDialog(s.lunchBooths[3]);">{{ s.lunchBooths[3].title}}</a> <br>
             <a href ng-click="s.unbookBoothDialog(s.lunchBooths[3]);">{{s.lunchBooths[3].additionalText}}</a>
         </td>
@@ -95,7 +93,7 @@
     </table>
     <table style="width:80%" class="produceTable">
       <tr>
-        <th width="25%"> Produce Booths </th>
+        <th width="25%"> Produce </th>
         <td width="18.75%"> <a href ng-click="s.showDialog(s.produceBooths[4]);">{{ s.produceBooths[4].title}}</a> <br>
             <a href ng-click="s.unbookBoothDialog(s.produceBooths[4]);">{{s.produceBooths[4].additionalText}}</a>
         </td>
@@ -112,7 +110,7 @@
     </table>
     <table style="width:80%" class="MerchTable">
       <tr>
-        <th width="25%"> Merchandise Booths </th>
+        <th width="25%"> Merchandise </th>
         <td width="15%"> <a href ng-click="s.showDialog(s.merchBooths[5]);">{{ s.merchBooths[5].title}}</a> <br>
             <a href ng-click="s.unbookBoothDialog(s.merchBooths[5]);">{{s.merchBooths[5].additionalText}}</a>
         </td>
@@ -132,11 +130,11 @@
     </table>
   </div>
 
-  <div class="SundayTable" ng-show="s.date.getDay() == 0">
-    <h1 style="text-align: center"> 12:00pm - 4:00pm</h1>
+  <div class="scheduleTable" ng-show="s.date.getDay() == 0">
+    <h1> 12:00pm - 4:00pm</h1>
     <table style="width:80%" class="lunchTable">
       <tr>
-        <th width="25%"> Lunch Booths </th>
+        <th width="25%"> Lunch </th>
         <td width="25%"> <a href ng-click="s.showDialog(s.lunchBooths[0]);">{{ s.lunchBooths[0].title}}</a> <br>
             <a href ng-click="s.unbookBoothDialog(s.lunchBooths[0]);">{{s.lunchBooths[0].additionalText}}</a>
         </td>
@@ -150,7 +148,7 @@
     </table>
     <table style="width:80%" class="produceTable">
       <tr>
-        <th width="25%"> Produce Booths </th>
+        <th width="25%"> Produce </th>
         <td width="18.75%"> <a href ng-click="s.showDialog(s.produceBooths[0]);">{{ s.produceBooths[0].title}}</a> <br>
             <a href ng-click="s.unbookBoothDialog(s.produceBooths[0]);">{{s.produceBooths[0].additionalText}}</a>
         </td>
@@ -167,7 +165,7 @@
     </table>
     <table style="width:80%" class="MerchTable">
       <tr>
-        <th width="25%"> Merchandise Booths </th>
+        <th width="25%"> Merchandise </th>
         <td width="15%"> <a href ng-click="s.showDialog(s.merchBooths[0]);">{{ s.merchBooths[0].title}}</a> <br>
             <a href ng-click="s.unbookBoothDialog(s.merchBooths[0]);">{{s.merchBooths[0].additionalText}}</a>
         </td>
@@ -188,7 +186,7 @@
   </div>
 
   <div ng-show="s.date.getDay() == 1">
-    <h1>The market is not open this day</h1>
+    <h1 class="notOpenThisDay">The market is not open this day</h1>
   </div>
   <br>
   <br>
