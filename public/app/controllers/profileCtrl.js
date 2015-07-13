@@ -31,6 +31,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
       vm.phone = data.docs[0].phone;
       vm.avatarLink = data.docs[0].avatarLink;
       vm.bannerLink = data.docs[0].bannerLink;
+      vm._id = data.docs[0]._id;
 
       if (typeof data.docs[0].description !== "undefined") {
         vm.description = data.docs[0].description;
@@ -53,7 +54,14 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
         dt = new Date(docs[i].timeSlot);
         if (dt >= today) {
           boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
-          vm.activeBooths.push({title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber, vendorId: vm.userID});
+          vm.activeBooths.push({
+            title: docs[i].title,
+            boothType: docs[i].boothType,
+            timeSlot: boothDate,
+            description: docs[i].description,
+            boothNumber: docs[i].boothNumber,
+            vendorId: vm.userID
+          });
         }
       }
       if (data.docs.length > 0) {
@@ -86,13 +94,14 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
   };
 
   vm.unbookBoothDialog = function(booth) {
-
+    // console.log(booth);
+    // console.log(new Date(booth.timeSlot));
     ngDialog.openConfirm({
       template: 'app/views/pages/popup/unbookConfirm.html'
     }).then(
       function() {
         $http.post('api/unbook', {body: JSON.stringify({
-          timeSlot: booth.timeSlot,
+          timeSlot: new Date(booth.timeSlot),
           boothNumber: booth.boothNumber,
           boothType: booth.boothType,
         })})
