@@ -42,7 +42,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="booth in p.activeBooths">
+					<tr ng-repeat="booth in p.activeBooths track by $index">
 
 					<td><a href ng-click="p.boothDescriptionDialog(booth)">{{booth.title}}</td>
 					<!-- <td ng-if="auth.activeUser._id == p.userID"><a href ng-click="p.unbookBoothDialog(booth)">{{booth.title}}</td>

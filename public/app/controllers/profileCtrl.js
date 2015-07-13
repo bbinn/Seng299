@@ -48,15 +48,25 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 			.success(function(data, status, headers, config) {
 				var boothDate, dt;
 				var docs = data.docs;
+				var today = new Date();
+
 				for (var i = 0; i < docs.length; i++) {
 					dt = new Date(docs[i].timeSlot);
-    			boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
-					vm.activeBooths[i] = {title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber, vendorId: docs[i].vendorId};
+					if (dt >= today) {
+    				boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
+						vm.activeBooths.push({title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber });
+					}
 				}
 
 				if (data.docs.length > 0) {
 					vm.hasBooths = true;
 				}
+
+				vm.activeBooths.sort(function(a, b) {
+					var date1 = new Date(a.timeSlot);
+					var date2 = new Date(b.timeSlot);
+					return date1 - date2;
+				});
 			});
 	};
 
