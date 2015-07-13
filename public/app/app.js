@@ -25,9 +25,6 @@ angular.module('userApp', ['ngRoute', 'ngDialog', 'angularFileUpload'])
       .when('/contact', {
         templateUrl: '/app/views/pages/contact.html'
       })
-      .when('/about', {
-        templateUrl: '/app/views/pages/about.html'
-      })
       .when('/login', {
         templateUrl: '/app/views/pages/login.html'
       })
