@@ -43,24 +43,34 @@ angular.module('userApp').controller('AdminController', ['$scope', '$http', 'ngD
   }
 
   vm.submit = function() {
+    var confirm = [];
+    var deny = [];
     for(var i = 0; i < vm.pending.length; i++) {
       var entry = vm.pending[i];
       if(entry.state == "confirm") {
-        vm.confirm(entry.vendor.username);
+        confirm.push(entry.vendor.username);
       }
       else if (entry.state == "deny") {
-        vm.deny(entry.vendor.username);
+        deny.push(entry.vendor.username);
       }
     }
-    vm.repopulate();
+    $http.post('api/confirmvendor', {body: JSON.stringify({usernames: confirm})})
+    .success(function(data, status, xhr, config) {
+      $http.post('api/denyvendor', {body: JSON.stringify({usernames: deny})})
+      .success(function(data, status, xhr, config) {
+        vm.repopulate();
+      });
+    });
   }
 
-  vm.confirm = function(vendor) {
-    $http.post('api/confirmvendor', {body: JSON.stringify({ username: vendor })});
-  }
-
-  vm.deny = function(vendor) {
-    $http.post('api/denyvendor', {body: JSON.stringify({ username: vendor })});
+  vm.hasChanges = function() {
+    for(var i = 0; i < vm.pending.length; i++) {
+      var entry = vm.pending[i];
+      if(entry.state != "") {
+        return true;
+      }
+    }
+    return false;
   }
 
   vm.repopulate();
