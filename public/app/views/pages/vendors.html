@@ -5,7 +5,7 @@
   <div class="centerText">
 
     <input type="text" placeholder="Search all Vendors!" ng-model="v.vendorName" ng-change="v.search()">
-    <select class="dropdown" ng-model="filterTypeSelected" ng-change="v.filterVendors(filterTypeSelected)"
+    <select class="dropdown" ng-model="filterTypeSelected" ng-click="v.filterVendors(filterTypeSelected)"
             data-ng-options="filterType as filterType.name for filterType in v.filterTypes">
       <option value="">Vendor Filter<option>
     </select>
