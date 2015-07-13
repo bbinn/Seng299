@@ -95,7 +95,7 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
         var oneDayFromNow = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1, 0, 0, 0, 0); //set hours, minutes, seconds, milliseconds to 0
         if (vm.date <= oneDayFromNow && vm.date > today && activeUser.accountType != "admin") {
           locked = today;
-          console.log(locked);
+          activeUser.locked = today;
         }
         $http.post('api/unbook', {body: JSON.stringify({
           timeSlot: vm.date,
