@@ -142,7 +142,7 @@ AccountController = (function() {
         query.accountType = accountType;
       }
       if(fuzzyName != null && fuzzyName != undefined){
-        query.username = { $regex: fuzzyName, $options: 'i' };
+        query.name = { $regex: fuzzyName, $options: 'i' };
       }
 
       Account.find(query)

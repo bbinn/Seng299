@@ -125,9 +125,11 @@ h2 {
 
 .followerStatus {
 	padding: 0 0 0 10px;
+	text-align: center;
 }
 
 .followButtonAccountPage {
 	padding: 3px;
 	margin: 0 0 6px 0;
+	width: 100%;
 }

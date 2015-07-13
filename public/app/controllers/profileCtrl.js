@@ -148,6 +148,9 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	};
 
 	vm.follow = function() {
+		if (!activeUser) {
+			return;
+		}
 		$http.post('api/follow', {body: JSON.stringify({username: activeUser._id, vendor: vm.userID})})
                 .success(function(data, status, xhr, config) {
 			vm.repopulateFollowers();
@@ -162,14 +165,47 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	};
 
 	vm.showFollowers = function() {
-		vm.repopulateFollowers();
+		var template = "<h1> Followers </h1><br>";
+		var followerids = [];
+		for (var i = 0; i < vm.followers.length; i++) {
+			followerids[i] = vm.followers[i].userId;
+		}
+
+		$http.post('api/getaccount', {body: JSON.stringify({ids: followerids})})
+		.success(function(data, status, xhr, config) {
+			for (var i = 0; i < vm.followers.length; i++) {
+				template += "<p>" + data.docs[i].name + "</p><br>";
+			}
+			ngDialog.open({
+				template: template,
+				plain: true
+			});
+		});
 	};
 
 	vm.showFollowing = function() {
-		vm.repopulateFollowers();
+		var template = "<h1> Following </h1><br>";
+		var followingids = [];
+		for (var i = 0; i < vm.following.length; i++) {
+			followingids[i] = vm.following[i].vendorId;
+		}
+
+		$http.post('api/getaccount', {body: JSON.stringify({ids: followingids})})
+		.success(function(data, status, xhr, config) {
+			for (var i = 0; i < vm.following.length; i++) {
+				template += "<p>" + data.docs[i].name + "</p><br>";
+			}
+			ngDialog.open({
+				template: template,
+				plain: true
+			});
+		});
 	};
 
 	vm.isFollowing = function() {
+		if (!activeUser) {
+			return false;
+		}
 		for (var i = 0; i < vm.followers.length; i++) {
 			if (vm.followers[i].userId == activeUser._id) {
 				return true;
