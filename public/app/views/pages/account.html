@@ -23,12 +23,10 @@
 
 	<div class="content">
 		<div ng-show="p.canBook" id="sidebar">
-			<!-- <h2>Booked Booths</h2> -->
-			<!-- <div ng-if="p.hasBooths"> -->
-			<button ng-if="!p.isFollowing();" ng-click="p.follow();">Follow</button>
-			<button ng-if="p.isFollowing();" ng-click="p.unfollow();">Unfollow</button>
-			<a href ng-click="p.showFollowers();">{{p.followers.length}} followers</a>
-			<a href ng-click="p.showFollowing();">{{p.following.length}} following</a>
+			<button class="followButtonAccountPage" ng-if="!p.isFollowing();" ng-click="p.follow();">Follow</button>
+			<button class="followButtonAccountPage" ng-if="p.isFollowing();" ng-click="p.unfollow();">Unfollow</button>
+			<a class="followerStatus" ng-click="p.showFollowers();">{{p.followers.length}} followers</a>
+			<a class="followerStatus"  ng-click="p.showFollowing();">{{p.following.length}} following</a>
 			<div>
 				<table>
 				<thead>
@@ -43,10 +41,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="booth in p.activeBooths track by $index">
-
 					<td><a href ng-click="p.boothDescriptionDialog(booth)">{{booth.title}}</td>
-					<!-- <td ng-if="auth.activeUser._id == p.userID"><a href ng-click="p.unbookBoothDialog(booth)">{{booth.title}}</td>
-					<td ng-if="auth.activeUser._id != p.userID">{{booth.title}}</td> -->
 					<td>{{booth.boothType}}</td>
 					<td>{{booth.timeSlot}}</td>
 					</tr>
