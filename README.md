@@ -15,12 +15,14 @@ Javascript, node, express, Mongodb, css, html, jquery, ajax, other things too
 - Nick Conde, V00781910
 
 ###Installation
+These instructions assume that you have a mongodb server running on localhost at port 27017, and have nodejs and npm installed already.
 - npm install
 - make sure ruby is installed (required for mailcatcher, for emails on localhost)
 to do so, install rvm, ruby, and mailcatcher, using the following commands:
 	- curl -sSL https://get.rvm.io | bash
 	- rvm install ruby
 	- gem install mailcatcher
+
 
 ###Running
 - mailcatcher --foreground --http-ip=0.0.0.0
