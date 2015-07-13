@@ -49,47 +49,46 @@ angular.module('userApp')
       username.length == 0||
       password.length == 0 ||
       accountType.length == 0
-    ){
+    ) {
       return alert.showAlert('Please fill out all the fields');
     }
 
     // Password != confirm password
-    if(password != confirmPassword)
-    {
+    if(password != confirmPassword) {
       return alert.showAlert('Passwords do not match');
     }
 
     // Invalid email
-    if(!ClientUtils.validateEmail(email)){
+    if(!ClientUtils.validateEmail(email)) {
       return alert.showAlert('Please enter a valid email');
     }
 
-    $http.post('api/signup', {body: JSON.stringify(
+    $http.post('api/signup',
       {
-        name: name,
-        company: company,
-        age: age,
-        email: email,
-        phone: phone,
-        address: address,
+        body: JSON.stringify( {
+          name: name,
+          company: company,
+          age: age,
+          email: email,
+          phone: phone,
+          address: address,
 
-        username: username,
-        password: password,
-        accountType: accountType
+          username: username,
+          password: password,
+          accountType: accountType
+        })
       }
-    )})
-    .success(function (data, status, xhr, config){
+    )
+    .success(function(data, status, xhr, config) {
       $location.path("/account");
       vm.activeUser = data;
       activeUser = data;
     })
-    .error(function (data, status, xhr, config){
+    .error(function(data, status, xhr, config) {
       console.log(data);
-      if(data.error){
+      if(data.error) {
         return alert.showAlert(data.error);
-      }
-      else
-      {
+      } else {
         return alert.showAlert('An error occured on the server');
       }
     });
@@ -100,12 +99,14 @@ angular.module('userApp')
     var alert = angular.element(document.getElementById('alertController')).scope().alert;
     var username = document.getElementById('loginusername').value.trim();
     var password = document.getElementById('loginpassword').value.trim();
-    $http.post('api/login', {body: JSON.stringify(
+    $http.post('api/login',
       {
-        username: username,
-        password: password
+        body: JSON.stringify( {
+          username: username,
+          password: password
+        })
       }
-    )})
+    )
     .success(function (data, status, xhr, config){
       $location.path("/account");
       vm.activeUser = data;
@@ -136,11 +137,13 @@ angular.module('userApp')
     if(!ClientUtils.validateEmail(email)){
       return alert.showAlert('Please enter a valid email');
     }
-    $http.post('api/reset', {body: JSON.stringify(
+    $http.post('api/reset',
       {
-        email: email
+        body: JSON.stringify( {
+          email: email
+        })
       }
-    )})
+    )
     .success(function (data, status, xhr, config){
       return alert.showAlert('An email has been sent!');
     })
@@ -154,17 +157,18 @@ angular.module('userApp')
     var token = $routeParams.token_id;
     var password = document.getElementById('password').value.trim();
     var confirmpassword = document.getElementById('confirmpassword').value.trim();
-    if(password != confirmpassword)
-    {
+    if(password != confirmpassword) {
       return alert.showAlert('Passwords do not match');
     }
 
-    $http.post('api/doreset', {body: JSON.stringify(
+    $http.post('api/doreset',
       {
-        token: token,
-        password: password
+        body: JSON.stringify( {
+          token: token,
+          password: password
+        })
       }
-    )})
+    )
     .success(function (data, status, xhr, config){
       return alert.showAlert('Success! You may log in now.');
     })
@@ -173,13 +177,5 @@ angular.module('userApp')
     });
   }
 
-
-
-
 });
-
-
-
-
-
 

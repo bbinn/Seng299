@@ -1,69 +1,69 @@
 <body>
 <div id="profileController" ng-controller="profileController as p">
-	<link rel="stylesheet" type="test/css" href="../../assets/account.css">
+  <link rel="stylesheet" type="test/css" href="../../assets/account.css">
 
-	<div class="header">
-		<img class="profilepic" ng-src="{{p.avatarLink}}">
-		<img class="banner" ng-src="{{p.bannerLink}}">
-	</div>
+  <div class="header">
+    <img class="profilepic" ng-src="{{p.avatarLink}}">
+    <img class="banner" ng-src="{{p.bannerLink}}">
+  </div>
 
-	<div class="accountUsername">
-		{{ p.userName }}
-		<div class="accountUpload" ng-if="p.userID == auth.activeUser._id" ng-controller="uploadController" nv-file-drop="" uploader="avatarUploader">
-			<input type="file" id="selectedAvatar" nv-file-select="false" uploader="avatarUploader" ngf-max-size='10000000' style="display: none;"/>
-			<input class="accountUpload" type="button" value="Upload Avatar" onclick="document.getElementById('selectedAvatar').click();" />
-		</div>
+  <div class="accountUsername">
+    {{ p.userName }}
+    <div class="accountUpload" ng-if="p.userID == auth.activeUser._id" ng-controller="uploadController" nv-file-drop="" uploader="avatarUploader">
+      <input type="file" id="selectedAvatar" nv-file-select="false" uploader="avatarUploader" ngf-max-size='10000000' style="display: none;"/>
+      <input class="accountUpload" type="button" value="Upload Avatar" onclick="document.getElementById('selectedAvatar').click();" />
+    </div>
 
-		<div class="accountUpload" ng-if="p.userID == auth.activeUser._id" ng-controller="uploadController" nv-file-drop="" uploader="bannerUploader">
-			<input type="file" id="selectedBanner" nv-file-select="false" uploader="bannerUploader" ngf-max-size='10000000' style="display: none;"/>
-			<input class="accountUpload" type="button" value="Upload Banner" onclick="document.getElementById('selectedBanner').click();" />
-		</div>
+    <div class="accountUpload" ng-if="p.userID == auth.activeUser._id" ng-controller="uploadController" nv-file-drop="" uploader="bannerUploader">
+      <input type="file" id="selectedBanner" nv-file-select="false" uploader="bannerUploader" ngf-max-size='10000000' style="display: none;"/>
+      <input class="accountUpload" type="button" value="Upload Banner" onclick="document.getElementById('selectedBanner').click();" />
+    </div>
 
-	</div>
+  </div>
 
-	<div class="content">
-		<div ng-show="p.canBook" id="sidebar">
-			<button class="followButtonAccountPage" ng-if="!p.isFollowing();" ng-click="p.follow();">Follow</button>
-			<button class="followButtonAccountPage" ng-if="p.isFollowing();" ng-click="p.unfollow();">Unfollow</button>
-			<br/>
-			<div class="followerStatus">
-				<a ng-click="p.showFollowers();">{{p.followers.length}} followers</a>
-				<a ng-click="p.showFollowing();">{{p.following.length}} following</a>
-			</div>
-			<br/>
-			<div>
-				<table>
-				<thead>
-					<tr>
-						<th>Booth</th>
-						<th>Booth Type</th>
-						<th>Time</th>
-					</tr>
-					<tr>
-						<th colspan="3" ng-if="!p.hasBooths">This user does not have any booked booths.</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="booth in p.activeBooths track by $index">
-					<td><a href ng-click="p.boothDescriptionDialog(booth)">{{booth.title}}</td>
-					<td>{{booth.boothType}}</td>
-					<td>{{booth.timeSlot}}</td>
-					</tr>
-				</tbody>
-				</table>
-			</div>
-		</div>
+  <div class="content">
+    <div ng-show="p.canBook" id="sidebar">
+      <button class="followButtonAccountPage" ng-if="!p.isFollowing();" ng-click="p.follow();">Follow</button>
+      <button class="followButtonAccountPage" ng-if="p.isFollowing();" ng-click="p.unfollow();">Unfollow</button>
+      <br/>
+      <div class="followerStatus">
+        <a ng-click="p.showFollowers();">{{p.followers.length}} followers</a>
+        <a ng-click="p.showFollowing();">{{p.following.length}} following</a>
+      </div>
+      <br/>
+      <div>
+        <table>
+        <thead>
+          <tr>
+            <th>Booth</th>
+            <th>Booth Type</th>
+            <th>Time</th>
+          </tr>
+          <tr>
+            <th colspan="3" ng-if="!p.hasBooths">This user does not have any booked booths.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="booth in p.activeBooths track by $index">
+          <td><a href ng-click="p.boothDescriptionDialog(booth)">{{booth.title}}</td>
+          <td>{{booth.boothType}}</td>
+          <td>{{booth.timeSlot}}</td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
 
-		<div class="description">
-			<div ng-show="!p.canBook">
-                                <a href ng-click="p.showFollowing();">{{p.following.length}} following</a>
-			</div>
-			<p class="accountParagraph" ng-hide="p.editClicked" ng-bind="p.description"></p>
-			<br>
-			<input class="accountDescriptionEdit" ng-hide="p.editClicked" ng-if="p.userID == auth.activeUser._id" type="button" value="Edit description" ng-click="p.toggleEditField()">
-			<textarea id="descriptionEditField" class="descriptionEditField" ng-show="p.editClicked" type="text" ng-model="p.description"></textarea>
-			<br>
-			<a class="accountDescriptionEdit" href="" ng-show="p.editClicked" ng-click="p.editDescription()">Save</a>
-		</div>
-	</div>
+    <div class="description">
+      <div ng-show="!p.canBook">
+        <a href ng-click="p.showFollowing();">{{p.following.length}} following</a>
+      </div>
+      <p class="accountParagraph" ng-hide="p.editClicked" ng-bind="p.description"></p>
+      <br>
+      <input class="accountDescriptionEdit" ng-hide="p.editClicked" ng-if="p.userID == auth.activeUser._id" type="button" value="Edit description" ng-click="p.toggleEditField()">
+      <textarea id="descriptionEditField" class="descriptionEditField" ng-show="p.editClicked" type="text" ng-model="p.description"></textarea>
+      <br>
+      <a class="accountDescriptionEdit" href="" ng-show="p.editClicked" ng-click="p.editDescription()">Save</a>
+    </div>
+  </div>
 </body>

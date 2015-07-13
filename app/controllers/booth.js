@@ -79,6 +79,7 @@ BoothController = (function() {
 
     });
   }
+
   // unbook
   // timeSlot = body.timeSlot;
   // boothNumber = body.boothNumber
@@ -91,10 +92,12 @@ BoothController = (function() {
     var locked = body.locked;
 
     if (locked) {
-      Account.update({_id: accountInformation._id}, {
-        $set: {locked: locked}
-      }, function(err, affected, resp) {
-      });
+      Account.update({_id: accountInformation._id},
+        { $set: {locked: locked} },
+        { multi: true },
+        function(err, affected, resp) {
+        }
+      );
     }
 
     var query = {
@@ -111,7 +114,6 @@ BoothController = (function() {
     Booth.find(query)
     .exec(function (err, docs) {
       if(err || docs.length == 0) {
-
         return res.status(200).send();
       }
       Booth.remove(query, function() {
@@ -126,7 +128,6 @@ BoothController = (function() {
   // vendorId = body.vendorId;
   // boothType = body.boothType;
   // boothNumber = body.boothNumber;
-
   BoothController.getBooths = function(req, res) {
     body = utils.safeParse(req.body.body);
 
@@ -167,6 +168,5 @@ BoothController = (function() {
 
   return BoothController;
 })();
-
 
 module.exports = BoothController;

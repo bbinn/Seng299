@@ -9,6 +9,7 @@ var config 	      = require('./config');
 var path 	        = require('path');
 var cookieParser  = require('cookie-parser');
 var fs            = require("fs");
+var favicon       = require('serve-favicon');
 
 // APP CONFIGURATION ==================
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,6 +35,8 @@ app.use('/api', apiRoutes);
 
 var fileRoutes = require('./app/fileRoutes')(app, express);
 app.use('/uploads', fileRoutes);
+
+app.use(favicon('./public/assets/images/favicon.ico'));
 
 //Ensure folder exists
 if(!fs.existsSync('./uploads')){
