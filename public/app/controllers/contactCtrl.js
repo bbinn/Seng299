@@ -8,13 +8,15 @@ angular.module('userApp')
     var username = document.getElementById('email').value.trim();
     var subject = document.getElementById('subject').value.trim();
     var inputDetailsText = document.getElementById('inputDetailsText').value.trim();
-    $http.post('api/contact', {body: JSON.stringify(
+    $http.post('api/contact',
       {
-        from: email,
-        subject: subject,
-        text: inputDetailsText
+        body: JSON.stringify( {
+          from: email,
+          subject: subject,
+          text: inputDetailsText
+        })
       }
-    )})
+    )
     .success(function (data, status, xhr, config){
       return alert.showAlert('Email successfully sent!');
     })

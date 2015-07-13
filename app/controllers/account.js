@@ -57,6 +57,8 @@ AccountController = (function() {
     });
   };
 
+  // API Call
+  // Takes an array of vendor usernames and forfirms then as vendors
   AccountController.confirmVendor = function(req, res, accountInformation) {
     if(accountInformation == null) {
       return res.status(401).send({
@@ -89,6 +91,8 @@ AccountController = (function() {
     );
   };
 
+  // API Call
+  // Takes an array of usernames and denies them as vendors, setting them to users
   AccountController.denyVendor = function(req, res, accountInformation) {
     if(accountInformation == null) {
       return res.status(401).send({
@@ -124,34 +128,34 @@ AccountController = (function() {
   // API call
   // Get account information from a vendor given a vendor ID
   AccountController.getAccount = function(req, res) {
-      body = utils.safeParse(req.body.body);
-      var query = {};
-      var vendorId = body.vendorId;
-      var ids = body.ids; // [1,2,4,7]
-      var accountType = body.accountType;
-      var fuzzyName = body.fuzzyName;
+    body = utils.safeParse(req.body.body);
+    var query = {};
+    var vendorId = body.vendorId;
+    var ids = body.ids; // [1,2,4,7]
+    var accountType = body.accountType;
+    var fuzzyName = body.fuzzyName;
 
-      var query = {};
-      if(vendorId != null && vendorId != undefined){
-        query._id = vendorId;
-      }
-      if(ids != null && ids != undefined){
-        query._id = {$in: ids};
-      }
-      if(accountType != null && accountType != undefined){
-        query.accountType = accountType;
-      }
-      if(fuzzyName != null && fuzzyName != undefined){
-        query.username = { $regex: fuzzyName, $options: 'i' };
-      }
+    var query = {};
+    if(vendorId != null && vendorId != undefined){
+      query._id = vendorId;
+    }
+    if(ids != null && ids != undefined){
+      query._id = {$in: ids};
+    }
+    if(accountType != null && accountType != undefined){
+      query.accountType = accountType;
+    }
+    if(fuzzyName != null && fuzzyName != undefined){
+      query.name = { $regex: fuzzyName, $options: 'i' };
+    }
 
-      Account.find(query)
-      .exec(function (err, docs) {
-        if(err) {
-          return res.status(200).send(JSON.stringify({docs: []}));
-        }
-        return res.status(200).send(JSON.stringify({docs: docs}));
-      });
+    Account.find(query)
+    .exec(function (err, docs) {
+      if(err) {
+        return res.status(200).send(JSON.stringify({docs: []}));
+      }
+      return res.status(200).send(JSON.stringify({docs: docs}));
+    });
   };
 
   // API call
@@ -160,7 +164,7 @@ AccountController = (function() {
   AccountController.changeAccount = function(req, res, accountInformation) {
 
     if(accountInformation == null) {
-        return res.status(401).send({
+      return res.status(401).send({
         error: "You must be logged in to perform this action"
       });
     }
@@ -204,15 +208,17 @@ AccountController = (function() {
     if(description != null && description != undefined) {
       query.description = description;
     }
-    Account.update({_id: id},{
-      $set: query
-    }, function(err, doc) {
-      if (err) {
-        console.log(err);
-        return res.status(500).send({error: err});
+    Account.update({_id: id},
+      { $set: query },
+      { multi: true }, 
+      function(err, doc) {
+        if (err) {
+          console.log(err);
+          return res.status(500).send({error: err});
+        }
+        res.status(200).send("Success");
       }
-      res.status(200).send("Success");
-    });
+    );
   };
 
   return AccountController;

@@ -14,14 +14,14 @@
         <h2>{{v.header}}</h2>
       </div>
         <div ng-if="v.noVendors">
-          <h1>OH NOOO! VENDOR NOT FOUND!</h1>
+          <h1>No Vendors Found!</h1>
           <img ng-src="{{v.noVendorsImg}}">
         </div>
         <ul class="vendorList">
           <li class="singleVendor" ng-repeat="vendor in v.vendors" ng-click="v.viewProfile(vendor.id)">
             <img class="center-cropped" ng-src="{{vendor.profilePic}}">
             <div class="vendorDescription vendorName">
-              <h3>{{vendor.username}}</h3>
+              <h3>{{vendor.name}}</h3>
               <p class="descriptionText">{{vendor.description}}</p>
               <p ng-if="vendor.numFollowers != null" class="descriptionText">Number Of Followers: {{vendor.numFollowers}}</h5>
             </div>

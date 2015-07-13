@@ -1,133 +1,139 @@
 h2 {
-	font-size: 24px;
-	margin: 15px 0px;
-	text-align: center;
+  font-size: 24px;
+  margin: 15px 0px;
+  text-align: center;
 }
 
 .header {
-	position: relative;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	height: 200px;
+  position: relative;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  height: 200px;
 }
 
 .profilepic {
-	height: 150px;
-	width: 150px;
-	margin: 15px;
-	background:;
-	overflow: hidden;
-	position: absolute;
-	top: 0;
-	left: 0;
+  height: 150px;
+  width: 150px;
+  margin: 15px;
+  background:;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .accountUsername{
-	font: inherit;
-	font-size: 50px;
-	margin: 0 100px;
-	text-align: left;
-	color: #222;
-	border-width: 1px;
-	border-bottom-style: solid;
-	border-color: #AAA;
+  font: inherit;
+  font-size: 50px;
+  margin: 0 100px;
+  text-align: left;
+  color: #222;
+  border-width: 1px;
+  border-bottom-style: solid;
+  border-color: #AAA;
 }
 
 .accountUpload {
-	background-color: rgb(200, 200, 255);
-	padding: 2px;
-	border-radius: 4px;
-	margin: 4px 6px;
-	float: right;
-	font-size: 16px;
-	border: none;
-	display: inline-block;
+  background-color: rgb(200, 200, 255);
+  padding: 2px;
+  border-radius: 4px;
+  margin: 4px 6px;
+  float: right;
+  font-size: 16px;
+  border: none;
+  display: inline-block;
 }
 
 .banner {
-	background-size: cover;
-	width: 100%;
-	height: 180px;
-	position: absolute;
-	left: 0;
-	top: 0;
-	z-index: -1;
-	text-align: center;
+  background-size: cover;
+  width: 100%;
+  height: 180px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  text-align: center;
 }
 
 .content {
-	margin: 15px 100px;
-	width: 100%;
+  margin: 15px 100px;
+  width: 100%;
 }
+
 .accountParagraph {
-	text-indent: 0;
-	line-height: 120%;
-	white-space: pre-line;
-	word-wrap: break-word;
-
+  text-indent: 0;
+  line-height: 120%;
+  white-space: pre-line;
+  word-wrap: break-word;
 }
+
 .description {
-	width: 65%;
-	text-align: left;
-	padding-left: 20px;
-	word-wrap: break-word;
-	overflow-x: hidden;
-	line-height: 120%
+  width: 65%;
+  text-align: left;
+  padding-left: 20px;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  line-height: 120%
 }
+
 tbody {
-	margin: 10px;
+  margin: 10px;
 }
+
 .accountDescriptionEdit {
-	background-color: rgb(200, 200, 255);
-	padding: 2px;
-	border-radius: 4px;
-	margin: 4px 6px;
-	font-size: 16px;
-	border: none;
-	display: inline-block;
-
+  background-color: rgb(200, 200, 255);
+  padding: 2px;
+  border-radius: 4px;
+  margin: 4px 6px;
+  font-size: 16px;
+  border: none;
+  display: inline-block;
 }
+
 .descriptionEditField {
-	width: 90%;
-	height: 50vh;
-	word-wrap: break-word;
-	white-space: normal;
-	min-height: 5em;
-	padding: 5px;
-	font-size: 20px;
-	resize: none;
+  width: 90%;
+  height: 50vh;
+  word-wrap: break-word;
+  white-space: normal;
+  min-height: 5em;
+  padding: 5px;
+  font-size: 20px;
+  resize: none;
 }
-h2 {
-	color: : #91b2cc;
 
+h2 {
+  color: : #91b2cc;
 }
+
 #sidebar {
-	width: 25%;
-	float:left;
-	display:table-cell;
+  width: 25%;
+  float:left;
+  display:table-cell;
 }
 
 #sidebar table, td, th {
-	border-color: #AAA;
-	border-collapse: collapse;
-	border: 1px solid black;
+  border-color: #AAA;
+  border-collapse: collapse;
+  border: 1px solid black;
 }
 
 #sidebar td, th {
-	padding: 10px;
+  padding: 10px;
 }
 
 #sidebar th {
-	text-align: center;
-	vertical-align: middle;
+  text-align: center;
+  vertical-align: middle;
 }
 
 .followerStatus {
-	padding: 0 0 0 10px;
+  padding: 0 0 0 10px;
+  text-align: center;
 }
 
 .followButtonAccountPage {
-	padding: 3px;
-	margin: 0 0 6px 0;
+  padding: 3px;
+  margin: 0 0 6px 0;
+  width: 100%;
 }

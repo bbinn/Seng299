@@ -112,7 +112,6 @@ ServerUtils = (function() {
     return re.test(email);
   }
 
-
   return ServerUtils;
 
 })();

@@ -74,9 +74,7 @@ AuthenticateController = (function() {
     if(!utils.validateEmail(email)){
       return res.status(400).send({error: 'A valid email is required'});
     }
-    Account.find({
-      email: email
-    })
+    Account.find({ email: email })
     .exec(function (error, docs) {
       //Find to see if this booth is already booked
       if(error) {
@@ -151,9 +149,7 @@ AuthenticateController = (function() {
       accountId = info.accountId;
 
       // Find account with userId
-      Account.find({
-        _id: accountId,
-      })
+      Account.find({ _id: accountId, })
       .exec(function (error, docs) {
         if(err)
         {
@@ -171,16 +167,20 @@ AuthenticateController = (function() {
             res.status(500).send({error: 'Generating hash'});
           }
           // Update the account password (hash it)
-          Account.update({_id: accountId}, {$set: {password: hash}}, function(error, results){
-            if(error){
-              return res.status(500).send({error: error});
-            }
+          Account.update({_id: accountId},
+            {$set: {password: hash}},
+            { multi: true },
+            function(error, results){
+              if(error){
+                return res.status(500).send({error: error});
+              }
 
-            // Remove the token from the documents
-            ResetModel.remove({token: token}, function() {
-              return res.status(200).send();
-            });
-          });
+              // Remove the token from the documents
+              ResetModel.remove({token: token}, function() {
+                return res.status(200).send();
+              });
+            }
+          );
         });
       });
     });
@@ -213,9 +213,7 @@ AuthenticateController = (function() {
       }
       //Handle success
       utils.setCookie(res, sessionToken);
-      res.status(200).send(
-        JSON.stringify(results)
-      );
+      res.status(200).send(JSON.stringify(results));
     });
   }
 
@@ -261,37 +259,35 @@ login = function (data, callback) {
   var password = data.password;
 
   // get the user with that id
-  Account.find({username: username }).select(
-      {
-        password: true //Explicity include the password in this query
-      }
-    ).exec(function (err, docs) {
-      if(err) {
-        return callback(err);
-      }
-      // docs is an array
-      if(docs.length == 0) {
-        return callback('No user found');
-      }
-      account = docs[0];
+  Account.find({username: username })
+  .select({ password: true })//Explicity include the password in this query
+  .exec(function (err, docs) {
+    if(err) {
+      return callback(err);
+    }
+    // docs is an array
+    if(docs.length == 0) {
+      return callback('No user found');
+    }
+    account = docs[0];
 
-      //Check if the entered password equals the hashed one.
-      account.comparePassword(password, function(error, passed){
-        if(error) {
-          return callback(error);
-        }
-        if(passed != true){
-          return callback('Invalid username or password');
-        }
+    //Check if the entered password equals the hashed one.
+    account.comparePassword(password, function(error, passed){
+      if(error) {
+        return callback(error);
+      }
+      if(passed != true){
+        return callback('Invalid username or password');
+      }
 
-        // Clone the object so we can delete the password (so it doesn't get sent to the client)
-        var cloned = utils.deepClone(account);
-        delete cloned.password;
+      // Clone the object so we can delete the password (so it doesn't get sent to the client)
+      var cloned = utils.deepClone(account);
+      delete cloned.password;
 
-        var token = utils.generateSessionToken(cloned._id);
-        return callback(null, token, cloned);
-      });
+      var token = utils.generateSessionToken(cloned._id);
+      return callback(null, token, cloned);
     });
+  });
 }
 
 signup = function(body, callback) {

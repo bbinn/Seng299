@@ -1,15 +1,13 @@
-
-
-p	{
-	color: black;
-	font-size: 20px;
+p  {
+  color: black;
+  font-size: 20px;
   line-height: 2em;
   text-indent: 50px;
 }
 
-h1	{
-	color: black;
-	font-size: 42px;
+h1  {
+  color: black;
+  font-size: 42px;
   text-align: center;
   font-weight: 900;
   padding: 20px 0 50px;

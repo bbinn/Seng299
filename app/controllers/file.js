@@ -15,23 +15,26 @@ FileController = (function() {
   // Handle an upload
   FileController.handleAvatarComplete = function(req, res, accountInformation){
     var file = req.files.file;
-    Account.update({_id: accountInformation._id}, {
-      $set: {avatarLink: file.path}
-    }, function(err, affected, resp) {
-      res.status(200).send({file: file.path});
-    });
+    Account.update({_id: accountInformation._id},
+      { $set: {avatarLink: file.path} },
+      { multi: true },
+      function(err, affected, resp) {
+        res.status(200).send({file: file.path});
+      }
+    );
   }
 
   // Handle an upload
   FileController.handleBannerComplete = function(req, res, accountInformation){
     var file = req.files.file;
-    Account.update({_id: accountInformation._id}, {
-      $set: {bannerLink: file.path}
-    }, function(err, affected, resp) {
-      res.status(200).send({file: file.path});
-    });
+    Account.update({_id: accountInformation._id},
+      { $set: {bannerLink: file.path} },
+      { multi: true },
+      function(err, affected, resp) {
+        res.status(200).send({file: file.path});
+      }
+    );
   }
-
 
   // Ensure a file exists, will call the callback with wether it exists or not
   FileController.ensureExists = function (id, cb){
@@ -41,14 +44,4 @@ FileController = (function() {
   return FileController;
 })();
 
-
 module.exports = FileController;
-
-
-
-
-
-
-
-
-

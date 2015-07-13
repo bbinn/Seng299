@@ -64,5 +64,4 @@ EmailController = (function() {
 
 })();
 
-
 module.exports = EmailController;
