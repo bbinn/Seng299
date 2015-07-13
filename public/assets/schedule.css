@@ -3,74 +3,86 @@ td {
   text-align: center;
   height: 120px;
   vertical-align: middle;
-  }
+  background-color: white;
+}
+
+.scheduleTable {
+  background-color: #DDD;
+  border: 1px solid black;
+  border-radius: 16px;
+  padding: 0 0 30px 0;
+}
+
 th {
   border: none;
   vertical-align: middle;
-}
-input{
-  display:none;
-}
-
-label{
-width:45px;
-height:25px;
-border-radius:2;
-border: 3px black solid;
-line-height:22px;
-text-align:center;
-color:black;
-font-size:12pt;
-cursor:pointer;
-background:white;
-position:relative;
-
--webkit-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-}
- input:checked + label:before{
-   opacity:0.5;
-}
-label:before{
-    position:absolute;
-    top:2px;
-    left:2px;
-    height:15px;
-    width:35px;
-    background:green ;
-    content:'';
-    opacity:0;
+  color: black;
+  text-align: right;
+  padding: 0 30px 0 0;
 }
 
-/*
-label{
-  width:40px;
-  height:25px;
-  border-radius:2;
-  border: 3px #3a3a3a solid;
-  line-height:22px;
-  text-align:center;
-  color:black;
-  font-size:12pt;
-  cursor:pointer;
-  background:white;
+input {
+  display: none;
+}
+
+label {
+  width: 45px;
+  height: 25px;
+  border-radius: 2;
+  border: 1px black solid;
+  border-radius: 5px;
+
+  line-height: 22px;
+  text-align: center;
+  color: black;
+  font-size: 12pt;
+  cursor: pointer;
+  background: white;
+  position: relative;
 
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
 }
-input:checked + label:before{
-  opacity:1;
+
+input:checked + label:before {
+  opacity: 0.5;
 }
-label:before{
+
+label:before {
   position: absolute;
-  top:2px;
-  left:2px;
-  height:15px;
-  width:30px;
-  background:#3a3a3a;
-  content:'';
-  opacity:0;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background: royalblue;
+  content: '';
+  opacity: 0;
+  border-radius: 5px;
 }
+
+.dayPicker {
+  text-align: center;
+  padding: 0 0 10px 0;
+}
+
+.dayButton {
+  vertical-align: top;
+  width: 100px;
+  height: 24px;
+}
+
+.schedulePage h1 {
+  padding: 20px 0;
+}
+
+.schedulePage .notOpenThisDay {
+  padding: 140px 0 0 0;
+}
+
+
+/*
+  lavender, yellowgreen
 */
+
+
