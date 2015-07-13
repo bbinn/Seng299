@@ -8,6 +8,8 @@ FollowerController = (function() {
   //Empty constructor
   function FollowerController() {}
 
+  // API function
+  // takes a user's username and a vendor's username and sets the user as following the vendor
   FollowerController.follow = function(req, res, accountInformation) {
     if(accountInformation == null) {
       return res.status(401).send({
@@ -38,6 +40,8 @@ FollowerController = (function() {
     });
   }
 
+  // API function
+  // Takes a user's username and a vendor's username and removes the user from the vendor's followers
   FollowerController.unfollow = function(req, res, accountInformation) {
     if(accountInformation == null) {
       return res.status(401).send({
@@ -70,6 +74,8 @@ FollowerController = (function() {
     });
   }
 
+  // API Call
+  // Returns all followers of the given username
   FollowerController.getfollowing = function(req, res) {
     body = utils.safeParse(req.body.body);
     var username = body.username;
@@ -179,6 +185,5 @@ FollowerController = (function() {
 
   return FollowerController;
 })();
-
 
 module.exports = FollowerController;

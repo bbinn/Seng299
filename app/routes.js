@@ -43,7 +43,6 @@ module.exports = function(app, express) {
     Account.getAccountInformation(req, res, File.handleBannerComplete);
   });
 
-
   // Account management
   router.post('/getaccount', Account.getAccount);
   router.post('/changeaccount', Authenticate.ensureLoggedIn, function(req, res) {
@@ -69,7 +68,6 @@ module.exports = function(app, express) {
   router.post('/getfollowing', Follower.getfollowing);
   router.post('/getfollowers', Follower.getfollowers);
   router.post('/topfollowers', Follower.topfollowers);
-
 
   //Return
   return router;
