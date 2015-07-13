@@ -71,23 +71,22 @@ AccountController = (function() {
 
     body = utils.safeParse(req.body.body);
 
-    var username = body.username;
-    if(username == null) {
+    var usernames = body.usernames;
+    if(usernames == null || usernames == undefined) {
       return res.status(400).send({
         error: "Missing part of the body"
       });
     }
-    Account.find({userName: username})
-    .exec(function (err, docs) {
-      if(err) {
-        return res.status(500).send({});
-      }
-      Account.update({username: username}, {
-        $set: {accountType: "vendor"}
-      }, function(err, affected, resp) {
+    Account.update({username: { $in: usernames}},
+      { $set: {accountType: "vendor"} },
+      { multi: true },
+      function(err, affected, resp) {
+        if(err) {
+          return res.status(500).send({});
+        }
         res.status(200).send("");
-      });
-    });
+      }
+    );
   };
 
   AccountController.denyVendor = function(req, res, accountInformation) {
@@ -104,23 +103,22 @@ AccountController = (function() {
 
     body = utils.safeParse(req.body.body);
 
-    var username = body.username;
-    if(username == null) {
+    var usernames = body.usernames;
+    if(usernames == null  || usernames == undefined) {
       return res.status(400).send({
         error: "Missing part of the body"
       });
     }
-    Account.find({userName: username})
-    .exec(function (err, docs) {
-      if(err) {
-        return res.status(500).send({});
-      }
-       Account.update({username: username}, {
-        $set: {accountType: "user"}
-      }, function(err, affected, resp) {
+    Account.update({username: { $in: usernames}},
+      { $set: {accountType: "user"} },
+      { multi: true },
+      function(err, affected, resp) {
+        if(err) {
+          return res.status(500).send({});
+        }
         res.status(200).send("");
-      });
-    });
+      }
+    );
   };
 
   // API call
