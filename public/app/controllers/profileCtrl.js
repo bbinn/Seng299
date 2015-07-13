@@ -1,3 +1,5 @@
+var currentBooth = null;
+
 angular.module('userApp').controller('profileController', ['$scope', '$http', '$sce', '$routeParams', 'ngDialog', function($scope, $http, $sce, $routeParams, ngDialog) {
 	var vm = this;
 
@@ -29,7 +31,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 				vm.phone = data.docs[0].phone;
 				vm.avatarLink = data.docs[0].avatarLink;
 				vm.bannerLink = data.docs[0].bannerLink;
-				
+
 				if (typeof data.docs[0].description !== "undefined") {
 					vm.description = data.docs[0].description;
 				}
@@ -49,14 +51,30 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 				for (var i = 0; i < docs.length; i++) {
 					dt = new Date(docs[i].timeSlot);
     			boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
-					vm.activeBooths[i] = {title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber };
+					vm.activeBooths[i] = {title: docs[i].title, boothType: docs[i].boothType, timeSlot: boothDate, description: docs[i].description, boothNumber: docs[i].boothNumber, vendorId: docs[i].vendorId};
 				}
 
 				if (data.docs.length > 0) {
 					vm.hasBooths = true;
 				}
-
 			});
+	};
+
+	vm.boothDescriptionDialog = function(booth){
+		currentBooth = booth;
+
+		ngDialog.openConfirm({
+			template: 'app/views/pages/popup/ViewBoothPopup.html',
+			scope: $scope,
+			controller: 'BoothPopupController'
+		}).then(
+			function() {
+				vm.unbookBoothDialog(booth);
+			},
+			function() {
+				//do nothing
+			}
+		)
 	};
 
 	vm.unbookBoothDialog = function(booth) {
@@ -141,10 +159,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 	};
 
 	vm.isFollowing = function() {
-		console.log("checking");
-		console.log(vm.followers);
 		for (var i = 0; i < vm.followers.length; i++) {
-			console.log("Checking " + vm.followers[i] + " " + activeUser._id);
 			if (vm.followers[i].userId == activeUser._id) {
 				return true;
 			}
@@ -162,7 +177,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 		}	else {
 			vm.userID = null
 		}
-	} 
+	}
 
 	if (vm.userID == null) {
 		vm.userName = null;
@@ -170,7 +185,7 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
 		vm.bannerLink = null;
 		vm.description = null;
 	} else {
-		vm.getAccount(vm.userID);		
+		vm.getAccount(vm.userID);
 	}
 	vm.getActiveBooths(vm.userID);
 	vm.repopulateFollowers();
@@ -225,12 +240,12 @@ angular.module('userApp').controller('profileEditController', ['$scope', '$http'
 				vm.editPhone = temp;
 				break;
 			default:
-				break;	
+				break;
 		}
 	}
 
 	vm.saveEdit = function(field, editType, curr_user_id) {
-		
+
 		var new_value;
 
 		switch (editType) {
@@ -274,7 +289,7 @@ angular.module('userApp').controller('profileEditController', ['$scope', '$http'
 				});
 				break;
 			default:
-				break;	
+				break;
 		}
 
 		vm.toggleEdit(field, editType);

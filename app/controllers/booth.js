@@ -134,9 +134,17 @@ BoothController = (function() {
     var vendorId = body.vendorId;
     var boothType = body.boothType;
     var boothNumber = body.boothNumber;
+    var timeRangeMin = body.timeRangeMin;
+    var timeRangeMax = body.timeRangeMax;
+
     var query = {};
+
     if(timeSlot != null && timeSlot != undefined){
       query.timeSlot = timeSlot;
+    }
+    if(timeRangeMin != null && timeRangeMin != undefined &&
+      timeRangeMax != null && timeRangeMax != undefined){
+      query.timeSlot = {$gte : timeRangeMin.toString(), $lte : timeRangeMax.toString()};
     }
     if(vendorId != null && vendorId != undefined){
       query.vendorId = vendorId;
@@ -150,7 +158,7 @@ BoothController = (function() {
 
     Booth.find(query)
     .exec(function (err, docs) {
-      if(err) {
+      if(err || docs.length == 0) {
         return res.status(200).send(JSON.stringify({docs: []}));
       }
       return res.status(200).send(JSON.stringify({docs: docs}));

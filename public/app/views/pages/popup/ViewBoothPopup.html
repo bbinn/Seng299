@@ -6,5 +6,8 @@
     <br>
     <p>{{pp.booth.description}}</p>
     <br>
+    <button type="button" class="ngdialog-button ngdialog-button-primary"
+            ng-if="pp.booth.vendorId == auth.activeUser._id" ng-enter=confirm(1)  ng-click=confirm(1)>Unbook Booth</button>
+    <br>
   </div>
 </div>
