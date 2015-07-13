@@ -29,6 +29,8 @@ to do so, install rvm, ruby, and mailcatcher, using the following commands:
 - node server.js
 - navigate to localhost:8080
 
+While testing email-related functions you can navigate to localhost:1080 in order to view emails which are caught by mailcatcher. Note: You must have the page open in order for the emails to be caught and displayed.
+
 ###**Problem Description**
 The Fernwood Farmers’ Market would like to improve their quality of service for
 vendors by providing a more convenient way for vendors to reserve a booth. To aid
