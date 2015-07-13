@@ -4,7 +4,7 @@ var Schema       = mongoose.Schema;
 var BoothSchema = new Schema({
 
   title:        { type: String, required: true, select: true },
-  timeSlot:     { type: Date, default: Date.now, required: true, select: true, index: true },
+  timeSlot:     { type: String, default: Date.now, required: true, select: true, index: true },
   vendorId:     { type: Number, required: true, select: true, index: true },
   boothType:    { type: String, required: true, select: true },
   boothNumber:  { type: Number, required: true, select: true },
