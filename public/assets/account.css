@@ -69,7 +69,7 @@ h2 {
 }
 
 .description {
-  width: 65%;
+  width: 60%;
   text-align: left;
   padding-left: 20px;
   word-wrap: break-word;
@@ -107,7 +107,7 @@ h2 {
 }
 
 #sidebar {
-  width: 25%;
+  width: 35%;
   float:left;
   display:table-cell;
 }
@@ -116,6 +116,10 @@ h2 {
   border-color: #AAA;
   border-collapse: collapse;
   border: 1px solid black;
+}
+
+#sidebar table {
+  width:100%;
 }
 
 #sidebar td, th {
