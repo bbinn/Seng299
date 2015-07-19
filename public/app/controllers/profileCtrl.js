@@ -47,16 +47,17 @@ angular.module('userApp').controller('profileController', ['$scope', '$http', '$
     vm.activeBooths = [];
     $http.post('api/getbooths', {body: JSON.stringify({ vendorId: curr_user_id})})
     .success(function(data, status, headers, config) {
-      var boothDate, dt;
+      var boothDate, boothTypeUpper, dt;
       var docs = data.docs;
       var today = new Date();
       for (var i = 0; i < docs.length; i++) {
         dt = new Date(docs[i].timeSlot);
         if (dt >= today) {
           boothDate = vm.m_names[dt.getMonth()] + " " + dt.getDate() + ", " + dt.getFullYear();
+          boothTypeUpper = docs[i].boothType.charAt(0).toUpperCase() + docs[i].boothType.slice(1);
           vm.activeBooths.push({
             title: docs[i].title,
-            boothType: docs[i].boothType,
+            boothType: boothTypeUpper,
             timeSlot: boothDate,
             description: docs[i].description,
             boothNumber: docs[i].boothNumber,
