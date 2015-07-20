@@ -38,6 +38,7 @@
   -moz-appearance:  menulist;
   appearance: menulist;
   background-color: #b2dbfb;
+  border: solid 1px;
   padding: 0 10px;
   height: 30px;
   width: 150px;
