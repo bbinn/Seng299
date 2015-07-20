@@ -22,6 +22,22 @@ h2 {
   top: 0;
   left: 0;
 }
+.settingButton{
+  padding: 6px 4px 6px 4px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #b2dbfb;
+  background: #91b2cc;
+  color: #000000;
+  width: 15%;
+
+}
+.settingButton:hover{
+  outline: 0;
+  box-shadow: none;
+  color: #000000;
+  background: #b2dbfb;
+}
 
 .accountUsername{
   font: inherit;
@@ -81,7 +97,7 @@ tbody {
   margin: 10px;
 }
 
-.accountDescriptionEdit {
+/*.accountDescriptionEdit {
   background-color: rgb(200, 200, 255);
   padding: 2px;
   border-radius: 4px;
@@ -89,9 +105,9 @@ tbody {
   font-size: 16px;
   border: none;
   display: inline-block;
-}
+}*/
 
-.descriptionEditField {
+/*.descriptionEditField {
   width: 90%;
   height: 50vh;
   word-wrap: break-word;
@@ -100,7 +116,7 @@ tbody {
   padding: 5px;
   font-size: 20px;
   resize: none;
-}
+}*/
 
 h2 {
   color: : #91b2cc;
