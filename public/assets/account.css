@@ -24,19 +24,19 @@ h2 {
 }
 .settingButton{
   padding: 6px 4px 6px 4px;
-  border-width: 2px;
+  border-width: 1px;
   border-style: solid;
-  border-color: #b2dbfb;
-  background: #91b2cc;
+  border-color: #000000;
   color: #000000;
   width: 15%;
+  vertical-align: center;
 
 }
 .settingButton:hover{
   outline: 0;
   box-shadow: none;
   color: #000000;
-  background: #b2dbfb;
+  background: #bbbbbb;
 }
 
 .accountUsername{

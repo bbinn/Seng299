@@ -125,13 +125,13 @@ FollowerController = (function() {
         for(k in hash){
           arr.push({vendorId: k, numFollowers: hash[k]});
         }
-        arr.sort(function(a, b){
 
+        arr.sort(function(a, b){
           if(a.numFollowers < b.numFollowers) {
-            return -1;
+            return 1;
           }
           if(a.numFollowers > b.numFollowers) {
-            return 1;
+            return -1;
           }
           return 0;
         });

@@ -50,7 +50,7 @@
         <br>
         <input class="settingButton" type="button" ng-hide="e.editAddress" value="Edit address" ng-click="e.toggleEdit(e.editAddress, e.edits.ADDRESS)">
         <input id="addressEdit" ng-show="e.editAddress" type="text" ng-model="p.address">
-        <input class="settingButton" type="button" ng-show="e.editAddress" value="Save" ng-click="e.saveEdit(e.editAddress, e.edits.ADDRESS, p.userID)">
+        <input type="button" ng-show="e.editAddress" value="Save" ng-click="e.saveEdit(e.editAddress, e.edits.ADDRESS, p.userID)">
         <br>
       </div>
     </div>
