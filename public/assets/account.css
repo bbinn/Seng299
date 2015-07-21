@@ -22,8 +22,8 @@ h2 {
   top: 0;
   left: 0;
 }
-.settingButton{
-  padding: 6px 4px 6px 4px;
+.settingButton {
+  padding: none;
   border-width: 1px;
   border-style: solid;
   border-color: #000000;
@@ -37,6 +37,9 @@ h2 {
   box-shadow: none;
   color: #000000;
   background: #bbbbbb;
+}
+.addPadding {
+  padding-bottom: 3px;
 }
 
 .accountUsername{
