@@ -8,6 +8,7 @@
 
 .login .field {
   padding: 20px 0 4px 0;
+  border-radius: 4px;
 }
 
 .login .inputDetailsText {
@@ -30,4 +31,15 @@
 .login button {
   width: 200px;
   height: 30px;
+}
+
+.userTypeOpts {
+  -webkit-appearance: menulist;
+  -moz-appearance:  menulist;
+  appearance: menulist;
+  background-color: #b2dbfb;
+  border: solid 1px;
+  padding: 0 10px;
+  height: 30px;
+  width: 150px;
 }

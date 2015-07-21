@@ -74,10 +74,11 @@ input[type="text"]:focus {
   width: 100%;
   padding: 5px;
   border-style: solid;
-  border-color: #AAA;
+  border-color: #888;
   border-width: 1px;
   border-radius: 16px;
   margin: 1%;
+  background-color: #DDDDDD;
 }
 
 h3 {
@@ -106,6 +107,7 @@ h3 {
 }
 
 .singleVendor {
+  background-color: white;
   padding: 15px 15px 15px 15px;
   margin: 5px;
   width: 210px;
