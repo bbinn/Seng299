@@ -160,6 +160,7 @@ AccountController = (function() {
     }
 
     Account.find(query)
+    .limit(50)
     .exec(function (err, docs) {
       if(err) {
         return res.status(200).send(JSON.stringify({docs: []}));
@@ -220,7 +221,7 @@ AccountController = (function() {
     }
     Account.update({_id: id},
       { $set: query },
-      { multi: true }, 
+      { multi: true },
       function(err, doc) {
         if (err) {
           console.log(err);
