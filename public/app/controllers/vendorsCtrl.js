@@ -27,7 +27,9 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   }];
 
   //Initialize all vendors in the vendor container.
-  $http.post('api/getAccount', {body: JSON.stringify( {$or:[{accountType: "admin"}, {accountType: "vendor" }]})})
+  $http.post('api/getAccount',
+    {body: JSON.stringify( { accountType: true } )}
+  )
   .success(function(data, status, headers, config) {
     var docs = data.docs;
 
@@ -68,8 +70,8 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
   vm.search = function(){
     vm.filterTypeSelected = 0;
     vm.header = "All Vendors";
-    
-    $http.post('api/getAccount', {body: JSON.stringify({$or:[{accountType: "vendor", accountType: "admin"}] , fuzzyName: vm.vendorName })})
+
+    $http.post('api/getAccount', {body: JSON.stringify({ accountType: true , fuzzyName: vm.vendorName })})
     .success(function(data, status, headers, config) {
       var docs = data.docs;
       if(docs.length == 0)
@@ -101,7 +103,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
     vm.vendors = [];
     if(type.id == 0) {
       vm.header = "All Vendors";
-      $http.post('api/getAccount', {body: JSON.stringify({$or:[{accountType: "admin"}, {accountType: "vendor" }]})})
+      $http.post('api/getAccount', {body: JSON.stringify({ accountType: true })})
       .success(function(data, status, headers, config) {
         var docs = data.docs;
         vm.populateVendors(docs);
