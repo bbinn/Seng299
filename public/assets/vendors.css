@@ -94,7 +94,7 @@ h3 {
   white-space: pre-line;
   line-height: 100%;
   text-indent: 0;
-  height: 50px;
+  padding-top: 5px;
 }
 
 .vendorDescription {
@@ -103,6 +103,7 @@ h3 {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
+  height: 75px;
 }
 
 .singleVendor {

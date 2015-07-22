@@ -135,7 +135,18 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
       vm.header = "Top Followed Vendors";
       $http.post('api/topfollowers')
       .success(function(data, status, xhr, config) {
-        vm.populateVendors(data.docs);
+        var docs = data.docs;
+        //sort vendors based on set
+        docs.sort(function(a, b){
+          if(a.numFollowers < b.numFollowers) {
+            return 1;
+          }
+          if(a.numFollowers > b.numFollowers) {
+            return -1;
+          }
+          return 0;
+        });
+        vm.populateVendors(docs);
       });
 
 
@@ -159,5 +170,7 @@ angular.module('userApp').controller('VendorController', ['$scope', '$http', '$s
       });
     }
   }
+
+
 
 }]);
