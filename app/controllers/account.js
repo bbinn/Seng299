@@ -142,11 +142,21 @@ AccountController = (function() {
     if(ids != null && ids != undefined){
       query._id = {$in: ids};
     }
-    if(accountType != null && accountType != undefined){
-      query.accountType = accountType;
-    }
     if(fuzzyName != null && fuzzyName != undefined){
       query.name = { $regex: fuzzyName, $options: 'i' };
+    }
+    if(accountType != null && accountType != undefined){
+      query = {$and:[
+          query,
+          {$or:[
+            {
+              accountType: "admin"
+            },
+            {
+              accountType: "vendor"
+            }]
+          }
+        ]}
     }
 
     Account.find(query)
