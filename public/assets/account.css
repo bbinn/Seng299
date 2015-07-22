@@ -100,7 +100,7 @@ tbody {
   margin: 10px;
 }
 
-/*.accountDescriptionEdit {
+.accountDescriptionEdit {
   background-color: rgb(200, 200, 255);
   padding: 2px;
   border-radius: 4px;
@@ -108,18 +108,18 @@ tbody {
   font-size: 16px;
   border: none;
   display: inline-block;
-}*/
+}
 
-/*.descriptionEditField {
+.descriptionEditField {
   width: 90%;
-  height: 50vh;
+  height: 300px;
   word-wrap: break-word;
   white-space: normal;
   min-height: 5em;
   padding: 5px;
   font-size: 20px;
   resize: none;
-}*/
+}
 
 h2 {
   color: : #91b2cc;
