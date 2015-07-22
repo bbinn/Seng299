@@ -7,7 +7,7 @@ module.exports = {
 	'database': 'mongodb://localhost:27017/nodeDB',
 	'secret': 'seng299Group6Secret',
   'cookieName': 'seng299Group6Cookie',
-  'server': 'localhost:8080',
+  'server': 'seng.nick.coffee/',
 
   "email": {
     "from": "group6@seng299.web",

@@ -106,8 +106,8 @@ AuthenticateController = (function() {
             opts = {
               to: email,
               subject: 'Password Reset',
-              text: ('Reset password here! ' + config.server + '/reset/' + token),
-              html: ('<div>Reset Password: <a href="' + config.server + '/reset/' + token + '">Here</a></div>')
+              text: ('Reset password here! http://seng.nick.coffee/reset/' + token),
+              html: ('<div>Reset Password: <a href="http://seng.nick.coffee/reset/' + token + '">Here</a></div>')
             };
 
             EmailController.sendEmail(opts, function(error){
