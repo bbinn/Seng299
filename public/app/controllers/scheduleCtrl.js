@@ -85,20 +85,6 @@ angular.module('userApp').controller('ScheduleController', ['$scope', '$http', '
     vm.repopulate();
   }
 
-  vm.OverloadNow = function() {
-    var num = 0;
-    var date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0);
-    while(1){
-      num += 1;
-      $http.post('api/getbooths', {
-        body: JSON.stringify({ timeSlot: date })
-      })
-      .success(function (data, status, xhr, config) {
-        console.log('Sent' + num);
-      });
-    }
-  }
-
   vm.unbookBoothDialog = function(booth) {
     ngDialog.openConfirm({
       template: 'app/views/pages/popup/unbookConfirm.html'
