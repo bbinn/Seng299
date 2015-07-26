@@ -142,13 +142,10 @@ angular.module('userApp')
       $http.post('api/getbooths', {
         body: JSON.stringify({ timeSlot: date })
       })
-      .success(function (data, status, xhr, config) {
-        console.log('Sent' + num);
-      });
-      setTimeout(foo, 1);
+      .success(function (data, status, xhr, config) {});
+      return setTimeout(foo, 1);
     }
     foo();
-
   }
 
   $scope.tryResetPassword = function() {
