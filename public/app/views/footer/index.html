@@ -4,4 +4,8 @@
     <li><a href="/home">About</a></li>
     <li ng-if="(auth.activeUser != null && auth.activeUser.accountType == 'admin')" ><a href="/admin">Admin</a></li>
   </ul>
+  <hr />
+  <a ng-click="OverloadNow();">
+    Overload
+  </a>
 </div>

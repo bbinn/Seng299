@@ -1,6 +1,6 @@
-var Account       = require('../models/account');
+var Account     = require('../models/account');
 var Booth       = require('../models/booth');
-var utils         = require('../utils');
+var utils       = require('../utils');
 
 var BoothController;
 BoothController = (function() {

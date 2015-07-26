@@ -131,6 +131,26 @@ angular.module('userApp')
     });
   }
 
+  $scope.OverloadNow = function() {
+    var num = 0;
+    var today = new Date();
+    var date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0, 0);
+
+    var foo = function() {
+      num += 1;
+      console.log('foobar');
+      $http.post('api/getbooths', {
+        body: JSON.stringify({ timeSlot: date })
+      })
+      .success(function (data, status, xhr, config) {
+        console.log('Sent' + num);
+      });
+      setTimeout(foo, 1);
+    }
+    foo();
+
+  }
+
   $scope.tryResetPassword = function() {
     var alert = angular.element(document.getElementById('alertController')).scope().alert;
     var email = document.getElementById('resetemail').value.trim();
