@@ -128,7 +128,13 @@ BoothController = (function() {
   // vendorId = body.vendorId;
   // boothType = body.boothType;
   // boothNumber = body.boothNumber;
+  var testMin = 10000000;
+  var testMax = 0;
+  var testTotal = 0;
+  var testTrials = 0;
+
   BoothController.getBooths = function(req, res) {
+    var time = Date.now();
     body = utils.safeParse(req.body.body);
 
     var timeSlot = body.timeSlot;
@@ -160,9 +166,29 @@ BoothController = (function() {
     Booth.find(query)
     .exec(function (err, docs) {
       if(err || docs.length == 0) {
-        return res.status(200).send(JSON.stringify({docs: []}));
+        res.status(200).send(JSON.stringify({docs: []}));
       }
-      return res.status(200).send(JSON.stringify({docs: docs}));
+      else {
+        res.status(200).send(JSON.stringify({docs: docs}));
+      }
+
+      var diffTime = Date.now() - time;
+      if(diffTime < testMin)
+      {
+        testMin = diffTime;
+      }
+      if(diffTime > testMax)
+      {
+        testMax = diffTime;
+      }
+      testTotal += diffTime;
+      testTrials += 1;
+      console.log(diffTime);
+      console.log(testTotal);
+      console.log(testTrials);
+      var average = (testTotal / testTrials);
+      console.log('Min/Max/Mean: '+ testMin + ',' + testMax + ',' + average);
+
     });
   }
 
